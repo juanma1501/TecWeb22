@@ -7,7 +7,7 @@ public class TestPeonCaminoBloqueado extends TestCase {
 	public void testPeonMoverDobleCBNegro(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		
 		
@@ -21,7 +21,7 @@ public class TestPeonCaminoBloqueado extends TestCase {
 	public void testPeonMoverDobleCBBlanco(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		Pieza o= t.getTablero()[6][3];
 		t.getTablero()[6][3] = null;

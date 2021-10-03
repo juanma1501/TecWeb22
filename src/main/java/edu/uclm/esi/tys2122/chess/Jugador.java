@@ -1,13 +1,12 @@
 package edu.uclm.esi.tys2122.chess;
 
-public class Jugador {
+import edu.uclm.esi.tys2122.model.User;
 
-	private String login;
-	private String pwd;
+public class Jugador extends User {
 
-	public Jugador(String login, String pwd) {
-		this.login=login;
-		this.pwd=pwd;
+	public Jugador(String login) {
+		super();
+		this.setName(login);
 	}
 
 	public void insert() throws Exception {
@@ -38,11 +37,7 @@ public class Jugador {
 		// TODO Auto-generated method stub
 		
 	}
-
-	public String getLogin() {
-		return login;
-	}
-
+	
 	public void retar(Jugador retador) {
 		// TODO Auto-generated method stub
 		

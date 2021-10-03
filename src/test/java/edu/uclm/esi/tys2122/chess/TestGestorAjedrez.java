@@ -1,20 +1,17 @@
 package edu.uclm.esi.tys2122.chess;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import edu.uclm.esi.tys2122.dao.UserRepository;
 import junit.framework.TestCase;
 
 public class TestGestorAjedrez extends TestCase {
+	@Autowired
+	private UserRepository userRepo;
 	
 	protected void init() {
 		try {
-			Connection bd=Broker.get().getDB("ideas", "ideas123");
-			String sql="delete from jugador";
-			PreparedStatement p=bd.prepareStatement(sql);
-			p.executeUpdate();
-			bd.close();
+			userRepo.deleteAll();
 		}
 		catch (Exception e) {
 			fail();
@@ -23,7 +20,7 @@ public class TestGestorAjedrez extends TestCase {
 	
 	public void testRegistro() {
 		init();
-		Jugador j=new Jugador("a", "a");
+		Jugador j=new Jugador("a");
 		try {
 			j.insert();
 		} catch (Exception e) {
@@ -32,8 +29,8 @@ public class TestGestorAjedrez extends TestCase {
 	}
 	
 	public void testMatePastor() {
-		Jugador a=new Jugador("a", "a");
-		Jugador b=new Jugador("b", "b");
+		Jugador a=new Jugador("a");
+		Jugador b=new Jugador("b");
 		GestorAjedrez gestor=GestorAjedrez.get();
 		try {
 			gestor.add(a);

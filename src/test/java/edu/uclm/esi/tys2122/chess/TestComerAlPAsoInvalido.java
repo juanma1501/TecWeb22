@@ -7,20 +7,14 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	
 	
 	public void testPeonComerAlPasoIzquierdaBlancaMuyLargo() {
-		int dev;
-		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
-		
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.mover('b', 2, 2, 4, 2, "g2", "g4");
 		t.mover('n', 7, 8, 6, 8, "a7", "a6");
 		t.mover('b', 4, 2, 5, 2, "g4", "g5");
 		t.mover('n', 7, 1, 5, 1, "h7", "h5");
 		
-		
 		t.almacenarMovimiento("h7-h5");
-		dev = t.mover('b', 5, 2, 7, 1, "g5", "h7");
-		
-		
+		int dev = t.mover('b', 5, 2, 7, 1, "g5", "h7");
 		super.assertEquals(-5, dev);
 	} 
 	
@@ -29,7 +23,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoDerechaBlancaMuyLargo() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 1, 4, 1, "h2", "h4");
 		t.mover('n', 7, 8, 6, 8, "a7", "a6");
@@ -47,7 +41,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoIzquierdaNegraMuyLargo() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		
 		t.mover('n', 7, 2, 5, 2, "g7", "g5");
@@ -65,7 +59,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoDerechaNegraMuyLargo() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		t.mover('n', 7, 1, 5, 1, "h7", "h5");
 		t.mover('b', 2, 8, 3, 8, "a2", "a3");
@@ -81,7 +75,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoBlancaColumBad() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 2, 4, 2, "g2", "g4");
 		t.mover('n', 7, 3, 5, 3, "f7", "f5");
@@ -99,7 +93,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoBlancaColumBadOL() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 2, 4, 2, "g2", "g4");
 		t.mover('n', 7, 3, 5, 3, "f7", "f5");
@@ -123,7 +117,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoaNegraColumbad() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		
 		t.mover('n', 7, 2, 5, 2, "g7", "g5");
@@ -140,7 +134,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoaNegraColumbadOL() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		
 		t.mover('n', 7, 2, 5, 2, "g7", "g5");
@@ -160,7 +154,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoBlancaColumBadPasarse() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 4, 4, 4, "e2", "e4");
 		t.mover('n', 7, 5, 5, 5, "d7", "d5");
@@ -178,7 +172,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoBlancaColumBadOLPasarse() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 4, 4, 4, "e2", "e4");
 		t.mover('n', 7, 5, 5, 5, "d7", "d5");
@@ -202,7 +196,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoaNegraColumbadPasarse() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		
 		t.mover('n', 7, 4, 5, 4, "e7", "e5");
@@ -219,7 +213,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoaNegraColumbadOLPasarse() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		
 		t.mover('n', 7, 4, 5, 4, "e7", "e5");
@@ -239,7 +233,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoBlancaColumBadPasarse2() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 4, 4, 4, "e2", "e4");
 		t.mover('n', 7, 6, 5, 6, "c7", "c5");
@@ -257,7 +251,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoBlancaColumBadOLPasarse2() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 4, 4, 4, "e2", "e4");
 		t.mover('n', 7, 6, 5, 6, "c7", "c5");
@@ -281,7 +275,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoaNegraColumbadPasarse2() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		
 		t.mover('n', 7, 4, 5, 4, "e7", "e5");
@@ -298,7 +292,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoaNegraColumbadOLPasarse2() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		
 		t.mover('n', 7, 4, 5, 4, "e7", "e5");
@@ -319,7 +313,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoListaLarga() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		
 		t.mover('n', 7, 5, 5, 5, "d7", "d5");
@@ -346,7 +340,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 2, 4, 2, "g2", "g4");
 		t.mover('n', 7, 8, 6, 8, "a7", "a6");
@@ -364,7 +358,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial2() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 2, 4, 2, "g2", "g4");
 		t.mover('n', 7, 8, 6, 8, "a7", "a6");
@@ -382,7 +376,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial3() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 2, 4, 2, "g2", "g4");
 		t.mover('n', 7, 8, 6, 8, "a7", "a6");
@@ -400,7 +394,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial4() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 2, 4, 2, "g2", "g4");
 		t.mover('n', 7, 8, 6, 8, "a7", "a6");
@@ -418,7 +412,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial5() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 2, 4, 2, "g2", "g4");
 		t.mover('n', 7, 8, 6, 8, "a7", "a6");
@@ -436,7 +430,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial6() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 2, 4, 2, "g2", "g4");
 		t.mover('n', 7, 8, 6, 8, "a7", "a6");
@@ -454,7 +448,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial7() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 2, 2, 4, 2, "g2", "g4");
 		t.mover('n', 7, 8, 6, 8, "a7", "a6");
@@ -478,7 +472,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecialn() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.setColorDelJugadorConElTurno('n');
 		t.mover('n', 7, 2, 5, 2, "g7", "g5");
@@ -497,7 +491,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial2n() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.setColorDelJugadorConElTurno('n');
 		t.mover('n', 7, 2, 5, 2, "g7", "g5");
@@ -516,7 +510,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial3n() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.setColorDelJugadorConElTurno('n');
 		t.mover('n', 7, 2, 5, 2, "g7", "g5");
@@ -535,7 +529,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial4n() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.setColorDelJugadorConElTurno('n');
 		t.mover('n', 7, 2, 5, 2, "g7", "g5");
@@ -554,7 +548,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial5n() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.setColorDelJugadorConElTurno('n');
 		t.mover('n', 7, 2, 5, 2, "g7", "g5");
@@ -573,7 +567,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial6n() {
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.setColorDelJugadorConElTurno('n');
 		t.mover('n', 7, 2, 5, 2, "g7", "g5");
@@ -592,7 +586,7 @@ public class TestComerAlPAsoInvalido extends TestCase {
 	public void testPeonComerAlPasoInvalidoSpecial7n(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.setColorDelJugadorConElTurno('n');
 		t.mover('n', 7, 2, 5, 2, "g7", "g5");

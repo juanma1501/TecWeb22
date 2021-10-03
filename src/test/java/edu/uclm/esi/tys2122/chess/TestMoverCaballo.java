@@ -9,7 +9,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoAAD(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -23,7 +23,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoAAI(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -37,7 +37,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoDDAb(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -51,7 +51,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoDDAr(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -65,7 +65,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoIIAb(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -79,7 +79,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoIIAr(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -93,7 +93,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoAArD(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -107,7 +107,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoAArI(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -122,7 +122,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoDDAbEspecial(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -141,7 +141,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoAADLargo(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -155,7 +155,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoAAILargo(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -169,7 +169,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoDDAbLargo(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -183,7 +183,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoDDArLargo(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -197,7 +197,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoIIAbLargo(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -211,7 +211,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoIIArLargo(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -225,7 +225,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoAArDLargo(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.getTablero().clone()[1][4] = null;
 		
@@ -241,7 +241,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoAArILargo(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.getTablero().clone()[1][2] = null;
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -255,7 +255,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoEX4(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -269,7 +269,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoEX3(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -283,7 +283,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoEX2(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -297,7 +297,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoEX(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -311,7 +311,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoEX4Corto(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -325,7 +325,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoEX3Corto(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -339,7 +339,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoEX2Corto(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');
@@ -353,7 +353,7 @@ public class TestMoverCaballo extends TestCase {
 	public void testMoverCaballoEXCorto(){
 		int dev;
 		
-		Tablero t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		Tablero t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		
 		t.mover('b', 1, 2, 3, 3, "g1", "f3");
 		t.setColorDelJugadorConElTurno('b');

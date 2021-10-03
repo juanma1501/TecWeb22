@@ -30,9 +30,9 @@ public class GestorAjedrez {
 	}
 	
 	public void add(Jugador jugador) throws Exception {
-		if (this.jugadoresConectados.get(jugador.getLogin())!=null)
-			throw new Exception("El jugador " + jugador.getLogin() + " ya tiene una sesión abierta");
-		this.jugadoresConectados.put(jugador.getLogin(), jugador);
+		if (this.jugadoresConectados.get(jugador.getName())!=null)
+			throw new Exception("El jugador " + jugador.getName() + " ya tiene una sesión abierta");
+		this.jugadoresConectados.put(jugador.getName(), jugador);
 		this.jugadoresDisponibles.add(jugador);
 	} 
 	
@@ -206,7 +206,7 @@ public class GestorAjedrez {
 		else {
 			contrario = partida.getJugador(Constantes.BLANCO);
 		}
-		Jugador jug = jugadoresConectados.get(contrario.getLogin());
+		Jugador jug = jugadoresConectados.get(contrario.getName());
 		jug.rivalCorono(nFila, nColumna, cTipo);
 		if (nCaso > 1) {  // Se devuelven los jugadores a la lista de disponibles
 			// Se informa de la nueva lista de jugadores disponibles
@@ -257,7 +257,7 @@ public class GestorAjedrez {
 		else {
 			contrario = partida.getJugador(Constantes.BLANCO);
 		}
-		Jugador jug = jugadoresConectados.get(contrario.getLogin());
+		Jugador jug = jugadoresConectados.get(contrario.getName());
 		
 		if (bRespuesta) {  //Tablas aceptadas
 			// Se almacena la partida
@@ -295,7 +295,7 @@ public class GestorAjedrez {
 		else {
 			contrario = partida.getJugador(Constantes.BLANCO);
 		}
-		Jugador jug = jugadoresConectados.get(contrario.getLogin());
+		Jugador jug = jugadoresConectados.get(contrario.getName());
 		
 		// Se almacena en y la partida
 		partida.abandonar(cColor);

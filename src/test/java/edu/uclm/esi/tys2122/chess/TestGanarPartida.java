@@ -8,8 +8,8 @@ public class TestGanarPartida extends TestCase {
 	private Jugador ja, jb;
 	
 	protected void setUp(){
-		ja=new Jugador("ja", "");
-		jb=new Jugador("jb", "");
+		ja=new Jugador("ja");
+		jb=new Jugador("jb");
 		t = new Tablero(1, ja, jb);
 		Pieza[][] tablero = t.getTablero();
 		for(int i = 0;i<tablero.length;i++){

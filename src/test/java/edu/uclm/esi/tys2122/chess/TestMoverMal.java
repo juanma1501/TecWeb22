@@ -8,8 +8,8 @@ public class TestMoverMal extends TestCase {
 	private Jugador ja, jb;
 	
 	protected void setUp(){
-		ja=new Jugador("ja", "");
-		jb=new Jugador("jb", "");
+		ja=new Jugador("ja");
+		jb=new Jugador("jb");
 		t = new Tablero(1, ja, jb);
 		Pieza[][] tablero = t.getTablero();
 		for(int i = 0;i<tablero.length;i++){
@@ -140,24 +140,24 @@ public class TestMoverMal extends TestCase {
 	
 	
 	public void testMoverNegrasSinDeber(){
-		t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		int r = t.mover('n', 7, 2, 6, 2, "", "");
 		assertTrue(r == -1);
 	}
 	public void testMoverBlancasSinDeber(){
-		t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		int r = t.mover('b', 2, 2, 3, 2, "", "");
 		assertTrue(r == -1);
 	}
 	
 	public void testMoverNoesTufichaB(){
-		t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		int r = t.mover('b', 7, 2, 6, 2, "", "");
 		assertTrue(r == -3);
 	}
 	public void testMoverNoEsTufichaN(){
-		t = new Tablero(1, new Jugador("a", ""), new Jugador("b", ""));
+		t = new Tablero(1, new Jugador("a"), new Jugador("b"));
 		t.setColorDelJugadorConElTurno('n');
 		int r = t.mover('n', 2, 2, 3, 2, "", "");
 		assertTrue(r == -3);

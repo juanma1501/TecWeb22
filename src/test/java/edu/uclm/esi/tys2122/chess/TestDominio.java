@@ -3,8 +3,8 @@ package edu.uclm.esi.tys2122.chess;
 import junit.framework.TestCase;
 
 public class TestDominio extends TestCase {
-		// Ordenaci?n de las piezas: primero la fila de los peones y despu?s 
-		//las dem?s piezas; por tanto, los peones van del 0 al 7, y el resto son:
+	// Ordenación de las piezas: primero la fila de los peones y después 
+	//las demás piezas; por tanto, los peones van del 0 al 7, y el resto son:
 	protected final int fnTorre1 = 8;
 	protected final int fnTorre2 = 9;
 	protected final int fnCaballo1 = 10;
@@ -23,8 +23,8 @@ public class TestDominio extends TestCase {
 	
 	protected void setUp() throws Exception {
 		super.setUp();
-		jugador1=new Jugador("j1", "");
-		jugador2=new Jugador("j2", "");
+		jugador1=new Jugador("j1");
+		jugador2=new Jugador("j2");
 	}
 	
 	protected void tearDown() throws Exception {
@@ -34,129 +34,71 @@ public class TestDominio extends TestCase {
 	
 	/***************   TESTS DE LA CLASE "TABLERO"   ***************/
 	
-	/* getJugador(char) */
 	public void testGetJugador1() {
-		Jugador dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		System.out.println("getJugador(char): testGetJugador1");
-		dev = t.getJugador('b');
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		Jugador dev = t.getJugador('b');
 		super.assertEquals(jugador1, dev);
-	} /* Fin m?todo testGetJugador1 */
+	} 
 	
-	
-	/* getJugador(char) */
 	public void testGetJugador2() {
-		Jugador dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		System.out.println("getJugador(char): testGetJugador2");
-		dev = t.getJugador('n');
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		Jugador dev = t.getJugador('n');
 		super.assertEquals(jugador2, dev);
-	} /* Fin m?todo testGetJugador2 */
+	} 
 	
-	
-	/* abandono(char) */
 	public void testAbandonoNegras() {
-		Jugador dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		System.out.println("abandono(char): testAbandonoNegras");
 		t.abandonar('n');
-		dev = t.getGanador();
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		Jugador dev = t.getGanador();
 		super.assertTrue(dev==jugador2);
-	} /* Fin m?todo testAbandonoNegras */	
+	} 
 	
-	/* abandono(char) */
 	public void testAbandonoBlancas() {
-		Jugador dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		System.out.println("abandono(char): testAbandonoBlancas");
 		t.abandonar('b');
-		dev = t.getGanador();
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		Jugador dev = t.getGanador();
 		super.assertTrue(dev==jugador1);
-	} /* Fin m?todo testAbandonoBlancas */
+	}
 	
-	
-	/* mover(char, int, int, int, int)
-	 * 0: el movimiento se ha realizado correctamente */
 	public void testMover0() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
+
 		System.out.println("mover(char, int, int, int, int): CASO testMover0");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 2, 1, 3, 1, "h2", "h3");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 2, 1, 3, 1, "h2", "h3");
 		super.assertTrue(dev==0);
-	} /* Fin m?todo testMover0 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 1: estado 0 y el jugador actual ha eliminado una pieza del contrincante
-	 * 0: el movimiento se ha realizado correctamente */
+	}
+
 	public void testMover1_1() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.getBlancas()[t.getTablero()[1][0].getId()] = null;
 		t.getTablero()[1][0] = null;
 		System.out.println("mover(char, int, int, int, int): CASO testMover1_1");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 1, 1, 7, 1, "h1", "h7");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 1, 1, 7, 1, "h1", "h7");
 		super.assertTrue(dev==1);
-	} /* Fin m?todo testMover1_1 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 1: estado 0 y el jugador actual ha eliminado una pieza del contrincante
-	 * 0: el movimiento se ha realizado correctamente */
+	} 
+
 	public void testMover1_2() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.mover('b', 2, 1, 3, 1, "h2", "h3");
 		t.mover('n', 7, 2, 5, 2, "g7", "g5");
 		t.mover('b', 3, 1, 4, 1, "h3", "h4");
 		System.out.println("mover(char, int, int, int, int): CASO testMover1_2");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('n', 5, 2, 4, 1, "g5", "h4");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('n', 5, 2, 4, 1, "g5", "h4");
 		super.assertTrue(dev==1);
-	} /* Fin m?todo testMover1_2 */
+	}
 	
-	
-	/* mover(char, int, int, int, int)
-	 * 2: estado 0 y la pieza es un pe?n que ha llegado al final del tablero
-	 * 0: el movimiento se ha realizado correctamente */
 	public void testMover2() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.getNegras()[t.getTablero()[7][0].getId()] = null;
 		t.getTablero()[7][0] = null;
 		t.getNegras()[t.getTablero()[6][0].getId()] = null;
@@ -166,23 +108,12 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover2");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 7, 1, 8, 1, "h7", "h8");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 7, 1, 8, 1, "h7", "h8");
 		super.assertTrue(dev==2);
-	} /* Fin m?todo testMover2 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 3: estados 1 y 2
-	 * 0: el movimiento se ha realizado correctamente
-	 * 1: estado 0 y el jugador actual ha eliminado una pieza del contrincante
-	 * 2: estado 0 y la pieza es un pe?n que ha llegado al final del tablero */
+	} 
+
 	public void testMover3() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.getNegras()[t.getTablero()[6][0].getId()] = null;
 		t.getTablero()[6][0] = t.getTablero()[1][0];
 		t.getTablero()[1][0] = null;
@@ -190,20 +121,12 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover3");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 7, 1, 8, 2, "h7", "g8");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 7, 1, 8, 2, "h7", "g8");
 		super.assertTrue(dev==3);
-	} /* Fin m?todo testMover3 */
+	}
 	
-	
-	/* mover(char, int, int, int, int)
-	 * 4: estado 0 y el movimiento realizado ha sido tomar al paso */
 	public void testMover4_1() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.mover('b', 2, 2, 4, 2, "g2", "g4");
 		t.mover('n', 7, 8, 6, 8, "a7", "a6");
 		t.mover('b', 4, 2, 5, 2, "g4", "g5");
@@ -212,20 +135,12 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover4_1");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 5, 2, 6, 1, "g5", "h6");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 5, 2, 6, 1, "g5", "h6");
 		super.assertTrue(dev==4);
-	} /* Fin m?todo testMover4_1 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 4: estado 0 y el movimiento realizado ha sido tomar al paso */
+	}
+
 	public void testMover4_2() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.mover('b', 2, 1, 3, 1, "h2", "h3");
 		t.mover('n', 7, 3, 5, 3, "f7", "f5");
 		t.mover('b', 3, 1, 4, 1, "h3", "h4");
@@ -235,20 +150,12 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover4_2");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('n', 4, 3, 3, 2, "f4", "g3");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('n', 4, 3, 3, 2, "f4", "g3");
 		super.assertTrue(dev==4);
-	} /* Fin m?todo testMover4_2 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 4: estado 0 y el movimiento realizado ha sido tomar al paso */
+	} 
+
 	public void testMover4_3() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.mover('b', 2, 4, 4, 4, "e2", "e4");
 		t.mover('n', 7, 1, 6, 1, "h7", "h6");
 		t.mover('b', 4, 4, 5, 4, "e4", "e5");
@@ -257,20 +164,12 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover4_3");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 5, 4, 6, 3, "e5", "f6");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 5, 4, 6, 3, "e5", "f6");
 		super.assertTrue(dev==4);
-	} /* Fin m?todo testMover4_3 */	
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 4: estado 0 y el movimiento realizado ha sido tomar al paso */
+	}
+
 	public void testMover4_4() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.mover('b', 2, 5, 4, 5, "d2", "d4");
 		t.mover('n', 7, 1, 6, 1, "h7", "h6");
 		t.mover('b', 4, 5, 5, 5, "d4", "d5");
@@ -279,20 +178,12 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover4_4");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 5, 5, 6, 4, "d5", "e6");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 5, 5, 6, 4, "d5", "e6");
 		super.assertTrue(dev==4);
-	} /* Fin m?todo testMover4_4 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 4: estado 0 y el movimiento realizado ha sido tomar al paso */
+	}
+
 	public void testMover4_5() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.mover('b', 2, 6, 4, 6, "c2", "c4");
 		t.mover('n', 7, 1, 6, 1, "h7", "h6");
 		t.mover('b', 4, 6, 5, 6, "c4", "c5");
@@ -301,20 +192,12 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover4_5");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 5, 6, 6, 5, "c5", "d6");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 5, 6, 6, 5, "c5", "d6");
 		super.assertTrue(dev==4);
-	} /* Fin m?todo testMover4_5 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 4: estado 0 y el movimiento realizado ha sido tomar al paso */
+	}
+
 	public void testMover4_6() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.mover('b', 2, 7, 4, 7, "b2", "b7");
 		t.mover('n', 7, 1, 6, 1, "h7", "h6");
 		t.mover('b', 4, 7, 5, 7, "b4", "b7");
@@ -323,20 +206,12 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover4_6");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 5, 7, 6, 6, "b5", "c6");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 5, 7, 6, 6, "b5", "c6");
 		super.assertTrue(dev==4);
-	} /* Fin m?todo testMover4_6 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 4: estado 0 y el movimiento realizado ha sido tomar al paso */
+	}
+
 	public void testMover4_7() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.mover('b', 2, 8, 4, 8, "a2", "a4");
 		t.mover('n', 7, 1, 6, 1, "h7", "h6");
 		t.mover('b', 4, 8, 5, 8, "a4", "a5");
@@ -345,20 +220,12 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover4_7");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 5, 8, 6, 7, "a5", "b6");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 5, 8, 6, 7, "a5", "b6");
 		super.assertTrue(dev==4);
-	} /* Fin m?todo testMover4_7 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 4: estado 0 y el movimiento realizado ha sido tomar al paso */
+	}
+
 	public void testMover4_8() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.mover('b', 2, 7, 4, 7, "b2", "b4");
 		t.mover('n', 7, 8, 5, 8, "a7", "a5");
 		t.mover('b', 4, 7, 5, 7, "b4", "b5");
@@ -367,20 +234,12 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover4_8");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 5, 7, 6, 8, "b5", "a6");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 5, 7, 6, 8, "b5", "a6");
 		super.assertTrue(dev==-5);
-	} /* Fin m?todo testMover4_8 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 5: estado 0 y el movimiento realizado ha sido el enroque corto */
+	}
+
 	public void testMover5() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.mover('b', 2, 1, 3, 1, "h2", "h3");
 		t.getNegras()[t.getTablero()[7][1].getId()] = null;
 		t.getTablero()[7][1] = null;
@@ -389,15 +248,10 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover5");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('n', 8, 4, 8, 2, "e8", "g8");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('n', 8, 4, 8, 2, "e8", "g8");
 		super.assertTrue(dev==5);
-	} /* Fin m?todo testMover5 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 5: estado 0 y el movimiento realizado ha sido el enroque corto */
+	} 
+
 	public void testMover5_medio() {
 		int dev;
 		//1? Construir instancia de la clase CUT
@@ -417,8 +271,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 8, 4, 8, 2, "e8", "g2");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==-5);
 	} /* Fin m?todo testMover5_medio */
 	
@@ -440,8 +294,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 1, 4, 1, 6, "e1", "c1");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==6);
 	} /* Fin m?todo testMover6 */
 	
@@ -449,10 +303,7 @@ public class TestDominio extends TestCase {
 	/* mover(char, int, int, int, int)
 	 * 6: estado 0 y el movimiento realizado ha sido el enroque largo */
 	public void testMover6_medio() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.getTablero()[4][3] = t.getTablero()[7][7];
 		t.getTablero()[7][7] = null;
 		t.getTablero()[4][3].setPosicion(4, 3);
@@ -467,23 +318,13 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover6_medio");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 1, 4, 1, 6, "e1", "c1");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 1, 4, 1, 6, "e1", "c1");
+		
 		super.assertTrue(dev==-5);
-	} /* Fin m?todo testMover6_medio */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 1_: estado 0, 1, 2 o 3 y se produce jaque al rey contrario
-	 * 0: el movimiento se ha realizado correctamente
-	 * 1: estado 0 y el jugador actual ha eliminado una pieza del contrincante
-	 * 2: estado 0 y la pieza es un pe?n que ha llegado al final del tablero */
+	} 
+
 	public void testMover10() {
-		int dev;
-		//1? Construir instancia de la clase CUT
 		Tablero t = new Tablero(1, jugador1, jugador2);
-		//2? Ejecutar servicios sobre la instancia de la CUT
 		t.getBlancas()[t.getTablero()[1][3].getId()] = null;
 		t.getTablero()[1][3] = null;
 		t.getNegras()[t.getTablero()[6][3].getId()] = null;
@@ -491,18 +332,10 @@ public class TestDominio extends TestCase {
 		System.out.println("mover(char, int, int, int, int): CASO testMover10");
 		System.out.println(t.toString());
 		System.out.println();
-		dev = t.mover('b', 1, 5, 2, 4, "d1", "e2");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		int dev = t.mover('b', 1, 5, 2, 4, "d1", "e2");
 		super.assertTrue(dev==10);
-	} /* Fin m?todo testMover10 */
-	
-	
-	/* mover(char, int, int, int, int)
-	 * 1_: estado 0, 1, 2 o 3 y se produce jaque al rey contrario
-	 * 0: el movimiento se ha realizado correctamente
-	 * 1: estado 0 y el jugador actual ha eliminado una pieza del contrincante
-	 * 2: estado 0 y la pieza es un pe?n que ha llegado al final del tablero */
+	} 
+
 	public void testMover_SalvadorComeAtacante() {
 		int dev;
 		//1? Construir instancia de la clase CUT
@@ -571,8 +404,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 2, 1, 2, 4, "h2", "e2");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorComeAtacante */
 	
@@ -647,8 +480,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 2, 1, 2, 4, "h2", "e2");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorTorreN */
 	
@@ -728,8 +561,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 7, 8, 8, 8, "a7", "a8");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorTorreE */
 	
@@ -806,8 +639,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 7, 1, 7, 4, "h7", "e7");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorTorreS */
 	
@@ -884,8 +717,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 1, 1, 8, 1, "h1", "h8");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorTorreO */
 	
@@ -964,8 +797,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 1, 6, 2, 7, "c1", "b2");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorAlfilNE */
 	
@@ -1045,8 +878,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 8, 6, 7, 7, "c8", "b7");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorAlfilSE */
 	
@@ -1126,8 +959,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 8, 3, 7, 2, "f8", "g7");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorAlfilSO */
 	
@@ -1206,8 +1039,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 1, 3, 2, 2, "f1", "g2");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorAlfilNO */
 	
@@ -1285,8 +1118,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 2, 1, 2, 4, "h2", "e2");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorDamaN */
 	
@@ -1366,8 +1199,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 7, 8, 8, 8, "a7", "a8");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorDamaE */
 	
@@ -1441,8 +1274,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 8, 5, 7, 4, "d8", "e7");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorDamaS */
 	
@@ -1522,8 +1355,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 1, 1, 8, 1, "h1", "h8");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorDamaO */
 	
@@ -1602,8 +1435,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 1, 5, 4, 5, "d1", "d4");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorDamaNE */
 	
@@ -1683,8 +1516,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 8, 5, 5, 5, "e8", "e5");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorDamaSE */
 	
@@ -1764,8 +1597,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 8, 5, 4, 5, "d8", "d4");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorDamaSO */
 	
@@ -1844,8 +1677,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 1, 5, 5, 5, "d1", "d5");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_SalvadorDamaNO */
 	
@@ -1929,8 +1762,8 @@ public class TestDominio extends TestCase {
 		System.out.println();
 		t.mover('b', 5, 6, 5, 5, "c5", "d5");
 		dev = t.mover('n', 4, 2, 3, 4, "g4", "e3");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueCaballo1 */
 	
@@ -2013,8 +1846,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 4, 8, 3, 6, "a4", "c3");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueCaballo2 */
 	
@@ -2097,8 +1930,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 6, 8, 4, 7, "a6", "b4");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueCaballo3 */
 	
@@ -2181,8 +2014,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 4, 8, 6, 7, "a4", "b6");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueCaballo4 */
 	
@@ -2265,8 +2098,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 8, 6, 7, 4, "c8", "e7");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueCaballo5 */
 	
@@ -2349,8 +2182,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 8, 4, 7, 6, "e8", "c7");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueCaballo6 */
 	
@@ -2433,8 +2266,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 5, 1, 4, 3, "h5", "f4");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueCaballo7 */
 	
@@ -2517,8 +2350,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 5, 1, 6, 3, "h5", "f6");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueCaballo8 */
 	
@@ -2601,8 +2434,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 6, 3, 7, 3, "f6", "f7");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueExtra1 */
 	
@@ -2685,8 +2518,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 6, 5, 7, 5, "d6", "d7");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueExtra2 */
 	
@@ -2770,8 +2603,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 3, 2, 2, 2, "g3", "g2");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueExtra3 */
 	
@@ -2855,8 +2688,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 3, 4, 2, 4, "e3", "e2");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==10);
 	} /* Fin m?todo testMover_JaqueExtra4 */
 	
@@ -2891,8 +2724,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 1, 5, 2, 4, "d1", "e2");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==20);
 	} /* Fin m?todo testMover20 */
 	
@@ -2971,8 +2804,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 1, 4, 1, 5, "e1", "d1");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==31);
 	} /* Fin m?todo testMover31 */
 	
@@ -3069,8 +2902,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 3, 4, 4, 4, "e3", "e4");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==30);
 	} /* Fin m?todo testMover3_Ahogado */
 	
@@ -3111,8 +2944,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 6, 3, 8, 2, "f6", "g8");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==30);
 	} /* Fin m?todo testMover3_JaqueContinuo */
 	
@@ -3128,8 +2961,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 2, 1, 3, 1, "h2", "h3");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==-1);
 	} /* Fin m?todo testMoverMenos1 */
 	
@@ -3145,8 +2978,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 3, 3, 4, 4, "f3", "e4");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==-2);
 	} /* Fin m?todo testMoverMenos2 */
 	
@@ -3162,8 +2995,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 7, 1, 6, 1, "h7", "h6");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==-3);
 	} /* Fin m?todo testMoverMenos3 */
 	
@@ -3179,8 +3012,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 1, 1, 2, 1, "h1", "h2");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==-4);
 	} /* Fin m?todo testMoverMenos4 */
 	
@@ -3196,8 +3029,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 2, 1, 3, 2, "h2", "g3");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==-5);
 	} /* Fin m?todo testMoverMenos5 */
 	
@@ -3213,8 +3046,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('b', 1, 1, 4, 1, "h1", "h4");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==-6);
 	} /* Fin m?todo testMoverMenos6 */
 	
@@ -3239,8 +3072,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.mover('n', 7, 4, 8, 5, "e7", "d8");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==-7);
 	} /* Fin m?todo testMoverMenos7 */
 	
@@ -3261,8 +3094,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.convertirPeon('a');
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==0);
 	} /* Fin m?todo testConvertirPeon0 */
 	
@@ -3284,8 +3117,8 @@ public class TestDominio extends TestCase {
 		System.out.println();
 		dev = t.convertirPeon('t');
 		System.out.println(t.toString());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==1);
 	} /* Fin m?todo testConvertirPeon1 */
 	
@@ -3320,8 +3153,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.convertirPeon('d');
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==2);
 	} /* Fin m?todo testConvertirPeon2 */
 	
@@ -3399,8 +3232,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.toString());
 		System.out.println();
 		dev = t.convertirPeon('c');
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(dev==3);
 	} /* Fin m?todo testConvertirPeon3 */
 		
@@ -3418,8 +3251,8 @@ public class TestDominio extends TestCase {
 		System.out.println(apB[0].toString());
 		System.out.println();
 		dev = apB[0].getId();
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(0, dev);
 	} /* Fin m?todo testGetId */
 	
@@ -3435,8 +3268,8 @@ public class TestDominio extends TestCase {
 		System.out.println(apN[0].toString());
 		System.out.println();
 		dev = apN[0].getTipo();
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals("p", dev);
 	} /* Fin m?todo testGetTipo */
 	
@@ -3452,8 +3285,8 @@ public class TestDominio extends TestCase {
 		System.out.println(apB[0].toString());
 		System.out.println();
 		dev = apB[0].getNombre();
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals("peon", dev);
 	} /* Fin m?todo testGetNombrePeon */
 	
@@ -3469,8 +3302,8 @@ public class TestDominio extends TestCase {
 		System.out.println(apB[fnTorre1].toString());
 		System.out.println();
 		dev = apB[fnTorre1].getNombre();
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals("torre", dev);
 	} /* Fin m?todo testGetNombreTorre */
 	
@@ -3486,8 +3319,8 @@ public class TestDominio extends TestCase {
 		System.out.println(apB[fnCaballo1].toString());
 		System.out.println();
 		dev = apB[fnCaballo1].getNombre();
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals("caballo", dev);
 	} /* Fin m?todo testGetNombreCaballo */
 	
@@ -3503,8 +3336,8 @@ public class TestDominio extends TestCase {
 		System.out.println(apB[fnAlfil1].toString());
 		System.out.println();
 		dev = apB[fnAlfil1].getNombre();
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals("alfil", dev);
 	} /* Fin m?todo testGetNombreAlfil */
 	
@@ -3520,8 +3353,8 @@ public class TestDominio extends TestCase {
 		System.out.println(apB[fnDama].toString());
 		System.out.println();
 		dev = apB[fnDama].getNombre();
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals("dama", dev);
 	} /* Fin m?todo testGetNombreDama */
 	
@@ -3537,8 +3370,8 @@ public class TestDominio extends TestCase {
 		System.out.println(apB[fnRey].toString());
 		System.out.println();
 		dev = apB[fnRey].getNombre();
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals("rey", dev);
 	} /* Fin m?todo testGetNombreRey */
 	
@@ -3554,8 +3387,8 @@ public class TestDominio extends TestCase {
 		System.out.println(apB[0].toString());
 		System.out.println();
 		dev = apB[0].getColor();
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals('b', dev);
 	} /* Fin m?todo testGetColor */
 	
@@ -3570,8 +3403,8 @@ public class TestDominio extends TestCase {
 		System.out.println(apB[0].toString());
 		System.out.println();
 		apB[0].setPosicion(5, 6);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertTrue(apB[0].getFila()==5 && apB[0].getColumna()==6);
 	} /* Fin m?todo testSetPosicion */
 	
@@ -3593,8 +3426,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[4][4].toString());
 		System.out.println();
 		dev = t.getTablero()[4][4].esValido(t.getTablero(), 4, 4, 5, 4);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(0, dev);
 	} /* Fin m?todo testPeonEsValido0 */
 	
@@ -3614,8 +3447,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[5][4].toString());
 		System.out.println();
 		dev = t.getTablero()[5][4].esValido(t.getTablero(), 5, 4, 6, 5);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(0, dev);
 	} /* Fin m?todo testPeonEsValido0_comer */
 	
@@ -3637,8 +3470,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[4][1].toString());
 		System.out.println();
 		dev = t.getTablero()[4][1].esValido(t.getTablero(), 4, 1, 5, 0);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(1, dev);
 	} /* Fin m?todo testPeonEsValido1 */
 	
@@ -3658,8 +3491,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[4][4].toString());
 		System.out.println();
 		dev = t.getTablero()[4][4].esValido(t.getTablero(), 4, 4, 3, 4);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-1, dev);
 	} /* Fin m?todo testPeonEsValidoMenos1 */
 	
@@ -3682,8 +3515,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[4][4].toString());
 		System.out.println();
 		dev = t.getTablero()[4][4].esValido(t.getTablero(), 4, 4, 5, 4);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-2, dev);
 	} /* Fin m?todo testPeonEsValidoMenos2 */
 	
@@ -3702,8 +3535,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[1][3].toString());
 		System.out.println();
 		dev = t.getTablero()[1][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testPeonBloqueado1 */
 	
@@ -3719,8 +3552,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[1][0].toString());
 		System.out.println();
 		dev = t.getTablero()[1][0].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testPeonBloqueado2 */
 	
@@ -3742,8 +3575,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[1][0].toString());
 		System.out.println();
 		dev = t.getTablero()[1][0].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testPeonBloqueado3 */
 	
@@ -3762,8 +3595,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[6][3].toString());
 		System.out.println();
 		dev = t.getTablero()[6][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testPeonBloqueado4 */
 	
@@ -3779,8 +3612,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[6][0].toString());
 		System.out.println();
 		dev = t.getTablero()[6][0].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testPeonBloqueado5 */
 	
@@ -3802,8 +3635,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[6][0].toString());
 		System.out.println();
 		dev = t.getTablero()[6][0].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testPeonBloqueado6 */
 	
@@ -3825,8 +3658,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[5][4].toString());
 		System.out.println();
 		dev = t.getTablero()[5][4].esValido(t.getTablero(), 5, 4, 3, 4);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(0, dev);
 	} /* Fin m?todo testTorreEsValido0 */
 	
@@ -3846,8 +3679,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[5][4].toString());
 		System.out.println();
 		dev = t.getTablero()[5][4].esValido(t.getTablero(), 5, 4, 4, 3);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-1, dev);
 	} /* Fin m?todo testTorreEsValidoMenos1 */
 	
@@ -3864,8 +3697,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[0][0].toString());
 		System.out.println();
 		dev = t.getTablero()[0][0].esValido(t.getTablero(), 0, 0, 3, 0);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-2, dev);
 	} /* Fin m?todo testTorreEsValidoMenos2 */
 	
@@ -3884,8 +3717,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testTorreBloqueada1 */
 	
@@ -3907,8 +3740,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testTorreBloqueada2 */
 	
@@ -3933,8 +3766,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testTorreBloqueada3 */
 	
@@ -3965,8 +3798,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testTorreBloqueada4 */
 	
@@ -3985,8 +3818,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[0][1].toString());
 		System.out.println();
 		dev = t.getTablero()[0][1].esValido(t.getTablero(), 0, 1, 2, 2);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(0, dev);
 	} /* Fin m?todo testCaballoEsValido0 */
 	
@@ -4003,8 +3836,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[0][1].toString());
 		System.out.println();
 		dev = t.getTablero()[0][1].esValido(t.getTablero(), 0, 1, 1, 1);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-1, dev);
 	} /* Fin m?todo testCaballoEsValidoMenos1 */
 	
@@ -4027,8 +3860,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testCaballoBloqueado1 */
 	
@@ -4049,8 +3882,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testCaballoBloqueado2 */
 	
@@ -4069,8 +3902,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testCaballoBloqueado3 */
 	
@@ -4092,8 +3925,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testCaballoBloqueado4 */
 	
@@ -4118,8 +3951,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testCaballoBloqueado5 */
 	
@@ -4147,8 +3980,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testCaballoBloqueado6 */
 	
@@ -4179,8 +4012,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testCaballoBloqueado7 */
 	
@@ -4217,8 +4050,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testCaballoBloqueado8 */
 	
@@ -4240,8 +4073,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[5][3].toString());
 		System.out.println();
 		dev = t.getTablero()[5][3].esValido(t.getTablero(), 5, 3, 3, 1);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(0, dev);
 	} /* Fin m?todo testAlfilEsValido0 */
 	
@@ -4261,8 +4094,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[5][3].toString());
 		System.out.println();
 		dev = t.getTablero()[5][3].esValido(t.getTablero(), 5, 3, 4, 3);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-1, dev);
 	} /* Fin m?todo testAlfilEsValidoMenos1 */
 	
@@ -4282,8 +4115,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[5][3].toString());
 		System.out.println();
 		dev = t.getTablero()[5][3].esValido(t.getTablero(), 5, 3, 7, 1);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-2, dev);
 	} /* Fin m?todo testAlfilEsValidoMenos2 */
 	
@@ -4302,8 +4135,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testAlfilBloqueado1 */
 	
@@ -4325,8 +4158,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testAlfilBloqueado2 */
 	
@@ -4351,8 +4184,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testAlfilBloqueado3 */
 	
@@ -4383,8 +4216,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testAlfilBloqueado4 */
 	
@@ -4406,8 +4239,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[5][3].toString());
 		System.out.println();
 		dev = t.getTablero()[5][3].esValido(t.getTablero(), 5, 3, 3, 5);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(0, dev);
 	} /* Fin m?todo testDamaEsValido0 */
 	
@@ -4427,8 +4260,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[5][3].toString());
 		System.out.println();
 		dev = t.getTablero()[5][3].esValido(t.getTablero(), 5, 3, 4, 1);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-1, dev);
 	} /* Fin m?todo testDamaEsValidoMenos1 */
 	
@@ -4448,8 +4281,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[5][3].toString());
 		System.out.println();
 		dev = t.getTablero()[5][3].esValido(t.getTablero(), 5, 3, 7, 5);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-2, dev);
 	} /* Fin m?todo testDamaEsValidoMenos2 */
 	
@@ -4468,8 +4301,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testDamaBloqueada1 */
 	
@@ -4491,8 +4324,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testDamaBloqueada2 */
 	
@@ -4517,8 +4350,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testDamaBloqueada3 */
 	
@@ -4546,8 +4379,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testDamaBloqueada4 */
 	
@@ -4578,8 +4411,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testDamaBloqueada5 */
 	
@@ -4613,8 +4446,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testDamaBloqueada6 */
 	
@@ -4651,8 +4484,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testDamaBloqueada7 */
 	
@@ -4695,8 +4528,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testDamaBloqueada8 */
 	
@@ -4718,8 +4551,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[5][3].toString());
 		System.out.println();
 		dev = t.getTablero()[5][3].esValido(t.getTablero(), 5, 3, 4, 3);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(0, dev);
 	} /* Fin m?todo testReyEsValido0 */
 	
@@ -4739,8 +4572,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[5][3].toString());
 		System.out.println();
 		dev = t.getTablero()[5][3].esValido(t.getTablero(), 5, 3, 4, 1);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-1, dev);
 	} /* Fin m?todo testReyEsValidoMenos1 */
 	
@@ -4761,8 +4594,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[0][3].toString());
 		System.out.println();
 		dev = t.getTablero()[0][3].esValido(t.getTablero(), 0, 3, 0, 1);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(2, dev);
 	} /* Fin m?todo testReyEsValido2 */
 	
@@ -4785,8 +4618,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[0][3].toString());
 		System.out.println();
 		dev = t.getTablero()[0][3].esValido(t.getTablero(), 0, 3, 0, 5);
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(3, dev);
 	} /* Fin m?todo testReyEsValido3 */
 	
@@ -4805,8 +4638,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testReyBloqueado1 */
 	
@@ -4828,8 +4661,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testReyBloqueado2 */
 	
@@ -4854,8 +4687,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testReyBloqueado3 */
 	
@@ -4883,8 +4716,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testReyBloqueado4 */
 	
@@ -4915,8 +4748,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testReyBloqueado5 */
 	
@@ -4950,8 +4783,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testReyBloqueado6 */
 	
@@ -4988,8 +4821,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testReyBloqueado7 */
 	
@@ -5032,8 +4865,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[3][3].toString());
 		System.out.println();
 		dev = t.getTablero()[3][3].estaBloqueada(t.getTablero());
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertFalse(dev);
 	} /* Fin m?todo testReyBloqueado8 */
 	
@@ -5058,8 +4891,8 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[0][3].toString());
 		System.out.println();
 		dev = t.mover('b', 1, 4, 1, 2, "e1", "g1");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-5, dev);
 	} /* Fin m?todo testReyDeshabilitarEnroqueCorto */
 	
@@ -5086,9 +4919,9 @@ public class TestDominio extends TestCase {
 		System.out.println(t.getTablero()[0][3].toString());
 		System.out.println();
 		dev = t.mover('b', 1, 4, 1, 6, "e1", "c1");
-		//3? Escribir or?culo (es un conjunto de instruccciones para comprobar 
-		//que el resultado obtenido es el resultado esperado)
+		 
+		
 		super.assertEquals(-5, dev);
 	} /* Fin m?todo testReyDeshabilitarEnroqueLargo */
 	
-} /* Fin clase TestDominio */
+} 
