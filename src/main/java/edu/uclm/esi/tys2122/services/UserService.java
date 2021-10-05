@@ -1,6 +1,7 @@
 package edu.uclm.esi.tys2122.services;
 
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.Cookie;
 
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import edu.uclm.esi.tys2122.dao.LoginRepository;
-import edu.uclm.esi.tys2122.http.Manager;
-import edu.uclm.esi.tys2122.model.Email;
+import edu.uclm.esi.tys2122.dao.TokenRepository;
+import edu.uclm.esi.tys2122.dao.UserRepository;
 import edu.uclm.esi.tys2122.model.Login;
 import edu.uclm.esi.tys2122.model.Token;
 import edu.uclm.esi.tys2122.model.User;
@@ -21,20 +22,41 @@ public class UserService {
 	@Autowired
 	private LoginRepository loginDAO;
 	
+	@Autowired
+	private UserRepository userRepo;
+	
+	@Autowired
+	private TokenRepository tokenRepo;
+	
+	private ConcurrentHashMap<String, User> connectedUsers;
+	
+	public UserService() {
+		this.connectedUsers = new ConcurrentHashMap<>();
+	}
+
+	public User doLogin(String name, String pwd, String ip) {
+		User user = userRepo.findByNameAndPwd(name, pwd);
+		if (user==null) //  || user.getConfirmationDate()==null)
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Credenciales no válidas o cuenta no validada");
+		
+		this.connectedUsers.put(user.getId(), user);
+		return user;
+	}
+
 	public void save(User user) {
-		Manager.get().getUsersRepository().save(user);
+		userRepo.save(user);
 		
 		Token token = new Token(user.getEmail());
-		Manager.get().getTokensRepository().save(token);
-		Email smtp=new Email();
+		tokenRepo.save(token);
+		/*Email smtp=new Email();
 		smtp.send(user.getEmail(), "Bienvenido al sistema", 
 			"Para confirmar, pulse aquí: " +
-			"http://localhost/user/validateAccount/" + token.getId());
+			"http://localhost/user/validateAccount/" + token.getId());*/
 
 	}
 
 	public void validateToken(String tokenId) {
-		Optional<Token> optToken = Manager.get().getTokensRepository().findById(tokenId);
+		Optional<Token> optToken = tokenRepo.findById(tokenId);
 		if (optToken.isPresent()) {
 			Token token = optToken.get();
 			long date = token.getDate();
@@ -42,10 +64,10 @@ public class UserService {
 			if (now>date+24*60*60*1000)
 				throw new ResponseStatusException(HttpStatus.GONE, "Token caducado");
 			String email = token.getEmail();
-			User user = Manager.get().getUsersRepository().findByEmail(email);
+			User user = userRepo.findByEmail(email);
 			if (user!=null) {
 				user.setConfirmationDate(now);
-				Manager.get().getUsersRepository().save(user);
+				userRepo.save(user);
 			} else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
 		} else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Token " + tokenId + " no encontrado");
 	}
@@ -58,4 +80,9 @@ public class UserService {
 		login.setCookieValue(cookie.getValue());
 		loginDAO.save(login);
 	}
+
+	public User findUser(String userId) {
+		return this.connectedUsers.get(userId);
+	}
+
 }

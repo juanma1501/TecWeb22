@@ -37,9 +37,8 @@ public class UserController extends CookiesController {
 		String name = jso.getString("name");
 		String pwd = jso.getString("pwd");
 		String ip = request.getRemoteAddr();
-		User user = Manager.get().getUsersRepository().findByNameAndPwd(name, pwd);
-		if (user==null) //  || user.getConfirmationDate()==null)
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Credenciales no válidas o cuenta no validada");
+		
+		User user = userService.doLogin(name, pwd, ip);
 		
 		Cookie cookie = readOrCreateCookie(request, response);
 		userService.insertLogin(user, ip, cookie);

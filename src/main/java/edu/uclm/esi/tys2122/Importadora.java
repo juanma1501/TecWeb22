@@ -7,7 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import edu.uclm.esi.tys2122.http.Manager;
-import edu.uclm.esi.tys2122.model.ChessMatch;
+import edu.uclm.esi.tys2122.newchess.ChessMatch;
 
 @SpringBootApplication
 public class Importadora {

@@ -11,5 +11,5 @@
 		"auth" : "true",
 		"pwd" : "******",
 		"fallback" : "false"
-	}
+	}	
 }

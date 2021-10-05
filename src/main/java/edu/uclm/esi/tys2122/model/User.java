@@ -42,6 +42,7 @@ public class User {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	public String getEmail() {
 		return email;
 	}
@@ -80,6 +81,7 @@ public class User {
 		this.picture = picture;
 	}
 	
+	@JsonIgnore
 	public Long getConfirmationDate() {
 		return confirmationDate;
 	}

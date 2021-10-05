@@ -1,4 +1,4 @@
-package edu.uclm.esi.tys2122.model;
+package edu.uclm.esi.tys2122.newchess;
 
 import java.util.UUID;
 
@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Movement {
+public class ChessMovement {
 	@Id
 	@Column(length = 36)
 	private String id;
@@ -20,7 +20,7 @@ public class Movement {
 	private ChessMatch chessMatch;
 	private String comment;
 	
-	public Movement() {
+	public ChessMovement() {
 		this.id=UUID.randomUUID().toString();
 	}
 	
