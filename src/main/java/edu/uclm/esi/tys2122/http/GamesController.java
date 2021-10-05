@@ -56,8 +56,8 @@ public class GamesController extends CookiesController {
 		if (match.isReady()) {
 			game.getPendingMatches().remove(match);
 			game.getPlayingMatches().add(match);
-			gamesService.put(match);
 		}
+		gamesService.put(match);
 		return match;
 	}
 	
@@ -68,6 +68,11 @@ public class GamesController extends CookiesController {
 		Match match = gamesService.getMatch(jso.getString("matchId"));
 		match.move(userId, jso);
 		return match;
+	}
+	
+	@GetMapping("/findMatch/{matchId}")
+	public Match findMatch(@PathVariable String matchId) {
+		return gamesService.getMatch(matchId);
 	}
 
 	private Match getMatch(Game game) {

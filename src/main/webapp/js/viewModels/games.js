@@ -62,6 +62,26 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			$.ajax(data);
 		}
 
+		reload(match) {
+			let self = this;
+
+			let data = {
+				type : "get",
+				url : "/games/findMatch/" + match.id,
+				success : function(response) {
+					for (let i=0; i<self.matches().length; i++)
+						if (self.matches()[i].id==match.id) 
+							self.matches.splice(i, 1, response);
+					console.log(JSON.stringify(response));
+				},
+				error : function(response) {
+					console.error(response.responseJSON.message);
+					self.error(response.responseJSON.message);
+				}
+			};
+			$.ajax(data);
+		}
+
 		disconnected() {
 			// Implement if needed
 		};

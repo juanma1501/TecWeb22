@@ -18,34 +18,42 @@
             <!-- /ko -->
         </div>
 
-        <div>
+        <ol>
           <!-- ko foreach : matches -->
-            <div>Id: <label data-bind="html : id"></label></div>
+            <li>
+              <div>Id: <label data-bind="html : id"></label></div>
 
-            <div>Preparada: <span data-bind="html : ready"></span></div>
-            <div>Jugador 1: <span data-bind="html : players[0].name"></span></div>
+              <div>Preparada: <span data-bind="html : ready"></span></div>
+              <div>Jugador 1: <span data-bind="html : players[0].name"></span></div>
 
-            <div>Jugador 2: 
-              <!-- ko if : players[1] -->
-                <span data-bind="html : players[1].name"></span>
-              <!-- /ko -->
-              <!-- ko ifnot : players[1] -->
-                Esperando
-              <!-- /ko -->
-            </div>
-    
-            <div>Jugador con el turno:
-              <!-- ko if : playerWithTurn -->
-                <span data-bind="html : name"></span>
-              <!-- /ko -->
-            </div>
+              <div>Jugador 2: 
+                <!-- ko if : players[1] -->
+                  <span data-bind="html : players[1].name"></span>
+                <!-- /ko -->
+                <!-- ko ifnot : players[1] -->
+                  Esperando
+                <!-- /ko -->
+              </div>
+      
+              <div>Jugador con el turno:
+                <!-- ko if : playerWithTurn -->
+                  <span data-bind="html : playerWithTurn.name"></span>
+                <!-- /ko -->
+              </div>
 
-            <div>Ganador: <span data-bind="html : winner"></span></div>
-            <div>Perdedor: <span data-bind="html : looser"></span></div>
+              <div>Ganador: <span data-bind="html : winner"></span></div>
+              <div>Perdedor: <span data-bind="html : looser"></span></div>
 
-            <div>Acabó en empate: <span data-bind="html : draw"></span></div>
+              <div>Acabó en empate: <span data-bind="html : draw"></span></div>
+
+              <input type="number" size="1" placeholder="X">
+              <input type="number" size="1" placeholder="Y">
+              <button>Mover</button>
+              <br>
+              <button data-bind="click : function() { $parent.reload($data); }">Recargar partida</button>
+            </li>
           <!-- /ko -->
-        </div>
+        </ol>
       </div>
     </div>
   </div>
