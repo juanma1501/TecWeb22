@@ -57,11 +57,11 @@ public class TictactoeMatchTest extends MvcTestCase {
 		this.sessionLucas = doPost("/user/login", null, "name", "lucas", "pwd", "lucas123").
 				andReturn().getRequest().getSession();
 		
-		ResultActions resultActions = doGet("/games/getGames", null);
-		MvcResult result = resultActions.andReturn();
+		MvcResult result= doGet("/games/getGames", this.sessionPepe).
+				andReturn();
 		String response = result.getResponse().getContentAsString();
 		JSONArray jsaGames = new JSONArray(response);
-		assertTrue(jsaGames.length()==1);
+		assertTrue(jsaGames.length()==2);
 		
 		result = doGet("/games/joinGame/Tres en raya", this.sessionPepe).andReturn();
 		response = result.getResponse().getContentAsString();

@@ -52,6 +52,7 @@ public abstract class Match {
 		this.board = board;
 	}
 
+	// TODO : no se puede añadir dos veces el mismo jugador
 	public void addPlayer(User user) {
 		this.players.add(user);
 		checkReady();

@@ -17,15 +17,8 @@ public class GamesService {
 	
 	private ConcurrentHashMap<String, Match> matches;
 	
-	public GamesService() {
+	public GamesService() throws Exception {
 		this.matches = new ConcurrentHashMap<>();
-	}
-	
-	public Match newMatch(Class<? extends Match> clazz) throws InstantiationException, IllegalAccessException {
-		return clazz.newInstance();
-	}
-
-	public List<Game> getGames() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		JSONArray jsa = Manager.get().readFileAsJSONArray("games.txt");
 		JSONObject jso;
 		String name, clazz;
@@ -39,6 +32,13 @@ public class GamesService {
 			game.setName(name);
 			Manager.get().add(game);
 		}
+	}
+	
+	public Match newMatch(Class<? extends Match> clazz) throws InstantiationException, IllegalAccessException {
+		return clazz.newInstance();
+	}
+
+	public List<Game> getGames() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		return Manager.get().getGames();
 	}
 

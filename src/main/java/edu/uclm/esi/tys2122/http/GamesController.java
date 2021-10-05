@@ -1,6 +1,6 @@
 package edu.uclm.esi.tys2122.http;
 
-import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
 
@@ -31,21 +31,33 @@ public class GamesController extends CookiesController {
 	private UserService userService;
 	
 	@GetMapping("/getGames")
-	public List<Game> getGames() throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
+	public List<Game> getGames(HttpSession session) throws Exception {
 		return gamesService.getGames();
 	}
 
 	@GetMapping("/joinGame/{gameName}")
 	public Match joinGame(HttpSession session, @PathVariable String gameName) throws Exception {
+		User user;
+		if (session.getAttribute("userId")!=null) {
+			String userId = session.getAttribute("userId").toString();
+			user = this.userService.findUser(userId);
+		} else {
+			user = new User();
+			user.setName("anonimo" + new SecureRandom().nextInt(1000));
+			session.setAttribute("userId", user.getId());
+		}
+
 		Game game = Manager.get().findGame(gameName);
 		if (game==null)
 			throw new Exception("No se encuentra el juego " + gameName);
 		
 		Match match = getMatch(game);
-		String userId = session.getAttribute("userId").toString();
-		User user = this.userService.findUser(userId);
 		match.addPlayer(user);
-		gamesService.put(match);
+		if (match.isReady()) {
+			game.getPendingMatches().remove(match);
+			game.getPlayingMatches().add(match);
+			gamesService.put(match);
+		}
 		return match;
 	}
 	

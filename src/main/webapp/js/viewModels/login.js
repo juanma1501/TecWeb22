@@ -6,7 +6,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			var self = this;
 			
 			self.userName = ko.observable("pepe");
-			self.pwd = ko.observable("pepep");
+			self.pwd = ko.observable("pepe123");
 			self.message = ko.observable();
 			self.error = ko.observable();
 			
@@ -37,7 +37,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				type : "post",
 				contentType : 'application/json',
 				success : function(response) {
-					app.router.go( { path : "menu"} );
+					app.router.go( { path : "games"} );
 				},
 				error : function(response) {
 					self.error(response.responseJSON.errorMessage);
