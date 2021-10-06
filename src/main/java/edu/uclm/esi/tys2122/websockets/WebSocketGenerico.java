@@ -17,8 +17,29 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		session.setBinaryMessageSizeLimit(1000*1024*1024);
 		System.out.println(session.getId());
+		
+		saludarDeVezEnCuando(session);
 	}
 	
+	private void saludarDeVezEnCuando(WebSocketSession session) {
+		Runnable r = new Runnable() {
+			
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						session.sendMessage(new TextMessage("Hola, user agent"));
+						Thread.sleep(5000);
+					} catch (IOException | InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		new Thread(r).start();
+	}
+
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
 		session.setBinaryMessageSizeLimit(1000*1024*1024);
