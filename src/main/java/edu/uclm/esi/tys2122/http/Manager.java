@@ -3,6 +3,9 @@ package edu.uclm.esi.tys2122.http;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import edu.uclm.esi.tys2122.model.Game;
+import edu.uclm.esi.tys2122.websockets.AjedrezSession;
 
 @Component
 public class Manager {
@@ -18,8 +22,17 @@ public class Manager {
 	
 	private JSONObject configuration;
 
+	private ConcurrentHashMap<String, HttpSession> httpSessions;
+
+	private ConcurrentHashMap<String, AjedrezSession> ajedrezSessionsPorHttp;
+
+	private ConcurrentHashMap<String, AjedrezSession> ajedrezSessionsPorWs;
+
 	private Manager() {
 		this.games = new Vector<>();
+		this.httpSessions = new ConcurrentHashMap<>();
+		this.ajedrezSessionsPorHttp = new ConcurrentHashMap<>();
+		this.ajedrezSessionsPorWs = new ConcurrentHashMap<>();
 		try {
 			loadParameters();
 		} catch (Exception e) {
@@ -82,5 +95,16 @@ public class Manager {
 			if (game.getName().equals(gameName))
 				return game;
 		return null;
+	}
+
+	public void add(AjedrezSession ajedrezSesion, String httpSessionId) {
+		HttpSession httpSession = this.httpSessions.get(httpSessionId);
+		ajedrezSesion.setHttpSession(httpSession);
+		this.ajedrezSessionsPorHttp.put(httpSessionId, ajedrezSesion);
+		this.ajedrezSessionsPorWs.put(ajedrezSesion.getWsSession().getId(), ajedrezSesion);
+	}
+
+	public void add(HttpSession session) {
+		this.httpSessions.put(session.getId(), session);
 	}
 }

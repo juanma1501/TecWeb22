@@ -46,9 +46,9 @@
 
               <div>Acabó en empate: <span data-bind="html : draw"></span></div>
 
-              <input type="number" size="1" placeholder="X">
-              <input type="number" size="1" placeholder="Y">
-              <button>Mover</button>
+              <input data-bind="value : $parent.x" type="number" size="1" placeholder="X">
+              <input data-bind="value : $parent.y" type="number" size="1" placeholder="Y">
+              <button data-bind="click : function() { $parent.mover($data); }">Mover</button>
               <br>
               <button data-bind="click : function() { $parent.reload($data); }">Recargar partida</button>
             </li>

@@ -47,6 +47,8 @@ public class GamesController extends CookiesController {
 			session.setAttribute("userId", user.getId());
 		}
 
+		Manager.get().add(session);
+		
 		Game game = Manager.get().findGame(gameName);
 		if (game==null)
 			throw new Exception("No se encuentra el juego " + gameName);
@@ -67,6 +69,7 @@ public class GamesController extends CookiesController {
 		JSONObject jso = new JSONObject(movement);
 		Match match = gamesService.getMatch(jso.getString("matchId"));
 		match.move(userId, jso);
+		
 		return match;
 	}
 	

@@ -76,16 +76,16 @@ public class TictactoeMatch extends Match {
 		TictactoeBoard board = (TictactoeBoard) this.getBoard();
 		int[][] squares = board.getSquares();
 		
-		if (squares[0][0]==squares[0][1] && squares[0][1]==squares[0][2] ||
-				squares[1][0]==squares[1][1] && squares[1][1]==squares[1][2] ||
-				squares[2][0]==squares[2][1] && squares[2][1]==squares[2][2]) {
+		if (squares[0][0]!=0 && squares[0][0]==squares[0][1] && squares[0][1]==squares[0][2] ||
+				squares[1][0]!=0 && squares[1][0]==squares[1][1] && squares[1][1]==squares[1][2] ||
+				squares[2][0]!=0 && squares[2][0]==squares[2][1] && squares[2][1]==squares[2][2]) {
 			this.winner = this.getPlayerWithTurn();
-		} else if (squares[0][0]==squares[1][0] && squares[1][0]==squares[2][0] ||
-				squares[0][1]==squares[1][1] && squares[1][1]==squares[2][1] ||
-				squares[0][2]==squares[1][2] && squares[2][1]==squares[2][2]) {
+		} else if (squares[0][0]!=0 && squares[0][0]==squares[1][0] && squares[1][0]==squares[2][0] ||
+				squares[0][1]!=0 && squares[0][1]==squares[1][1] && squares[1][1]==squares[2][1] ||
+				squares[0][2]!=0 && squares[0][2]==squares[1][2] && squares[2][1]==squares[2][2]) {
 			this.winner = this.getPlayerWithTurn();
-		} else if (squares[0][0]==squares[1][1] && squares[1][1]==squares[2][2] ||
-				squares[0][2]==squares[1][1] && squares[1][1]==squares[2][0]) {
+		} else if (squares[0][0]!=0 && squares[0][0]==squares[1][1] && squares[1][1]==squares[2][2] ||
+				squares[0][2]!=0 && squares[0][2]==squares[1][1] && squares[1][1]==squares[2][0]) {
 			this.winner = this.getPlayerWithTurn();
 		}
 		if (this.winner!=null) {
