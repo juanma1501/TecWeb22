@@ -34,7 +34,7 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 				httpSessionId = token.substring(posIgual+1).trim();
 			}
 		}
-		AjedrezSession ajedrezSesion = new AjedrezSession(wsSession);
+		WrapperSession ajedrezSesion = new WrapperSession(wsSession);
 		Manager.get().add(ajedrezSesion, httpSessionId);
 		
 		//saludarDeVezEnCuando(session);

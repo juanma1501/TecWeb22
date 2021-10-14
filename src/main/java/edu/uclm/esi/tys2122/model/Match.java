@@ -1,5 +1,6 @@
 package edu.uclm.esi.tys2122.model;
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -76,5 +77,21 @@ public abstract class Match {
 	protected abstract Board newBoard();
 
 	public abstract void move(String userId, JSONObject jso) throws Exception;
+
+	public void notifyNewState(String userId) {
+		JSONObject jso = new JSONObject();
+		jso.put("type", "BOARD");
+		// jso.put("board", this.board.toJSON());
+		
+		for (User player : this.players) {
+			if (!player.getId().equals(userId))
+				try {
+					player.sendMessage(jso);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}		
+	}
 
 }

@@ -41,8 +41,8 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 					self.games(response);
 				},
 				error : function(response) {
-					console.error(response.responseJSON.message);
-					self.error(response.responseJSON.message);
+					console.error(response);
+					self.error(response);
 				}
 			}
 			$.ajax(data);
@@ -66,8 +66,8 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 					console.log(JSON.stringify(response));
 				},
 				error : function(response) {
-					console.error(response.responseJSON.message);
-					self.error(response.responseJSON.message);
+					console.error(response);
+					self.error(response);
 				}
 			}
 			$.ajax(data);
@@ -79,7 +79,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				alert("Conexión establecida");
 			}
 			ws.onmessage = function(event) {
-				console.log(event.data);
+				let msg = JSON.parse(event.data);
 			}
 		}
 

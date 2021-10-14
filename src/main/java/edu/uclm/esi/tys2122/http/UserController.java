@@ -42,7 +42,7 @@ public class UserController extends CookiesController {
 		
 		Cookie cookie = readOrCreateCookie(request, response);
 		userService.insertLogin(user, ip, cookie);
-		request.getSession().setAttribute("userId", user.getId());
+		request.getSession().setAttribute("user", user);
 	}
 
 	@PutMapping("/register")

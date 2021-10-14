@@ -13,7 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import edu.uclm.esi.tys2122.model.Game;
-import edu.uclm.esi.tys2122.websockets.AjedrezSession;
+import edu.uclm.esi.tys2122.model.User;
+import edu.uclm.esi.tys2122.websockets.WrapperSession;
 
 @Component
 public class Manager {
@@ -24,9 +25,9 @@ public class Manager {
 
 	private ConcurrentHashMap<String, HttpSession> httpSessions;
 
-	private ConcurrentHashMap<String, AjedrezSession> ajedrezSessionsPorHttp;
+	private ConcurrentHashMap<String, WrapperSession> ajedrezSessionsPorHttp;
 
-	private ConcurrentHashMap<String, AjedrezSession> ajedrezSessionsPorWs;
+	private ConcurrentHashMap<String, WrapperSession> ajedrezSessionsPorWs;
 
 	private Manager() {
 		this.games = new Vector<>();
@@ -97,11 +98,13 @@ public class Manager {
 		return null;
 	}
 
-	public void add(AjedrezSession ajedrezSesion, String httpSessionId) {
+	public void add(WrapperSession wrapperSession, String httpSessionId) {
 		HttpSession httpSession = this.httpSessions.get(httpSessionId);
-		ajedrezSesion.setHttpSession(httpSession);
-		this.ajedrezSessionsPorHttp.put(httpSessionId, ajedrezSesion);
-		this.ajedrezSessionsPorWs.put(ajedrezSesion.getWsSession().getId(), ajedrezSesion);
+		User user = (User) httpSession.getAttribute("user");
+		user.setSession(wrapperSession);
+		wrapperSession.setHttpSession(httpSession);
+		this.ajedrezSessionsPorHttp.put(httpSessionId, wrapperSession);
+		this.ajedrezSessionsPorWs.put(wrapperSession.getWsSession().getId(), wrapperSession);
 	}
 
 	public void add(HttpSession session) {

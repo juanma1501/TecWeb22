@@ -4,12 +4,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.socket.WebSocketSession;
 
-public class AjedrezSession {
+public class WrapperSession {
 
 	private WebSocketSession wsSession;
 	private HttpSession httpSession;
 
-	public AjedrezSession(WebSocketSession wsSession) {
+	public WrapperSession(WebSocketSession wsSession) {
 		this.wsSession = wsSession;
 	}
 

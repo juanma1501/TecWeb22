@@ -38,13 +38,12 @@ public class GamesController extends CookiesController {
 	@GetMapping("/joinGame/{gameName}")
 	public Match joinGame(HttpSession session, @PathVariable String gameName) throws Exception {
 		User user;
-		if (session.getAttribute("userId")!=null) {
-			String userId = session.getAttribute("userId").toString();
-			user = this.userService.findUser(userId);
+		if (session.getAttribute("user")!=null) {
+			user = (User) session.getAttribute("user");
 		} else {
 			user = new User();
 			user.setName("anonimo" + new SecureRandom().nextInt(1000));
-			session.setAttribute("userId", user.getId());
+			session.setAttribute("user", user);
 		}
 
 		Manager.get().add(session);
@@ -65,11 +64,11 @@ public class GamesController extends CookiesController {
 	
 	@PostMapping("/move")
 	public Match move(HttpSession session, @RequestBody Map<String, Object> movement) throws Exception {
-		String userId = session.getAttribute("userId").toString();
+		User user = (User) session.getAttribute("user");
 		JSONObject jso = new JSONObject(movement);
 		Match match = gamesService.getMatch(jso.getString("matchId"));
-		match.move(userId, jso);
-		
+		match.move(user.getId(), jso);
+		match.notifyNewState(user.getId());
 		return match;
 	}
 	
