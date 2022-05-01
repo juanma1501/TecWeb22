@@ -38,7 +38,7 @@ public class UserController extends CookiesController {
 		String pwd = jso.getString("pwd");
 		String ip = request.getRemoteAddr();
 		
-		User user = userService.doLogin(name, pwd, ip);
+		User user = userService.doLogin(name, pwd, ip); //Recupera el user de la base de datos
 		
 		Cookie cookie = readOrCreateCookie(request, response);
 		userService.insertLogin(user, ip, cookie);
