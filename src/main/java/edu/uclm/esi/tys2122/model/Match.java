@@ -55,8 +55,6 @@ public abstract class Match {
 
 	// TODO : no se puede añadir dos veces el mismo jugador
 	public void addPlayer(User user) {
-		for(User player : this.players)
-			if(!player.getId().equals(user.getId()))
 				this.players.add(user);
 		checkReady();
 	}

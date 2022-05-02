@@ -41,12 +41,6 @@ public class UserService {
 
 		Iterator<ConcurrentHashMap.Entry<String, User>> itr = connectedUsers.entrySet().iterator();
 
-		while (itr. hasNext()){
-			ConcurrentHashMap.Entry<String, User> entry = itr.next();
-			if (entry.getValue().getName().equals(name))
-				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Usuario ya loggeado.");
-		}
-
 		if (user==null) //  || user.getConfirmationDate()==null)
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Credenciales no válidas o cuenta no validada");
 		
