@@ -94,14 +94,13 @@ public abstract class Match {
 		}		
 	}
 
-	public void notifyUnir() {
+	public void notifyPreparada() {
 		JSONObject jso = new JSONObject();
 		jso.put("type", "PREPARADA");
 		jso.put("id", this.id);
 		// jso.put("board", this.board.toJSON());
 
 		for (User player : this.players) {
-
 				try {
 					player.sendMessage(jso);
 				} catch (IOException e) {

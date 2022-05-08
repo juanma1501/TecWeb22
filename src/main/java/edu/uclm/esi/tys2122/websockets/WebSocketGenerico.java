@@ -75,7 +75,7 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 		if (jso.getString("type").equals("UNIR")){
 			String id = jso.getString("id");
 			Match match = Manager.get().findMatch(id);
-			match.notifyNewState();
+			match.notifyPreparada();
 		}
 	}
 
