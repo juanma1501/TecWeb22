@@ -94,4 +94,21 @@ public abstract class Match {
 		}		
 	}
 
+	public void notifyUnir() {
+		JSONObject jso = new JSONObject();
+		jso.put("type", "PREPARADA");
+		jso.put("id", this.id);
+		// jso.put("board", this.board.toJSON());
+
+		for (User player : this.players) {
+
+				try {
+					player.sendMessage(jso);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+
 }

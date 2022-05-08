@@ -44,6 +44,7 @@ public class GamesService {
 
 	public void put(Match match) {
 		this.matches.put(match.getId(), match);
+		Manager.get().put(match.getId(), match);
 	}
 
 	public Match getMatch(String matchId) {

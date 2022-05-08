@@ -3,6 +3,7 @@ package edu.uclm.esi.tys2122.websockets;
 import java.io.IOException;
 import java.util.List;
 
+import edu.uclm.esi.tys2122.model.Match;
 import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -66,7 +67,18 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 		byte[] payload = message.getPayload().array();
 		System.out.println("La sesión " + session.getId() + " manda un binario de " + payload.length + " bytes");
 	}
-	
+
+	@Override
+	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		String payload = message.getPayload();
+		JSONObject jso = new JSONObject(payload);
+		if (jso.getString("type").equals("UNIR")){
+			String id = jso.getString("id");
+			Match match = Manager.get().findMatch(id);
+			match.notifyNewState();
+		}
+	}
+
 	@Override
 	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
 		exception.printStackTrace();

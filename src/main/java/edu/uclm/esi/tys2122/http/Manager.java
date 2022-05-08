@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpSession;
 
+import edu.uclm.esi.tys2122.model.Match;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Bean;
@@ -29,11 +30,14 @@ public class Manager {
 
 	private ConcurrentHashMap<String, WrapperSession> ajedrezSessionsPorWs;
 
+	private ConcurrentHashMap<String, Match> matches;
+
 	private Manager() {
 		this.games = new Vector<>();
 		this.httpSessions = new ConcurrentHashMap<>();
 		this.ajedrezSessionsPorHttp = new ConcurrentHashMap<>();
 		this.ajedrezSessionsPorWs = new ConcurrentHashMap<>();
+		this.matches = new ConcurrentHashMap<>();
 		try {
 			loadParameters();
 		} catch (Exception e) {
@@ -41,7 +45,15 @@ public class Manager {
 			System.exit(-1);
 		}
 	}
-	
+
+	public void put(String id, Match match) {
+		this.matches.put(id, match);
+	}
+
+	public Match findMatch(String id){
+		return this.matches.get(id);
+	}
+
 	private static class ManagerHolder {
 		static Manager singleton=new Manager();
 	}

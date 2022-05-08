@@ -10,7 +10,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
 			self.x = ko.observable(null);
 			self.y = ko.observable(null);
-
+			self.mensaje = ko.observable(null);
 			self.error = ko.observable(null);
 						
 			// Header Config
@@ -73,13 +73,27 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			$.ajax(data);
 		}
 
-		conectarAWebSocket() {
+		conectarAWebSocket(id) {
 			let ws = new WebSocket("ws://localhost/wsGenerico");
 			ws.onopen = function(event) {
-				alert("Conexión establecida");
+				alert("Conexión establecida")
+				let msg = {
+					type: "UNIR",
+					id: id
+				}
+				ws.send(JSON.stringify(msg))
 			}
 			ws.onmessage = function(event) {
 				let msg = JSON.parse(event.data);
+				if (msg.type == "PREPARADA"){
+					for (let i =0; i < self.matches().length; i++){
+						if (self.matches()[i].id==msg.id) {
+							self.matches()[i].ready(true)
+							alert("Jugando")
+							break;
+						}
+					}
+				}
 			}
 		}
 
@@ -90,8 +104,14 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				type : "get",
 				url : "/games/joinGame/" + game.name,
 				success : function(response) {
-					self.matches.push(response);
-					self.conectarAWebSocket();
+					let match = {
+						id: ko.observable(response.id),
+						ready: ko.observable(response.ready),
+						player: ko.observableArray(response.players),
+						playerWithTurn: ko.observable(response.playerWithTurn)
+					}
+					self.matches.push(match);
+					self.conectarAWebSocket(match.id());
 					console.log(JSON.stringify(response));
 				},
 				error : function(response) {
