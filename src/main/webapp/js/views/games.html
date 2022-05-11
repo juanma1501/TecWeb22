@@ -9,6 +9,7 @@
             <div class="oj-hybrid-padding">
                 <h1>Juegos disponibles</h1>
                 <div>
+                    <span data-bind="html : mensaje" style="color : blue"></span>
                     <span data-bind="html : error" style="color : red"></span>
                     <!-- ko foreach : games -->
                     <div>
@@ -24,20 +25,14 @@
                         <div>Id: <label data-bind="html : id"></label></div>
 
                         <div>Preparada: <span data-bind="html : ready"></span></div>
-                        <div>Jugador 1: <span data-bind="html : players[0].name"></span></div>
+                        <!-- ko foreach: players -->
+                        <div>Jugador <span data-bind="html : $index()"></span>: <span data-bind="html : name"></span></div>
+                        <!-- /ko -->
 
-                        <div>Jugador 2:
-                            <!-- ko if : players[1] -->
-                            <span data-bind="html : players[1].name"></span>
-                            <!-- /ko -->
-                            <!-- ko ifnot : players[1] -->
-                            Esperando
-                            <!-- /ko -->
-                        </div>
 
                         <div>Jugador con el turno:
-                            <!-- ko if : playerWithTurn -->
-                            <span data-bind="html : playerWithTurn.name"></span>
+                            <!-- ko if : playerWithTurn() -->
+                            <span data-bind="html : playerWithTurn().name"></span>
                             <!-- /ko -->
                         </div>
 

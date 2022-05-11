@@ -77,7 +77,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			let self = this;
 			let ws = new WebSocket("ws://localhost/wsGenerico");
 			ws.onopen = function(event) {
-				alert("Conexión establecida")
+				self.mensaje("Conexión establecida")
 				let msg = {
 					type: "UNIR",
 					id: id
@@ -90,10 +90,10 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				let msg = JSON.parse(event.data);
 				if (msg.type == "PREPARADA"){
 					self.matches().map( (match, index) => {
-						if (self.matches()[index].id._latestValue == msg.id) {
+						if (self.matches()[index].id() == msg.id) {
 							console.log("Entra")
 							self.matches()[index].ready(true)
-							alert("Jugando")
+							self.mensaje("Jugando")
 						}
 					})
 				}
@@ -109,18 +109,11 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				success : function(response) {
 					//VAMOS A CREAR UN PARTIDO DONDE TODOS SEAN OBSEVARBLES PARA PODER
 					//ACTUALIZAR CUANDO UN JUGADOR SE UNA
-					let match = {
-						id: ko.observable(response.id),
-						ready: ko.observable(response.ready),
-						players: ko.observableArray(response.players),
-						playerWithTurn: ko.observable(response.playerWithTurn),
-						winner: ko.observable(response.winner),
-						looser: ko.observable(response.looser),
-						draw: ko.observable(response.draw)
-					}
+					let match = new Partida (ko,response)
+
 					console.log(JSON.stringify(response));
 					console.log(response.players)
-					self.matches().push(match);
+					self.matches.push(match);
 					console.log("PARTIDAS " + self.matches().length)
 					self.conectarAWebSocket(match.id());
 
@@ -141,7 +134,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				url : "/games/findMatch/" + match.id,
 				success : function(response) {
 					for (let i=0; i<self.matches().length; i++)
-						if (self.matches()[i].id==match.id) {
+						if (self.matches()[i].id()==match.id) {
 							self.matches.splice(i, 1, response);
 							break;
 						}

@@ -6,7 +6,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			var self = this;
 			
 			self.userName = ko.observable("pepe");
-			self.pwd = ko.observable("pepe123");
+			self.pwd = ko.observable("pepe");
 			self.message = ko.observable();
 			self.error = ko.observable();
 			
