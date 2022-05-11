@@ -75,6 +75,14 @@ public class User {
 		return pwd;
 	}
 
+	public String getUser() {
+		JSONObject jso = new JSONObject();
+		jso.put("id", this.id);
+		jso.put("email", this.email);
+		jso.put("name", this.name);
+		return jso.toString();
+	}
+
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
@@ -110,7 +118,8 @@ public class User {
 		return session;
 	}
 
-	public void sendMessage(JSONObject jso) throws IOException {
+	public void
+	sendMessage(JSONObject jso) throws IOException {
 		WebSocketSession wsSession = this.session.getWsSession();
 		wsSession.sendMessage(new TextMessage(jso.toString()));
 	}

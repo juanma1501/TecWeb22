@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.google.gson.Gson;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 @Entity
@@ -96,8 +98,12 @@ public abstract class Match {
 
 	public void notifyPreparada() {
 		JSONObject jso = new JSONObject();
+		JSONObject user = new JSONObject(this.players.get(this.players.size() - 1).getUser());
 		jso.put("type", "PREPARADA");
 		jso.put("id", this.id);
+		jso.put("player", user);
+		//System.out.println();
+
 		// jso.put("board", this.board.toJSON());
 
 		for (User player : this.players) {

@@ -7,6 +7,9 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
 			self.games = ko.observableArray([]);
 			self.matches = ko.observableArray([]);
+			self.players = ko.observableArray([]);
+
+			self.cont = 0;
 
 			self.x = ko.observable(null);
 			self.y = ko.observable(null);
@@ -73,26 +76,42 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			$.ajax(data);
 		}
 
-		conectarAWebSocket(id) {
+		conectarAWebSocket(match) {
 			let self = this;
+			self.cont += 1
 			let ws = new WebSocket("ws://localhost/wsGenerico");
 			ws.onopen = function(event) {
 				self.mensaje("Conexión establecida")
 				let msg = {
 					type: "UNIR",
-					id: id
+					id: match.id()
 				}
 				ws.send(JSON.stringify(msg))
 
 			}
-
 			ws.onmessage = function(event) {
 				let msg = JSON.parse(event.data);
+				console.log(msg)
 				if (msg.type == "PREPARADA"){
 					self.matches().map( (match, index) => {
 						if (self.matches()[index].id() == msg.id) {
-							console.log("Entra")
 							self.matches()[index].ready(true)
+							let player = {
+								id : ko.observable(msg.player.id),
+								name : ko.observable(msg.player.name),
+								email : ko.observable(msg.player.email),
+							}
+
+							self.players.push(player)
+							self.players().map((pl, index) => {
+								if (pl !== player){
+									match.players.push(player)
+								}
+							})
+							console.log(player)
+							console.log(player.name())
+							console.log(match.players())
+							console.log(self.matches())
 							self.mensaje("Jugando")
 						}
 					})
@@ -109,13 +128,24 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				success : function(response) {
 					//VAMOS A CREAR UN PARTIDO DONDE TODOS SEAN OBSEVARBLES PARA PODER
 					//ACTUALIZAR CUANDO UN JUGADOR SE UNA
-					let match = new Partida (ko,response)
+					//let match = new Partida (ko,response)
+
+					let match = {
+						id : ko.observable(response.id),
+						ready : ko.observable(response.ready),
+						players : ko.observableArray(response.players),
+						playerWithTurn : ko.observable(response.playerWithTurn),
+						winner : ko.observable(response.winner),
+						looser : ko.observable(response.looser),
+						draw : ko.observable(response.draw),
+					}
 
 					console.log(JSON.stringify(response));
 					console.log(response.players)
 					self.matches.push(match);
 					console.log("PARTIDAS " + self.matches().length)
-					self.conectarAWebSocket(match.id());
+					console.log("PARTIDAS " + self.players())
+					self.conectarAWebSocket(match);
 
 				},
 				error : function(response) {
