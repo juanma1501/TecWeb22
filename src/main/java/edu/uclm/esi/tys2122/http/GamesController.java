@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import edu.uclm.esi.tys2122.model.Match;
 import edu.uclm.esi.tys2122.model.User;
 import edu.uclm.esi.tys2122.services.GamesService;
 import edu.uclm.esi.tys2122.services.UserService;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("games")
@@ -53,7 +55,7 @@ public class GamesController extends CookiesController {
 			throw new Exception("No se encuentra el juego " + gameName);
 		
 		Match match = getMatch(game);
-		match.addPlayer(user);
+		if (!match.addPlayer(user)) throw  new ResponseStatusException(HttpStatus.CONFLICT, "No puedes jugar contra el mismo usuario");
 		if (match.isReady()) {
 			game.getPendingMatches().remove(match);
 			game.getPlayingMatches().add(match);
