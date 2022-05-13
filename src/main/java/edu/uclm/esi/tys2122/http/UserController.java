@@ -41,7 +41,7 @@ public class UserController extends CookiesController {
 		User user = userService.doLogin(name, pwd, ip); //Recupera el user de la base de datos
 
 		Cookie cookie = readOrCreateCookie(request, response);
-
+		Manager.get().add(request.getSession());
 		userService.insertLogin(user, ip, cookie);
 		request.getSession().setAttribute("user", user);
 	}

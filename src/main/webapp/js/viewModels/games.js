@@ -15,6 +15,12 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			self.y = ko.observable(null);
 			self.mensaje = ko.observable(null);
 			self.error = ko.observable(null);
+
+			//self.refresh = function(){
+			//	let data = self.matches().slice(0);
+			//	self.matches([]);
+			//	self.matches(data);
+			//};
 						
 			// Header Config
 			self.headerConfig = ko.observable({
@@ -29,7 +35,12 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 					'viewModel' : app.getHeaderModel()
 				})
 			});
+
+
+			self.conectarAWebSocket();
+
 		}
+
 
 		connected() {
 			accUtils.announce('Juegos.');
@@ -76,46 +87,54 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			$.ajax(data);
 		}
 
-		conectarAWebSocket(match) {
+		conectarAWebSocket() {
 			let self = this;
 			self.cont += 1
 			let ws = new WebSocket("ws://localhost/wsGenerico");
 			ws.onopen = function(event) {
 				self.mensaje("Conexión establecida")
-				let msg = {
+				/*let msg = {
 					type: "UNIR",
 					id: match.id()
 				}
-				ws.send(JSON.stringify(msg))
+				ws.send(JSON.stringify(msg))*/
 
 			}
 			ws.onmessage = function(event) {
+
 				let msg = JSON.parse(event.data);
 				console.log(msg)
 				if (msg.type == "PREPARADA"){
 					self.matches().map( (match, index) => {
 						if (self.matches()[index].id() == msg.id) {
 							self.matches()[index].ready(true)
+
 							let player = {
-								id : ko.observable(msg.player.id),
-								name : ko.observable(msg.player.name),
 								email : ko.observable(msg.player.email),
+								id : ko.observable(msg.player.id),
+								name : ko.observable(msg.player.name)
 							}
 
-							self.players.push(player)
-							self.players().map((pl, index) => {
-								if (pl !== player){
-									match.players.push(player)
-								}
-							})
-							console.log(player)
-							console.log(player.name())
-							console.log(match.players())
+
+
+							self.matches()[index].players.push(player)
+							//self.players.push(player)
+
+							//ko.cleanNode(document.getElementById("globalBody"))
+							//ko.applyBindings(self, document.getElementById("globalBody"))
+
+
+
+							//console.log(player)
+							//console.log(player.name())
+							console.log("JUGADORES DE UNA PARTIDA " + match.players())
 							console.log(self.matches())
 							self.mensaje("Jugando")
+							//self.refresh()
 						}
 					})
 				}
+
 			}
 		}
 
@@ -128,8 +147,9 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				success : function(response) {
 					//VAMOS A CREAR UN PARTIDO DONDE TODOS SEAN OBSEVARBLES PARA PODER
 					//ACTUALIZAR CUANDO UN JUGADOR SE UNA
-					//let match = new Partida (ko,response)
+					let match = new Partida (ko,response)
 
+					/*
 					let match = {
 						id : ko.observable(response.id),
 						ready : ko.observable(response.ready),
@@ -139,13 +159,14 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 						looser : ko.observable(response.looser),
 						draw : ko.observable(response.draw),
 					}
+					 */
 
 					console.log(JSON.stringify(response));
 					console.log(response.players)
-					self.matches.push(match);
+					//SE PINTA CUANDO SE HACE PUSH
+					self.matches.push(match)
 					console.log("PARTIDAS " + self.matches().length)
 					console.log("PARTIDAS " + self.players())
-					self.conectarAWebSocket(match);
 
 				},
 				error : function(response) {

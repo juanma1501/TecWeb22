@@ -81,6 +81,8 @@ require(['ojs/ojbootstrap', 'knockout', 'appController', 'ojs/ojlogger', 'ojs/oj
           init();
         }
       }
+
+
     );
   }
 );
