@@ -55,12 +55,14 @@ public class GamesController extends CookiesController {
 			throw new Exception("No se encuentra el juego " + gameName);
 		
 		Match match = getMatch(game);
-		if (!match.addPlayer(user)) throw  new ResponseStatusException(HttpStatus.CONFLICT, "No puedes jugar contra el mismo usuario");
+		match.addPlayer(user);
+
 		if (match.isReady()) {
 			game.getPendingMatches().remove(match);
 			game.getPlayingMatches().add(match);
 			match.notifyPreparada();
 		}
+
 		gamesService.put(match);
 		return match;
 	}

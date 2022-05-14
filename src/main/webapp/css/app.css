@@ -21,3 +21,58 @@
   height: 1px;
   overflow: hidden;
 }
+
+/* **********************************************************
+                       CSS DEL LOGIN
+*************************************************************/
+
+
+
+
+
+
+
+.Board {
+  display: flex;
+  flex-direction: column;
+
+  margin: 20px 0px 20px 0px;
+}
+
+.Row {
+  display: flex;
+  flex-direction: row;
+}
+
+.Square {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.TicTacToeSquare {
+  width: 133px;
+  height: 133px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: solid white 5px;
+}
+
+.TicTacToeBackground {
+  background-color: #263b3a;
+}
+
+.TicTacToeSquare .Cross {
+  font-size: 4rem;
+  color: #73a029;
+}
+
+.TicTacToeSquare .Circle {
+  font-size: 4rem;
+  color: #73a029;
+}

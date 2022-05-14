@@ -136,6 +136,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     //ACTUALIZAR CUANDO UN JUGADOR SE UNA
                     let match = new Partida(ko, response)
 
+                    console.log("INFORMACION DE LA RAW RESPONSE ABAJO")
                     console.log(JSON.stringify(response));
                     console.log(response.players)
                     //SE PINTA CUANDO SE HACE PUSH

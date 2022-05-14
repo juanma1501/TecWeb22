@@ -27,7 +27,8 @@
                         <div>Preparada: <span data-bind="html : ready"></span></div>
 
                         <!-- ko foreach : players -->
-                        <div>Jugador <span data-bind="html : $index() + 1"></span>: <span data-bind="html : name"></span></div>
+                        <div>Jugador <span data-bind="html : $index() + 1"></span>: <span
+                                data-bind="html : name"></span></div>
                         <!-- /ko -->
 
                         <div>Jugador con el turno:
@@ -48,7 +49,34 @@
                         <button data-bind="click : function() { $parent.reload($data); }">Recargar partida</button>
                     </li>
 
+                    <!-- ko with : board -->
+                    <div class="Board">
+                        <h1>Tablero</h1>
+                        <!-- ko foreach : squares -->
+                        <div class="Row">
+                            <!-- ko foreach : $data -->
+                            <!-- ko if : $data == 0 -->
+                            <div class="TicTacToeSquare TicTacToeBackground">
+                                <i class="uil uil-circle Circle"></i>
+                            </div>
+                            <!-- /ko-->
 
+                            <!-- ko if : $data == 1 -->
+                            <div class="TicTacToeSquare TicTacToeBackground">
+                                <i class="fa fa-close Cross"></i>
+                            </div>
+                            <!-- /ko-->
+
+                            <!-- ko if : $data == 2 -->
+                            <div class="TicTacToeSquare TicTacToeBackground">
+                                <i class="fa fa-circle-o Circle"></i>
+                            </div>
+                            <!-- /ko-->
+                            <!-- /ko -->
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                    <!-- /ko -->
                     <!-- /ko -->
                 </ol>
             </div>

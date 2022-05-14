@@ -1,6 +1,7 @@
 class Partida{
     constructor(ko, response) {
         this.id = ko.observable(response.id)
+        this.board = ko.observable(response.board)
         this.ready = ko.observable(response.ready)
         this.players = ko.observableArray(response.players)
         this.playerWithTurn = ko.observable(response.playerWithTurn)
