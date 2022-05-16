@@ -32,9 +32,9 @@
                         <!-- /ko -->
 
                         <div>Jugador con el turno:
-                            <!-- ko if : playerWithTurn() -->
-                            <span data-bind="html : playerWithTurn().name"></span>
-                            <!-- /ko -->
+
+                            <span data-bind="html : playerWithTurn"></span>
+
                         </div>
 
                         <div>Ganador: <span data-bind="html : winner"></span></div>
@@ -57,19 +57,19 @@
                             <!-- ko foreach : $data -->
                             <!-- ko if : $data == 0 -->
                             <div class="TicTacToeSquare TicTacToeBackground">
-                                <i class="uil uil-circle Circle"></i>
+
                             </div>
                             <!-- /ko-->
 
                             <!-- ko if : $data == 1 -->
                             <div class="TicTacToeSquare TicTacToeBackground">
-                                <i class="fa fa-close Cross"></i>
+                                <i class="uil uil-times Cross"></i>
                             </div>
                             <!-- /ko-->
 
                             <!-- ko if : $data == 2 -->
                             <div class="TicTacToeSquare TicTacToeBackground">
-                                <i class="fa fa-circle-o Circle"></i>
+                                <i class="uil uil-circle Circle"></i>
                             </div>
                             <!-- /ko-->
                             <!-- /ko -->

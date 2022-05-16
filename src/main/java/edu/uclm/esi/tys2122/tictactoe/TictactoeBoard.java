@@ -15,4 +15,6 @@ public class TictactoeBoard extends Board {
 	public int[][] getSquares() {
 		return squares;
 	}
+
+
 }

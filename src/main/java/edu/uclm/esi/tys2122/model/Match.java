@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+
 @Entity
 @Table(name = "partida")
 public abstract class Match {
@@ -82,11 +83,17 @@ public abstract class Match {
 
     public void notifyNewState(String userId) {
         JSONObject jso = new JSONObject();
+        JSONObject movement = new JSONObject();
         jso.put("type", "BOARD");
-        // jso.put("board", this.board.toJSON());
+        jso.put("id", this.id);
+        //jso.put("board", this.board);
+        Gson gson = new Gson();
+        JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getSquares()));
+        movement.put("squares", jsonArray);
+        jso.put("board", movement);
+
 
         for (User player : this.players) {
-            if (!player.getId().equals(userId))
                 try {
                     player.sendMessage(jso);
                 } catch (IOException e) {
@@ -102,6 +109,7 @@ public abstract class Match {
         jso.put("type", "PREPARADA");
         jso.put("id", this.id);
         jso.put("player", user);
+        jso.put("playerWithTurn", this.playerWithTurn.getName());
         //System.out.println();
 
         // jso.put("board", this.board.toJSON());

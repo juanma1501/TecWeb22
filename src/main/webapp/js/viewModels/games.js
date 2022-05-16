@@ -66,7 +66,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             let self = this;
 
             let info = {
-                matchId: match.id,
+                matchId: match.id(),
                 x: this.x(),
                 y: this.y()
             };
@@ -104,25 +104,48 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                         if (self.matches()[index].id() == msg.id) {
                             self.matches()[index].ready(true)
 
-                            let player = {
-                                email: ko.observable(msg.player.email),
-                                id: ko.observable(msg.player.id),
-                                name: ko.observable(msg.player.name)
-                            }
-
-                            //Esto sirve para recargar el observableArray de players y que pinte en los dos clientes
-                            self.matches()[index].players.splice(1, 1);
-                            self.matches()[index].players.splice(1, 0, player);
+                            self.actualizarPreparada(self.matches()[index], msg)
 
                             console.log("JUGADORES DE UNA PARTIDA " + match.players())
-                            console.log(self.matches())
                             self.mensaje("Jugando")
                             //self.refresh()
                         }
                     })
                 }
 
+                if (msg.type == "BOARD"){
+                    self.matches().map((match, index) => {
+                        if (self.matches()[index].id() == msg.id) {
+
+                            console.log("EL TABLERO QUE LLEGA ES:")
+                            console.log(msg)
+
+                            self.actualizarMovimiento(self.matches()[index], msg)
+
+                        }
+                    })
+                }
+
             }
+        }
+
+        actualizarPreparada(partida, msg){
+            //VAMOS IR RECARGANDO ATRIBUTO A ATRIBUTO
+            let player = {
+                email: ko.observable(msg.player.email),
+                id: ko.observable(msg.player.id),
+                name: ko.observable(msg.player.name)
+            }
+            partida.ready(partida.ready())
+            //Esto sirve para recargar el observableArray de players y que pinte en los dos clientes
+            partida.players.splice(1, 1);
+            partida.players.splice(1, 0, player);
+            console.log(msg.playerWithTurn)
+            partida.playerWithTurn(msg.playerWithTurn)
+        }
+
+        actualizarMovimiento(partida, msg){
+            partida.board(msg.board)
         }
 
         joinGame(game) {
@@ -137,7 +160,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     let match = new Partida(ko, response)
 
                     console.log("INFORMACION DE LA RAW RESPONSE ABAJO")
-                    console.log(JSON.stringify(response));
+                    console.log(match);
                     console.log(response.players)
                     //SE PINTA CUANDO SE HACE PUSH
                     self.matches.push(match)
