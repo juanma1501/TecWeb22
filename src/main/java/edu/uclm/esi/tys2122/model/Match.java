@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.google.gson.Gson;
+import edu.uclm.esi.tys2122.http.Manager;
+import edu.uclm.esi.tys2122.tictactoe.TictactoeMatch;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -91,6 +93,8 @@ public abstract class Match {
         JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getSquares()));
         movement.put("squares", jsonArray);
         jso.put("board", movement);
+        jso.put("playerWithTurn", this.playerWithTurn.getName());
+
 
 
         for (User player : this.players) {

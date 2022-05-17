@@ -78,6 +78,15 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 contentType: "application/json",
                 success: function (response) {
                     console.log(JSON.stringify(response));
+
+                    //DE AQUÍ SACAMOS WINNER, LOOSER Y DRAW
+                    self.matches().map((match, index) => {
+                        if (self.matches()[index].id() == response.id) {
+                            self.matches()[index].winner(response.winner)
+                            self.matches()[index].looser(response.looser)
+                            self.matches()[index].draw(response.draw)
+                        }
+                    })
                 },
                 error: function (response) {
                     console.error(response);
@@ -117,6 +126,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     self.matches().map((match, index) => {
                         if (self.matches()[index].id() == msg.id) {
 
+                            console.log(self.matches()[index].name)
+
                             console.log("EL TABLERO QUE LLEGA ES:")
                             console.log(msg)
 
@@ -146,10 +157,12 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
         actualizarMovimiento(partida, msg){
             partida.board(msg.board)
+            partida.playerWithTurn(msg.playerWithTurn)
         }
 
         joinGame(game) {
             let self = this;
+            console.log(game.name)
 
             let data = {
                 type: "get",
