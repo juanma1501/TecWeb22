@@ -95,6 +95,12 @@ public abstract class Match {
         jso.put("board", movement);
         jso.put("playerWithTurn", this.playerWithTurn.getName());
 
+        TictactoeMatch match = (TictactoeMatch) Manager.get().findMatch(this.id);
+        if(match.getWinner() != null) {
+            jso.put("winner", match.getWinner().getName());
+            jso.put("looser", match.getLooser().getName());
+            jso.put("draw", match.isDraw());
+        }
 
 
         for (User player : this.players) {

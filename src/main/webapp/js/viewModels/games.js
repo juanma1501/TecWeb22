@@ -77,16 +77,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 data: JSON.stringify(info),
                 contentType: "application/json",
                 success: function (response) {
-                    console.log(JSON.stringify(response));
-
-                    //DE AQUÍ SACAMOS WINNER, LOOSER Y DRAW
-                    self.matches().map((match, index) => {
-                        if (self.matches()[index].id() == response.id) {
-                            self.matches()[index].winner(response.winner)
-                            self.matches()[index].looser(response.looser)
-                            self.matches()[index].draw(response.draw)
-                        }
-                    })
+                    console.log(response);
                 },
                 error: function (response) {
                     console.error(response);
@@ -158,6 +149,13 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
         actualizarMovimiento(partida, msg){
             partida.board(msg.board)
             partida.playerWithTurn(msg.playerWithTurn)
+
+            if (msg.winner != null){
+                partida.winner(msg.winner)
+                partida.looser(msg.looser)
+            }
+
+            self.matches()[index].draw(msg.draw)
         }
 
         joinGame(game) {
