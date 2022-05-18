@@ -155,7 +155,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 partida.looser(msg.looser)
             }
 
-            self.matches()[index].draw(msg.draw)
+            partida.draw(msg.draw)
         }
 
         joinGame(game) {
@@ -204,6 +204,35 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 error: function (response) {
                     console.error(response.responseJSON.message);
                     self.error(response.responseJSON.message);
+                }
+            };
+            $.ajax(data);
+        }
+
+        joinGameIA(){
+            let self = this;
+            console.log(game.name)
+
+            let data = {
+                type: "get",
+                url: "/games/joinGame/" + game.name,
+                success: function (response) {
+                    //VAMOS A CREAR UN PARTIDO DONDE TODOS SEAN OBSEVARBLES PARA PODER
+                    //ACTUALIZAR CUANDO UN JUGADOR SE UNA
+                    let match = new Partida(ko, response)
+
+                    console.log("INFORMACION DE LA RAW RESPONSE ABAJO")
+                    console.log(match);
+                    console.log(response.players)
+                    //SE PINTA CUANDO SE HACE PUSH
+                    self.matches.push(match)
+                    console.log("PARTIDAS " + self.matches().length)
+                    //console.log("PARTIDAS " + self.players())
+
+                },
+                error: function (response) {
+                    console.error(response.responseJSON.message);
+                    alert(response.responseJSON.message);
                 }
             };
             $.ajax(data);

@@ -91,7 +91,11 @@ public class TictactoeMatch extends Match {
 		}
 		if (this.winner!=null) {
 			this.looser = this.winner==this.players.get(0) ? this.players.get(1) : this.players.get(0);
+			System.out.println(this.looser.getName());
 		}
+
+
+
 	}
 
 	public User getWinner() {

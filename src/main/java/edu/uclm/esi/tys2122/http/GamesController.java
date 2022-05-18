@@ -55,6 +55,10 @@ public class GamesController extends CookiesController {
 			throw new Exception("No se encuentra el juego " + gameName);
 		
 		Match match = getMatch(game);
+		if (!match.getPlayers().isEmpty() && match.getPlayers().get(0).getId() == user.getId()) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Ya hay una partida en espera.");
+		}
+
 		match.addPlayer(user);
 
 		if (match.isReady()) {
@@ -92,4 +96,5 @@ public class GamesController extends CookiesController {
 		}
 		return match;
 	}
+
 }

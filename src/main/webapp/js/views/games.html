@@ -9,12 +9,14 @@
             <div class="oj-hybrid-padding">
                 <h1>Juegos disponibles</h1>
                 <div>
+
                     <span data-bind="html : mensaje" style="color : blue"></span>
                     <span data-bind="html : error" style="color : red"></span>
+
                     <!-- ko foreach : games -->
                     <div>
                         <label data-bind="html : name"></label>&nbsp;
-                        <button data-bind="click : function() { $parent.joinGame($data); }">Jugar partida</button>
+                        <button data-bind="click : function() { $parent.joinGame($data); }">Jugar partida online</button>
                     </div>
                     <!-- /ko -->
                 </div>
