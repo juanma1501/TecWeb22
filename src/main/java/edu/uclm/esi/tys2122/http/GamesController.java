@@ -55,9 +55,13 @@ public class GamesController extends CookiesController {
 			throw new Exception("No se encuentra el juego " + gameName);
 		
 		Match match = getMatch(game);
+
+		/* ESTO ES PARA LO DE LAS PARTIDAS EN ESPERA
 		if (!match.getPlayers().isEmpty() && match.getPlayers().get(0).getId() == user.getId()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Ya hay una partida en espera.");
 		}
+		*/
+
 
 		match.addPlayer(user);
 

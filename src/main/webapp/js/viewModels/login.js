@@ -28,6 +28,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 		login() {
 			var self = this;
 			var info = {
+				// Aquí luego el tipo de login que será normal y en el otro Google
 				name : this.userName(),
 				pwd : this.pwd()
 			};
