@@ -45,6 +45,13 @@ public class User {
 		this.id = UUID.randomUUID().toString();
 	}
 
+	public static User fakeUser() {
+		User cpu = new User();
+		cpu.name = "cpu";
+
+		return cpu;
+	}
+
 	public String getId() {
 		return id;
 	}

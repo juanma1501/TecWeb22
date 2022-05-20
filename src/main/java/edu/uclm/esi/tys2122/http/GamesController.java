@@ -6,15 +6,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import edu.uclm.esi.tys2122.websockets.WrapperSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import edu.uclm.esi.tys2122.model.Game;
 import edu.uclm.esi.tys2122.model.Match;
@@ -38,9 +34,22 @@ public class GamesController extends CookiesController {
 	}
 
 	@GetMapping("/joinGame/{gameName}")
-	public Match joinGame(HttpSession session, @PathVariable String gameName) throws Exception {
+	public Match joinGame(HttpSession session, @PathVariable String gameName, @RequestParam(required = false) boolean cpu) throws Exception {
 		User user;
-		if (session.getAttribute("user")!=null) {
+		if(cpu) {
+
+			user = User.fakeUser();
+			User real = (User) session.getAttribute("user");
+			user.setSession(real.getSession());
+
+			/* INTENTÉ MODIFICAR EL USUARIO HACIENDO USO DE UNA SESIÓN CREADA A PARTIR DE LA DEL VERDADERO CLIENTE PERO
+			AL FINAL EL ID DE LA SESIÓN ES EL MISMO Y NO SE PUEDE CAMBIAR UNA SIN CAMBIAR LA OTRA
+			HttpSession sesionCPU =  user.getSession().getHttpSession();
+			sesionCPU.setAttribute("user", user);
+			user.getSession().setHttpSession(sesionCPU);
+			 */
+
+		}else if (session.getAttribute("user")!=null) {
 			user = (User) session.getAttribute("user");
 		} else {
 			user = new User();

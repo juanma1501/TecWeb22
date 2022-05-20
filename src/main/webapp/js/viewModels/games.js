@@ -148,7 +148,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
         actualizarMovimiento(partida, msg){
             partida.board(msg.board)
-            partida.playerWithTurn(msg.playerWithTurn)
+            partida.setTurn(msg.playerWithTurn)
 
             if (msg.winner != null){
                 partida.winner(msg.winner)
@@ -187,6 +187,30 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             $.ajax(data);
         }
 
+        joinGameCPU(game) {
+            let self = this;
+
+            let data = {
+                type: "get",
+                url: "/games/joinGame/" + game.name,
+                success: function (response) {
+                    //VAMOS A CREAR UN PARTIDO DONDE TODOS SEAN OBSEVARBLES PARA PODER
+                    //ACTUALIZAR CUANDO UN JUGADOR SE UNA
+                    let match = new Partida(ko, response)
+
+                    //SE PINTA CUANDO SE HACE PUSH
+                    self.matches.push(match)
+                    match.unete($, ko, game)
+
+                },
+                error: function (response) {
+                    console.error(response.responseJSON.message);
+                    alert(response.responseJSON.message);
+                }
+            };
+            $.ajax(data);
+        }
+
         reload(match) {
             let self = this;
 
@@ -204,35 +228,6 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 error: function (response) {
                     console.error(response.responseJSON.message);
                     self.error(response.responseJSON.message);
-                }
-            };
-            $.ajax(data);
-        }
-
-        joinGameIA(){
-            let self = this;
-            console.log(game.name)
-
-            let data = {
-                type: "get",
-                url: "/games/joinGame/" + game.name,
-                success: function (response) {
-                    //VAMOS A CREAR UN PARTIDO DONDE TODOS SEAN OBSEVARBLES PARA PODER
-                    //ACTUALIZAR CUANDO UN JUGADOR SE UNA
-                    let match = new Partida(ko, response)
-
-                    console.log("INFORMACION DE LA RAW RESPONSE ABAJO")
-                    console.log(match);
-                    console.log(response.players)
-                    //SE PINTA CUANDO SE HACE PUSH
-                    self.matches.push(match)
-                    console.log("PARTIDAS " + self.matches().length)
-                    //console.log("PARTIDAS " + self.players())
-
-                },
-                error: function (response) {
-                    console.error(response.responseJSON.message);
-                    alert(response.responseJSON.message);
                 }
             };
             $.ajax(data);

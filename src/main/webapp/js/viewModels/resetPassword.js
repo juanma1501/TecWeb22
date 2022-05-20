@@ -5,7 +5,6 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
         constructor() {
             var self = this;
 
-            self.routes = routesFile.getRoutes();
 
             self.email = ko.observable("");
             self.message = ko.observable();
@@ -39,7 +38,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             };
             var data = {
                 data: JSON.stringify(info),
-                url: ,
+                url: "localhost:80",
                 type: "post",
                 contentType: "application/json",
                 success: function (response) {

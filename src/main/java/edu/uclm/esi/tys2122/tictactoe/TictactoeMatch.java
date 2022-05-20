@@ -12,6 +12,7 @@ public class TictactoeMatch extends Match {
 	
 	private User winner, looser;
 	private boolean draw;
+	private String lastUser;
 	
 	@Override
 	protected Board newBoard() {
@@ -40,6 +41,10 @@ public class TictactoeMatch extends Match {
 	public void move(String userId, JSONObject jsoMovimiento) throws Exception {
 		if (this.filled())
 			throw new Exception("La partida ya terminó");
+
+		System.out.println("Los IDs son:");
+		System.out.println(this.getPlayerWithTurn().getId() + " " + this.getPlayerWithTurn().getName());
+		System.out.println(userId);
 		
 		if (!this.getPlayerWithTurn().getId().equals(userId))
 			throw new Exception("No es tu turno");
