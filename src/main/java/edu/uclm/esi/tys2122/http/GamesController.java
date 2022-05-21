@@ -36,6 +36,7 @@ public class GamesController extends CookiesController {
 	@GetMapping("/joinGame/{gameName}")
 	public Match joinGame(HttpSession session, @PathVariable String gameName, @RequestParam(required = false) boolean cpu) throws Exception {
 		User user;
+		System.out.println(gameName);
 		if(cpu) {
 
 			user = User.fakeUser();
@@ -60,6 +61,8 @@ public class GamesController extends CookiesController {
 		Manager.get().add(session);
 		
 		Game game = Manager.get().findGame(gameName);
+		System.out.println(Manager.get().getGames().size());
+		System.out.println(game);
 		if (game==null)
 			throw new Exception("No se encuentra el juego " + gameName);
 		

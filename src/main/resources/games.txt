@@ -3,4 +3,8 @@
 		"name"  : "Tres en raya",
 		"clazz" : "edu.uclm.esi.tys2122.tictactoe.TictactoeGame"
 	},
+	{
+    	"name"  : "Piedra papel tijera",
+    	"clazz" : "edu.uclm.esi.tys2122.StonePaperScissor.StonePaperScissorGame"
+    },
 ]

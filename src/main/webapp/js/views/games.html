@@ -45,13 +45,13 @@
                     <!-- ko foreach : games -->
                     <div class="container-login100-form-btn m-t-17">
                         <button class="login100-form-btn" data-bind="click : function() { $parent.joinGame($data); }">
-                            Tres en raya
+                            <label data-bind="html : name"></label>
                         </button>
                     </div>
 
                     <div class="container-login100-form-btn m-t-17">
                         <button class="login100-form-btn" data-bind="click : function() { $parent.joinGameCPU($data); }">
-                            Tres en raya CPU
+                            <label data-bind="html : name +' CPU'"></label>
                         </button>
                     </div>
                     <!-- /ko -->

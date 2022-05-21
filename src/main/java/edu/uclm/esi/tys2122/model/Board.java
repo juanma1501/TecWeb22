@@ -4,4 +4,6 @@ public abstract class Board {
 
     public abstract int[][] getSquares();
 
+    public abstract int[] getArray();
+
 }
