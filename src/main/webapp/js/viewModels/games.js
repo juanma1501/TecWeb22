@@ -15,8 +15,12 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             self.mensaje = ko.observable(null);
             self.error = ko.observable(null);
 
+            self.handMove = ko.observable(null);
+
             self.secondMove = function(data,event){
-                self.moveSecondGame(event.target.innerText)
+                self.handMove(event.target.innerText)
+                console.log(event.target.innerText)
+                console.log()
             }
 
             // Header Config
@@ -244,9 +248,47 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             // Implement if needed
         };
 
-        moveSecondGame(data){
+        moveSecondGame(match){
             let self = this;
-            console.log(data)
+            let move;
+            let hand = self.handMove()
+            console.log(self.handMove())
+            //Piedra --> 0 ; Papel --> 1; Tijera --> 2
+
+            if(hand == 'piedra'){
+                move = 0
+
+            }else if(hand == 'papel'){
+                move = 1
+            }else{
+                move = 2
+            }
+
+            console.log(move)
+
+            console.log(match.id())
+
+            let infoMove = {
+                matchId: match.id(),
+                move: move,
+            };
+
+            console.log(infoMove)
+
+            let data = {
+                type: "post",
+                url: "/games/move",
+                data: JSON.stringify(infoMove),
+                contentType: "application/json",
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (response) {
+                    console.error(response);
+                    self.error(response);
+                }
+            }
+            $.ajax(data);
         }
     }
 

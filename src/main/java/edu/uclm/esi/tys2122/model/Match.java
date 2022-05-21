@@ -72,6 +72,10 @@ public abstract class Match {
         return playerWithTurn;
     }
 
+    public void setPlayerWithTurn (User user) {
+        this.playerWithTurn = user;
+    }
+
     @Transient
     public Vector<User> getPlayers() {
         return players;

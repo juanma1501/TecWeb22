@@ -102,7 +102,6 @@
 
                             </div>
                             <!-- /ko-->
-
                             <!-- ko if : $data == 1 -->
                             <div class="TicTacToeSquare TicTacToeBackground">
                                 <i class="uil uil-times Cross"></i>
@@ -119,9 +118,10 @@
                         <!-- /ko -->
                     </div>
                     <!-- /ko -->
-                    <button class="stone" data-bind="click: $parent.secondMove"> Stone</button>
-                    <button class="stone" data-bind="click: $parent.secondMove"> Paper</button>
-                    <button class="stone" data-bind="click: $parent.secondMove"> Scissor</button>
+                    <button class="stone" data-bind="click: $parent.secondMove"> piedra</button>
+                    <button class="stone" data-bind="click: $parent.secondMove"> papel</button>
+                    <button class="stone" data-bind="click: $parent.secondMove"> tijera</button>
+                    <button class="stone" data-bind="click: function(){ $parent.moveSecondGame($data)}"> Move </button>
                     <!-- /ko -->
                 </ol>
             </form>
