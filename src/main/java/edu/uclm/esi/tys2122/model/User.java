@@ -35,8 +35,12 @@ public class User {
 	private String name;
 	@NotBlank
 	private String pwd;
+	@Column(length = 36)
+	private String cookie;
 	private String picture;
 	private Long confirmationDate;
+	private String type;
+	private String token;
 	
 	@Transient
 	private WrapperSession session;
@@ -44,6 +48,16 @@ public class User {
 	public User() {
 		this.id = UUID.randomUUID().toString();
 	}
+
+	//Google
+	public User(@NotBlank String id, @NotBlank String name, @NotBlank String email) {
+		this.id = id;
+		this.email = email;
+		this.name = name;
+		this.pwd = org.apache.commons.codec.digest.DigestUtils.sha512Hex(UUID.randomUUID().toString());
+		this.type = "google";
+	}
+
 
 	public static User fakeUser() {
 		User cpu = new User();
@@ -129,5 +143,9 @@ public class User {
 	sendMessage(JSONObject jso) throws IOException {
 		WebSocketSession wsSession = this.session.getWsSession();
 		wsSession.sendMessage(new TextMessage(jso.toString()));
+	}
+
+	public void setCookie(String value) {
+		this.cookie = cookie;
 	}
 }

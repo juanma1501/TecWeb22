@@ -1,4 +1,7 @@
 {
+    "home" : "http://localhost",
+    "login" : "?ojr=login",
+
     "email" : {
     		"host" : "smtp.gmail.com",
     		"startTTLS" : "true",

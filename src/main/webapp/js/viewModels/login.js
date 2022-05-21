@@ -46,6 +46,8 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				};
 			}
 
+			console.log(info)
+
 			var data = {
 				data : JSON.stringify(info),
 				url : "user/login",

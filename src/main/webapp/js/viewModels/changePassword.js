@@ -1,12 +1,11 @@
-define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
-    'jquery'], function (ko, app, moduleUtils, accUtils, $) {
-
-    class ResetPasswordViewModel {
+define(["knockout", "appController", "ojs/ojmodule-element-utils", "accUtils", "jquery"], function (ko, app, moduleUtils, accUtils, $, routesFile) {
+    class ChangePasswordViewModel {
         constructor() {
             var self = this;
 
+            self.newPassword = ko.observable();
+            self.newPassword2 = ko.observable();
 
-            self.email = ko.observable("");
             self.message = ko.observable();
             self.error = ko.observable();
 
@@ -31,14 +30,17 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             app.router.go({ path: "login" });
         }
 
-        resetPassword() {
+        changePassword() {
             var self = this;
+            let {href} = window.location
             var info = {
-                email: this.email(),
+                newPass: self.newPassword(),
+                newPass2: self.newPassword2(),
+                token: href.split("/").at(-1),
             };
             var data = {
                 data: JSON.stringify(info),
-                url: "http://localhost/user/resetPassword",
+                url: "http://localhost/user/changePassword",
                 type: "post",
                 contentType: "application/json",
                 success: function (response) {
@@ -54,7 +56,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
         }
 
         connected() {
-            accUtils.announce("Reset password page loaded.");
+            accUtils.announce("Change password page loaded.");
+            // document.title = "Login";
         }
 
         disconnected() {
@@ -66,5 +69,5 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
         }
     }
 
-    return ResetPasswordViewModel;
-    });
+    return ChangePasswordViewModel;
+});

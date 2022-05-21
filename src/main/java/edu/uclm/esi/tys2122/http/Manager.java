@@ -7,9 +7,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpSession;
 
+import edu.uclm.esi.tys2122.dao.UserRepository;
 import edu.uclm.esi.tys2122.model.Match;
+import edu.uclm.esi.tys2122.services.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +25,9 @@ import org.springframework.web.socket.WebSocketSession;
 public class Manager {
 	
 	private Vector<Game> games;
+
+	@Autowired
+	private UserRepository userRepository;
 	
 	private JSONObject configuration;
 
@@ -55,6 +61,10 @@ public class Manager {
 
 	public Match findMatch(String id){
 		return this.matches.get(id);
+	}
+
+	public UserRepository getUserRepository() {
+		return userRepository;
 	}
 
 	private static class ManagerHolder {

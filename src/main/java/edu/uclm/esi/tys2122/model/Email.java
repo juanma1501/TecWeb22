@@ -25,7 +25,7 @@ public class Email {
 		String sender = (String) emailParameters.get("sender");
 		String serverUser = (String) emailParameters.get("serverUser");
 		String userAutentication = (String) emailParameters.get("auth");
-		String pwd = (String) emailParameters.get("pwd"); // PONER LA CONTRASEÑA
+		String pwd = (String) emailParameters.get("pwd");
 		String fallback = (String) emailParameters.get("fallback");
 
 		properties.put("mail.smtp.host", smtpHost);
@@ -75,7 +75,7 @@ public class Email {
 	
 	public static void main(String[] args) throws Exception {
 		Email sender=new Email();
-		sender.send("alonsodiazsobrino@gmail.com", "Hola", "Ya me va el correo");
+		sender.send("juanmaporreroalmansa@gmail.com", "Hola", "Ya me va el correo");
 		System.out.println("Enviado");
 	}
 }
