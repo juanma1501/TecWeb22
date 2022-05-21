@@ -7,7 +7,6 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
             self.games = ko.observableArray([]);
             self.matches = ko.observableArray([]);
-            //self.players = ko.observableArray([]);
 
             self.cont = 0;
 
@@ -15,6 +14,10 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             self.y = ko.observable(null);
             self.mensaje = ko.observable(null);
             self.error = ko.observable(null);
+
+            self.secondMove = function(data,event){
+                self.moveSecondGame(event.target.innerText)
+            }
 
             // Header Config
             self.headerConfig = ko.observable({
@@ -240,6 +243,11 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
         transitionCompleted() {
             // Implement if needed
         };
+
+        moveSecondGame(data){
+            let self = this;
+            console.log(data)
+        }
     }
 
     return MenuViewModel;

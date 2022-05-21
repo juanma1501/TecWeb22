@@ -23,8 +23,15 @@
 }
 
 /* **********************************************************
-                       CSS DEL TABLERO
+                       CSS DEL LOGIN
 *************************************************************/
+
+
+
+
+
+
+
 .Board {
   display: flex;
   flex-direction: column;
@@ -70,4 +77,11 @@
 .TicTacToeSquare .Circle {
   font-size: 4rem;
   color: #73a029;
+}
+
+.stone{
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 3px;
+  background-color: #2892fc;
 }
