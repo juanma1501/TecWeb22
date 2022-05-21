@@ -3,12 +3,17 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
 	class LoginViewModel {
 		constructor() {
+
 			var self = this;
 			
 			self.userName = ko.observable("pepe");
 			self.pwd = ko.observable("pepe");
 			self.message = ko.observable();
 			self.error = ko.observable();
+
+
+
+			self.googleUser = undefined
 			
 			// Header Config
 			self.headerConfig = ko.observable({
@@ -27,11 +32,20 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
 		login() {
 			var self = this;
-			var info = {
-				// Aquí luego el tipo de login que será normal y en el otro Google
-				name : this.userName(),
-				pwd : this.pwd()
-			};
+			if (self.googleUser){
+				info = {
+					name: self.googleUser.getBasicProfile().getName(),
+					email: self.googleUser.getBasicProfile().getEmail(),
+					id: self.googleUser.getBasicProfile().getId(),
+					type: 'google',
+				};
+			}else{
+				var info = {
+					name : this.userName(),
+					pwd : this.pwd()
+				};
+			}
+
 			var data = {
 				data : JSON.stringify(info),
 				url : "user/login",
@@ -55,16 +69,41 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			accUtils.announce('Login page loaded.');
 			document.title = "Login";
 
+			var self = this;
+			let divGoogle = document.createElement('div');
+			divGoogle.setAttribute('id', 'my-signin2');
+			document.getElementById('zonaGoogle').appendChild(divGoogle);
+
+			gapi.signin2.render('my-signin2', {
+
+				scope: 'profile email',
+				width: 200,
+				height: 75,
+				longtitle: false,
+				theme: 'dark',
+				onsuccess: function (response) {
+					self.googleUser = response;
+					localStorage.login3rd = true;
+					self.login();
+				},
+				onfailure: function (error) {
+					console.log(error);
+					self.googleUser = undefined;
+				},
+			});
+
 		};
 
 		disconnected() {
-			// Implement if needed
+
 		};
 
 		transitionCompleted() {
 			// Implement if needed
 		};
 	}
+
+
 
 	return LoginViewModel;
 });

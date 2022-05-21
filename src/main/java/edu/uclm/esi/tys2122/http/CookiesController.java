@@ -1,11 +1,14 @@
 package edu.uclm.esi.tys2122.http;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@CrossOrigin
 public abstract class CookiesController {
 	public final String COOKIE_NAME = "laCookie";
 	public final String COOKIE_PATH = "/";

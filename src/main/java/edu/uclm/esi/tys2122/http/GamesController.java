@@ -19,6 +19,7 @@ import edu.uclm.esi.tys2122.services.GamesService;
 import edu.uclm.esi.tys2122.services.UserService;
 import org.springframework.web.server.ResponseStatusException;
 
+@CrossOrigin
 @RestController
 @RequestMapping("games")
 public class GamesController extends CookiesController {

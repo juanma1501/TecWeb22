@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import edu.uclm.esi.tys2122.model.Game;
 import edu.uclm.esi.tys2122.model.User;
 import edu.uclm.esi.tys2122.websockets.WrapperSession;
+import org.springframework.web.socket.WebSocketSession;
 
 @Component
 public class Manager {
@@ -31,6 +32,8 @@ public class Manager {
 	private ConcurrentHashMap<String, WrapperSession> ajedrezSessionsPorWs;
 
 	private ConcurrentHashMap<String, Match> matches;
+
+	private Vector<WebSocketSession> chatSessions;
 
 	private Manager() {
 		this.games = new Vector<>();
