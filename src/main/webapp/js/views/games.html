@@ -118,11 +118,25 @@
                         <!-- /ko -->
                     </div>
                     <!-- /ko -->
-                    <button class="stone" data-bind="click: $parent.secondMove"> piedra</button>
-                    <button class="stone" data-bind="click: $parent.secondMove"> papel</button>
-                    <button class="stone" data-bind="click: $parent.secondMove"> tijera</button>
-                    <button class="stone" data-bind="click: function(){ $parent.moveSecondGame($data)}"> Move </button>
+                    <div class="buttons">
+                        <div>
+                            <p class="paraph"> Choose your option here: </p>
+                        </div>
+                        <div class="button-movements">
+                            <button class="stone" data-bind="click: $parent.secondMove"> piedra</button>
+                            <button class="stone" data-bind="click: $parent.secondMove"> papel</button>
+                            <button class="stone" data-bind="click: $parent.secondMove"> tijera</button>
+                        </div>
+                        <div>
+                            <button class="button-move" data-bind="click: function(){ $parent.moveSecondGame($data)}"> Move </button>
+                        </div>
+                    </div>
+
+
                     <!-- /ko -->
+                    <div class="info-message">
+                        <span data-bind="html : infoMessage" style="color : blue"></span>
+                    </div>
                 </ol>
             </form>
         </div>

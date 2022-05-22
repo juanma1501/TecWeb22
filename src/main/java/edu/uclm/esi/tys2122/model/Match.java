@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.google.gson.Gson;
+import edu.uclm.esi.tys2122.StonePaperScissor.StonePaperScissorMatch;
 import edu.uclm.esi.tys2122.http.Manager;
 import edu.uclm.esi.tys2122.tictactoe.TictactoeMatch;
 import org.json.JSONArray;
@@ -114,6 +115,63 @@ public abstract class Match {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+        }
+    }
+
+    public void notifyNewStateSecondGame(String userId) {
+        JSONObject jso = new JSONObject();
+        JSONObject movement = new JSONObject();
+        jso.put("type", "BOARD");
+        jso.put("id", this.id);
+
+        jso.put("board", movement);
+        jso.put("playerWithTurn", this.playerWithTurn.getName());
+
+        StonePaperScissorMatch match = (StonePaperScissorMatch) Manager.get().findMatch(this.id);
+
+        if(match.getWinner() != null) {
+            jso.put("winner", match.getWinner().getName());
+            jso.put("looser", match.getLooser().getName());
+            Gson gson = new Gson();
+            JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getArray()));
+            movement.put("squares", jsonArray);
+        }else{
+            jso.put("draw", match.isDraw());
+            Gson gson = new Gson();
+            JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getArray()));
+            movement.put("squares", jsonArray);
+        }
+
+        for (User player : this.players) {
+            try {
+                player.sendMessage(jso);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void notifyMessage(String userId, String message) {
+        JSONObject jso = new JSONObject();
+        JSONObject movement = new JSONObject();
+        jso.put("type", "BOARD");
+        jso.put("id", this.id);
+        //jso.put("board", this.board);
+        Gson gson = new Gson();
+        JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getSquares()));
+        movement.put("squares", jsonArray);
+        jso.put("board", movement);
+        jso.put("playerWithTurn", this.playerWithTurn.getName());
+        jso.put("message", message);
+
+        for (User player : this.players) {
+            try {
+                player.sendMessage(jso);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
 

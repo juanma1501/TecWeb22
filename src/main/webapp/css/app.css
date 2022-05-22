@@ -80,8 +80,37 @@
 }
 
 .stone{
-  padding: 5px;
-  border: 1px solid black;
+  padding: 9px;
+  border: 1px solid #3e5f8a;
   border-radius: 3px;
-  background-color: #2892fc;
+  background-color: #a0c5f7;
+  font-weight: bold;
+}
+
+.buttons{
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-movements{
+  padding: 10px;
+}
+
+.button-move{
+  font-weight: bold;
+  padding: 8px;
+  background-color: #312d2a;
+  color: white;
+  border-radius: 5px;
+}
+
+.paraph{
+  font-size: 20px;
+}
+
+.info-message{
+  text-align: center;
 }

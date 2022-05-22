@@ -86,26 +86,30 @@ public class GamesController extends CookiesController {
 		gamesService.put(match);
 		return match;
 	}
-	
-	/*@PostMapping("/move")
-	public Match move(HttpSession session, @RequestBody Map<String, Object> movement) throws Exception {
-		User user = (User) session.getAttribute("user");
-		JSONObject jso = new JSONObject(movement);
-		Match match = gamesService.getMatch(jso.getString("matchId"));
-		match.move(user.getId(), jso);
-		match.notifyNewState(user.getId());
-		return match;
-	}*/
+
 	@PostMapping("/move")
-	public void move(HttpSession session, @RequestBody Map<String, Object> movement) throws Exception {
+	public Match move(HttpSession session, @RequestBody Map<String, Object> movement) throws Exception {
 		User user = (User) session.getAttribute("user");
 		JSONObject jso = new JSONObject(movement);
 		System.out.println("User: "+ user+" ;; "+ jso);
 		Match match = gamesService.getMatch(jso.getString("matchId"));
 		System.out.println(match.getId());
 		match.move(user.getId(), jso);
-		//match.notifyNewState(user.getId());
-		//return match;
+		match.notifyNewState(user.getId());
+		return match;
+	}
+
+	@PostMapping("/move2")
+	public Match move2(HttpSession session, @RequestBody Map<String, Object> movement) throws Exception {
+		User user = (User) session.getAttribute("user");
+		JSONObject jso = new JSONObject(movement);
+		System.out.println("User: "+ user+" ;; "+ jso);
+		Match match = gamesService.getMatch(jso.getString("matchId"));
+		System.out.println(match.getId());
+		match.move(user.getId(), jso);
+		match.notifyNewStateSecondGame(user.getId());
+		//if finish : notifytablero
+		return match;
 	}
 	
 	@GetMapping("/findMatch/{matchId}")

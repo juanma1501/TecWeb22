@@ -15,12 +15,13 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             self.mensaje = ko.observable(null);
             self.error = ko.observable(null);
 
+            self.infoMessage = ko.observable(null);
+
             self.handMove = ko.observable(null);
 
             self.secondMove = function(data,event){
                 self.handMove(event.target.innerText)
                 console.log(event.target.innerText)
-                console.log()
             }
 
             // Header Config
@@ -100,6 +101,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             let ws = new WebSocket("ws://localhost/wsGenerico");
             ws.onopen = function (event) {
                 self.mensaje("Conexión establecida")
+                self.infoMessage("One player missing")
 
             }
             ws.onmessage = function (event) {
@@ -115,6 +117,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
                             console.log("JUGADORES DE UNA PARTIDA " + match.players())
                             self.mensaje("Jugando")
+                            self.infoMessage("Playing")
                             //self.refresh()
                         }
                     })
@@ -125,6 +128,10 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                         if (self.matches()[index].id() == msg.id) {
 
                             console.log(self.matches()[index].name)
+
+                            console.log(msg.message)
+                            console.log(msg.draw)
+                            self.infoMessage(msg.message)
 
                             console.log("EL TABLERO QUE LLEGA ES:")
                             console.log(msg)
@@ -163,6 +170,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             }
 
             partida.draw(msg.draw)
+
         }
 
         joinGame(game) {
@@ -253,42 +261,47 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             let move;
             let hand = self.handMove()
             console.log(self.handMove())
-            //Piedra --> 0 ; Papel --> 1; Tijera --> 2
+            //Piedra --> 1 ; Papel --> 2; Tijera --> 3
 
             if(hand == 'piedra'){
-                move = 0
+                move = 1
 
             }else if(hand == 'papel'){
-                move = 1
-            }else{
                 move = 2
+            }else{
+                move = 3
             }
 
-            console.log(move)
+            console.log("Movement: " +move)
 
-            console.log(match.id())
+            console.log("Match ID: " + match.id())
 
-            let infoMove = {
-                matchId: match.id(),
-                move: move,
-            };
+            console.log("Ready? " + match.ready())
 
-            console.log(infoMove)
+            if (match.ready()){
+                let infoMove = {
+                    matchId: match.id(),
+                    move: move,
+                };
 
-            let data = {
-                type: "post",
-                url: "/games/move",
-                data: JSON.stringify(infoMove),
-                contentType: "application/json",
-                success: function (response) {
-                    console.log(response);
-                },
-                error: function (response) {
-                    console.error(response);
-                    self.error(response);
+                let data = {
+                    type: "post",
+                    url: "/games/move2",
+                    data: JSON.stringify(infoMove),
+                    contentType: "application/json",
+                    success: function (response) {
+                        console.log(response);
+                    },
+                    error: function (response) {
+                        console.error(response);
+                        self.error(response);
+                    }
                 }
+                $.ajax(data);
+            }else{
+                self.infoMessage("Match isn´t ready yet.")
             }
-            $.ajax(data);
+
         }
     }
 
