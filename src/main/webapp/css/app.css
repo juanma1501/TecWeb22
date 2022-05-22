@@ -116,16 +116,16 @@
 }
 
 .TicTacToeSquare .paper {
-
+  font-size: 4rem;
   color: #73a029;
 }
 
-.TicTacToeSquare .stone{
-
+.TicTacToeSquare .stone-icon{
+  font-size: 4rem;
   color: #73a029;
 }
 
 .TicTacToeSquare .scissor{
-
+  font-size: 4rem;
   color: #73a029;
 }
