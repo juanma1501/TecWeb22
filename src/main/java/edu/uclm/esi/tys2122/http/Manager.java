@@ -44,6 +44,7 @@ public class Manager {
 	private Manager() {
 		this.games = new Vector<>();
 		this.httpSessions = new ConcurrentHashMap<>();
+		this.chatSessions = new Vector<>();
 		this.ajedrezSessionsPorHttp = new ConcurrentHashMap<>();
 		this.ajedrezSessionsPorWs = new ConcurrentHashMap<>();
 		this.matches = new ConcurrentHashMap<>();
@@ -53,6 +54,29 @@ public class Manager {
 			System.err.println("Error al leer el fichero parametros.txt: " + e.getMessage());
 			System.exit(-1);
 		}
+	}
+
+	public void addChatSession(WebSocketSession wsSession) {
+		this.chatSessions.add(wsSession);
+	}
+
+	public void removeChatSession(WebSocketSession wssession) {
+		Vector<WebSocketSession> cSessions = this.getChatSessions();
+		for(WebSocketSession ws : cSessions) {
+			if(ws.getId() == wssession.getId()) {
+				cSessions.remove(ws);
+				break;
+			}
+		}
+
+	}
+
+	public void setChatSessions(Vector<WebSocketSession> chatSessions) {
+		this.chatSessions = chatSessions;
+	}
+
+	public Vector<WebSocketSession> getChatSessions() {
+		return chatSessions;
 	}
 
 	public void put(String id, Match match) {

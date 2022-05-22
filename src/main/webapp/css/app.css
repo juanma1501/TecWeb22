@@ -71,3 +71,78 @@
   font-size: 4rem;
   color: #73a029;
 }
+
+.Chat {
+  color: white;
+  margin-left: 20px;
+  padding: 20px;
+  background: aliceblue;
+  border-radius: 20px;
+  position: fixed;
+  right: 170px;
+  top: 140px;
+}
+
+.Chat .Title {
+  padding-top: 20px;
+}
+
+.Chat .ChatContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 10px;
+  min-height: 500px;
+  max-height: 500px;
+  min-width: 310px;
+  max-width: 310px;
+  overflow: scroll;
+  scroll-behavior: smooth;
+  box-shadow: 0px 0px 12px cadetblue;
+}
+
+.Chat .ChatContent .Message {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin: 5px;
+  line-height: 17px;
+}
+
+.Chat .ChatContent .Message .User {
+  color:  #6200ff;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.Chat .ChatContent .Message .Text {
+  color: brown;
+}
+
+.Chat .ChatInput {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.Chat .ChatInput .Input {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  padding: 10px 35px 10px 10px;
+  margin-right: -20px;
+  color: brown;
+  box-shadow: 0px 0px 12px #4440c0
+}
+
+.Chat .ChatInput button {
+  position: relative;
+  color: #6200ff;
+  z-index: 1;
+  right: 10px;
+}
+
+.Chat .ChatInput button:hover {
+  color: #a64bf4;
+}

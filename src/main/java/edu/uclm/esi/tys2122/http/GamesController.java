@@ -1,5 +1,6 @@
 package edu.uclm.esi.tys2122.http;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,8 @@ import edu.uclm.esi.tys2122.model.User;
 import edu.uclm.esi.tys2122.services.GamesService;
 import edu.uclm.esi.tys2122.services.UserService;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 @CrossOrigin
 @RestController
@@ -109,6 +112,27 @@ public class GamesController extends CookiesController {
 			match = game.getPendingMatches().get(0);
 		}
 		return match;
+	}
+
+	@PostMapping("/sendMessageChat")
+	public void sendMessageChat(HttpSession session, @RequestBody Map<String, Object> messageInfo) {
+		JSONObject jso = new JSONObject(messageInfo);
+		String msg = jso.getString("msg");
+		User user = (User) session.getAttribute("user");
+
+		JSONObject jsoMsg = new JSONObject();
+		jsoMsg.put("user", user.getName());
+		jsoMsg.put("msg", msg);
+		byte[] payload = jsoMsg.toString().getBytes();
+		TextMessage message = new TextMessage(payload);
+
+		for (WebSocketSession ws : Manager.get().getChatSessions()) {
+			try {
+				ws.sendMessage(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

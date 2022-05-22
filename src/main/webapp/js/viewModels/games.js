@@ -30,8 +30,19 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 })
             });
 
+            //Vamos a crear un observableArray al que se irán sumando mensajes
+            self.chat = ko.observableArray([
+                {
+                    user: "Pixelillos 👻",
+                    msg: "Bienvenido a la partida, soy Pixelillos, el receptor de jugadores en el chat. !Pásalo en grande! 💯",
+                },
+            ]);
+
+            self.chatBoxInput = ko.observable(null);
+
 
             self.conectarAWebSocket();
+            self.conectarAChat();
 
             self.refresh = function (array) {
                 let data = array().slice(0);
@@ -61,6 +72,61 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             }
             $.ajax(data);
         };
+
+        handleScrollBottom() {
+            var objDiv = document.getElementById("chatContent");
+            objDiv.scrollTop = objDiv.scrollHeight;
+        }
+
+        handleEnterChat(d, e) {
+            let self = this;
+            if (e.keyCode === 13) self.sendMessage();
+        }
+
+        conectarAChat() {
+            let self = this;
+
+            let ws = new WebSocket("ws://localhost/wsChat");
+
+            console.log("Conectado a chat con éxito")
+            console.log(ws)
+
+            ws.onopen = function (event) {};
+            ws.onmessage = function (event) {
+                let msg = JSON.parse(event.data);
+                self.addMsgChat(msg);
+                self.handleScrollBottom();
+            };
+        }
+
+        addMsgChat(msg) {
+            let self = this;
+
+            self.chat().push(msg);
+            self.chat.valueHasMutated();
+        }
+
+        sendMessage() {
+            let self = this;
+            if (self.chatBoxInput() != "" && !/^\s+$/.test(self.chatBoxInput())) {
+
+                let info = {
+                    msg: self.chatBoxInput(),
+                };
+
+                let data = {
+                    type: "post",
+                    url: "games/sendMessageChat",
+                    data: JSON.stringify(info),
+                    contentType: "application/json",
+                    success: function (response) {
+                        self.chatBoxInput("");
+                    },
+                    error: function (response) {},
+                };
+                $.ajax(data);
+            }
+        }
 
         mover(match) {
             let self = this;
@@ -185,6 +251,20 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 }
             };
             $.ajax(data);
+        }
+
+        removeMatch(matchId) {
+            let self = this;
+            for (let i = 0; i < self.matches().length; i++)
+                if (self.matches()[i].id == matchId) {
+                    self.matches.splice(i, 1);
+                    break;
+                }
+        }
+
+        gameWon(matchId) {
+            let self = this;
+            self.removeMatch(matchId);
         }
 
         joinGameCPU(game) {
