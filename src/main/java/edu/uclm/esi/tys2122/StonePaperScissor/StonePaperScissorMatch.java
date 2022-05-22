@@ -80,7 +80,6 @@ public class StonePaperScissorMatch extends Match {
 
         if(this.filled()){
             checkWinner(user1, user2);
-            this.notifyBoard(userId);
             //throw new Exception("La partida ya terminó");
         }
     }
@@ -132,11 +131,15 @@ public class StonePaperScissorMatch extends Match {
         return winner;
     }
 
-    public User getLooser() {
-        return looser;
+    public User getLooserUser() {
+        return this.looser;
     }
 
     public boolean isDraw() {
         return draw;
+    }
+
+    public boolean getDraw(){
+        return this.draw;
     }
 }

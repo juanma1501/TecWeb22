@@ -128,45 +128,24 @@ public abstract class Match {
         StonePaperScissorMatch match = (StonePaperScissorMatch) Manager.get().findMatch(this.id);
 
         if(match.getFilled()){
+
+            if(match.getWinner() != null){
+                String winner = match.getWinner().getName();
+                String looser = match.getLooserUser().getName();
+                boolean draw = match.getDraw();
+
+                jso.put("winner", winner);
+                jso.put("looser", looser);
+                jso.put("draw", draw);
+            }else{
+                boolean draw = match.getDraw();
+                jso.put("draw", draw);
+            }
+
+
             Gson gson = new Gson();
             JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getArray()));
             jso.put("board", jsonArray);
-        }
-
-
-        for (User player : this.players) {
-            try {
-                player.sendMessage(jso);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void notifyBoard(String userId) {
-        JSONObject jso = new JSONObject();
-        JSONObject movement = new JSONObject();
-        jso.put("type", "BOARD");
-        jso.put("id", this.id);
-
-        jso.put("board", movement);
-        jso.put("playerWithTurn", this.playerWithTurn.getName());
-
-        StonePaperScissorMatch match = (StonePaperScissorMatch) Manager.get().findMatch(this.id);
-
-        if(match.getWinner() != null) {
-            jso.put("winner", match.getWinner().getName());
-            jso.put("looser", match.getLooser().getName());
-            jso.put("draw", match.isDraw());
-            Gson gson = new Gson();
-            JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getArray()));
-            jso.put("squares", jsonArray);
-        }else{
-            jso.put("draw", match.isDraw());
-            Gson gson = new Gson();
-            JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getArray()));
-            jso.put("squares", jsonArray);
         }
 
         for (User player : this.players) {
