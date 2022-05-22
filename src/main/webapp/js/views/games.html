@@ -90,39 +90,10 @@
                         <button data-bind="click : function() { $parent.reload($data); }">Recargar partida</button>
                     </li>
 
-
                     <!-- ko with : board -->
                     <div class="Board">
                         <h1>Tablero</h1>
-                        <!-- ko foreach : squares -->
-                        <div class="Row">
-                            <!-- ko foreach : $data -->
-                            <!-- ko if : $data == 0 -->
-                            <div class="TicTacToeSquare TicTacToeBackground">
-
-                            </div>
-                            <!-- /ko-->
-                            <!-- ko if : $data == 1 -->
-                            <div class="TicTacToeSquare TicTacToeBackground">
-                                <i class="uil uil-times Cross"></i>
-                            </div>
-                            <!-- /ko-->
-
-                            <!-- ko if : $data == 2 -->
-                            <div class="TicTacToeSquare TicTacToeBackground">
-                                <i class="uil uil-circle Circle"></i>
-                            </div>
-                            <!-- /ko-->
-                            <!-- /ko -->
-                        </div>
-                        <!-- /ko -->
-                    </div>
-                    <!-- /ko -->
-
-                    <!-- ko with : board -->
-                    <div class="Board">
-                        <h1>Tablero</h1>
-                        <!-- ko with : squares -->
+                        <!-- ko for each : squares -->
                         <div class="Row">
                             <!-- ko foreach : $data -->
                             <!-- ko if : $data == 1 -->

@@ -124,6 +124,9 @@ public class StonePaperScissorMatch extends Match {
                     return false;
         return true;
     }
+    public boolean getFilled() {
+        return this.filled();
+    }
 
     public User getWinner() {
         return winner;

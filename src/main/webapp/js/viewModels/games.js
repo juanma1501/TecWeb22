@@ -138,6 +138,9 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
                             console.log(self.matches()[index].playerWithTurn(msg.playerWithTurn))
 
+                            self.matches()[index].playerWithTurn(msg.playerWithTurn)
+                            self.matches()[index].board(msg.board)
+
                             self.actualizarMovimiento(self.matches()[index], msg)
 
                             console.log(self.matches()[0])
