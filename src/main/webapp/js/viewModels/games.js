@@ -136,7 +136,11 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                             console.log("EL TABLERO QUE LLEGA ES:")
                             console.log(msg)
 
+                            console.log(self.matches()[index].playerWithTurn(msg.playerWithTurn))
+
                             self.actualizarMovimiento(self.matches()[index], msg)
+
+                            console.log(self.matches()[0])
 
                         }
                     })
@@ -162,6 +166,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
         actualizarMovimiento(partida, msg){
             partida.board(msg.board)
+            console.log("Jugador actual con turno: " + msg.playerWithTurn)
             partida.setTurn(msg.playerWithTurn)
 
             if (msg.winner != null){

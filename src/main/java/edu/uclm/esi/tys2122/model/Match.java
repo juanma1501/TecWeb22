@@ -123,6 +123,29 @@ public abstract class Match {
         JSONObject movement = new JSONObject();
         jso.put("type", "BOARD");
         jso.put("id", this.id);
+        jso.put("board", movement);
+        jso.put("playerWithTurn", this.playerWithTurn.getName());
+
+        System.out.println("El jugador con turno es: " + this.playerWithTurn.getName());
+
+        StonePaperScissorMatch match = (StonePaperScissorMatch) Manager.get().findMatch(this.id);
+
+
+        for (User player : this.players) {
+            try {
+                player.sendMessage(jso);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void notifyBoard(String userId) {
+        JSONObject jso = new JSONObject();
+        JSONObject movement = new JSONObject();
+        jso.put("type", "BOARD");
+        jso.put("id", this.id);
 
         jso.put("board", movement);
         jso.put("playerWithTurn", this.playerWithTurn.getName());
@@ -132,6 +155,7 @@ public abstract class Match {
         if(match.getWinner() != null) {
             jso.put("winner", match.getWinner().getName());
             jso.put("looser", match.getLooser().getName());
+            jso.put("draw", match.isDraw());
             Gson gson = new Gson();
             JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getArray()));
             movement.put("squares", jsonArray);

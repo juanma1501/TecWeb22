@@ -114,3 +114,18 @@
 .info-message{
   text-align: center;
 }
+
+.TicTacToeSquare .paper {
+
+  color: #73a029;
+}
+
+.TicTacToeSquare .stone{
+
+  color: #73a029;
+}
+
+.TicTacToeSquare .scissor{
+
+  color: #73a029;
+}

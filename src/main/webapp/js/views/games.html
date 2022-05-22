@@ -118,6 +118,33 @@
                         <!-- /ko -->
                     </div>
                     <!-- /ko -->
+
+                    <!-- ko with : board -->
+                    <div class="Board">
+                        <h1>Tablero</h1>
+                        <!-- ko with : squares -->
+                        <div class="Row">
+                            <!-- ko foreach : $data -->
+                            <!-- ko if : $data == 1 -->
+                            <div class="TicTacToeSquare TicTacToeBackground">
+                                <link class="stone" rel="icon" href="../../css/images/roca.png">
+                            </div>
+                            <!-- /ko-->
+                            <!-- ko if : $data == 2 -->
+                            <div class="TicTacToeSquare TicTacToeBackground">
+                                <link class="paper" rel="icon" href="../../css/images/papel.png">
+                            </div>
+                            <!-- /ko-->
+                            <!-- ko if : $data == 3 -->
+                            <div class="TicTacToeSquare TicTacToeBackground">
+                                <link class="scissor" rel="icon" href="../../css/images/tijeras.png">
+                            </div>
+                            <!-- /ko-->
+                            <!-- /ko -->
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                    <!-- /ko -->
                     <div class="buttons">
                         <div>
                             <p class="paraph"> Choose your option here: </p>
