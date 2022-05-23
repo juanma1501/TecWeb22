@@ -90,33 +90,65 @@
                         <br>
                         <button data-bind="click : function() { $parent.reload($data); }">Recargar partida</button>
                     </li>
+                    <!-- ko if : game == "Tres en raya"-->
+                        <!-- ko with : board -->
+                        <div class="Board">
+                            <h1>Tablero</h1>
+                            <!-- ko foreach : squares -->
+                            <div class="Row">
+                                <!-- ko foreach : $data -->
+                                <!-- ko if : $data == 0 -->
+                                <div class="TicTacToeSquare TicTacToeBackground">
 
-                    <!-- ko with : board -->
-                    <div class="Board">
-                        <h1>Tablero</h1>
-                        <!-- ko for each : squares -->
-                        <div class="Row">
-                            <!-- ko foreach : $data -->
-                            <!-- ko if : $data == 1 -->
-                            <div class="TicTacToeSquare TicTacToeBackground">
-                                <i class="uil uil-bowling-ball stone-icon"></i>
+                                </div>
+                                <!-- /ko-->
+                                <!-- ko if : $data == 1 -->
+                                <div class="TicTacToeSquare TicTacToeBackground">
+                                    <i class="uil uil-times Cross"></i>
+                                </div>
+                                <!-- /ko-->
+
+                                <!-- ko if : $data == 2 -->
+                                <div class="TicTacToeSquare TicTacToeBackground">
+                                    <i class="uil uil-circle Circle"></i>
+                                </div>
+                                <!-- /ko-->
+                                <!-- /ko -->
                             </div>
-                            <!-- /ko-->
-                            <!-- ko if : $data == 2 -->
-                            <div class="TicTacToeSquare TicTacToeBackground">
-                                <i class="uil uil-toilet-paper paper"></i>
-                            </div>
-                            <!-- /ko-->
-                            <!-- ko if : $data == 3 -->
-                            <div class="TicTacToeSquare TicTacToeBackground">
-                                <i class="uil uil-restaurant scissor"></i>
-                            </div>
-                            <!-- /ko-->
                             <!-- /ko -->
                         </div>
                         <!-- /ko -->
-                    </div>
                     <!-- /ko -->
+
+                    <!-- ko if : game == "Piedra papel tijera"-->
+                        <!-- ko with : board -->
+                        <div class="Board">
+                            <h1>Tablero</h1>
+                            <!-- ko for each : squares -->
+                            <div class="Row">
+                                <!-- ko foreach : $data -->
+                                <!-- ko if : $data == 1 -->
+                                <div class="TicTacToeSquare TicTacToeBackground">
+                                    <i class="uil uil-bowling-ball stone-icon"></i>
+                                </div>
+                                <!-- /ko-->
+                                <!-- ko if : $data == 2 -->
+                                <div class="TicTacToeSquare TicTacToeBackground">
+                                    <i class="uil uil-toilet-paper paper"></i>
+                                </div>
+                                <!-- /ko-->
+                                <!-- ko if : $data == 3 -->
+                                <div class="TicTacToeSquare TicTacToeBackground">
+                                    <i class="uil uil-restaurant scissor"></i>
+                                </div>
+                                <!-- /ko-->
+                                <!-- /ko -->
+                            </div>
+                            <!-- /ko -->
+                        </div>
+                        <!-- /ko -->
+
+
                     <div class="buttons">
                         <div>
                             <p class="paraph"> Choose your option here: </p>
@@ -130,7 +162,7 @@
                             <button class="button-move" data-bind="click: function(){ $parent.moveSecondGame($data)}"> Move </button>
                         </div>
                     </div>
-
+                    <!-- /ko -->
 
                     <!-- /ko -->
                     <div class="info-message">

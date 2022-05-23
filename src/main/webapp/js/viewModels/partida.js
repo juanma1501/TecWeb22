@@ -1,5 +1,5 @@
 class Partida{
-    constructor(ko, response) {
+    constructor(ko, response, game) {
         this.id = ko.observable(response.id)
         this.board = ko.observable(response.board)
         this.ready = ko.observable(response.ready)
@@ -8,6 +8,7 @@ class Partida{
         this.winner = ko.observable(response.winner)
         this.looser = ko.observable(response.looser)
         this.draw = ko.observable(response.draw)
+        this.game = game
     }
 
     unete($, ko, game){

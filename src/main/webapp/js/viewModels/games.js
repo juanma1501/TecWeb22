@@ -72,6 +72,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 url: "/games/getGames",
                 success: function (response) {
                     self.games(response);
+                    console.log(response)
                 },
                 error: function (response) {
                     console.error(response);
@@ -257,7 +258,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 success: function (response) {
                     //VAMOS A CREAR UN PARTIDO DONDE TODOS SEAN OBSEVARBLES PARA PODER
                     //ACTUALIZAR CUANDO UN JUGADOR SE UNA
-                    let match = new Partida(ko, response)
+                    let match = new Partida(ko, response, game.name)
 
                     console.log("INFORMACION DE LA RAW RESPONSE ABAJO")
                     console.log(match);
