@@ -60,7 +60,7 @@
 
                 <ol>
                     <!-- ko foreach : matches -->
-                    <li>
+                    <li class="div-partida">
                         <div>Id: <label data-bind="html : id"></label></div>
 
                         <div>Preparada: <span data-bind="html : ready"></span></div>
@@ -81,19 +81,22 @@
 
                         <div>Acabó en empate: <span data-bind="html : draw"></span></div>
 
+                        <!-- ko if : game_ == "Tres en raya"-->
                         <div class="wrap-input100 validate-input" data-validate="Password is required">
                             <input data-bind="value : $parent.x" type="number" size="1" placeholder="X" class="inputº">
                             <span class="focus-input100"></span>
                         </div>
+
                         <input data-bind="value : $parent.y" type="number" size="1" placeholder="Y">
                         <button data-bind="click : function() { $parent.mover($data); }">Mover</button>
                         <br>
                         <button data-bind="click : function() { $parent.reload($data); }">Recargar partida</button>
                     </li>
-                    <!-- ko if : game == "Tres en raya"-->
+
+                    <h1 data-bind="html : game"></h1>
                         <!-- ko with : board -->
                         <div class="Board">
-                            <h1>Tablero</h1>
+
                             <!-- ko foreach : squares -->
                             <div class="Row">
                                 <!-- ko foreach : $data -->
@@ -120,10 +123,10 @@
                         <!-- /ko -->
                     <!-- /ko -->
 
-                    <!-- ko if : game == "Piedra papel tijera"-->
+                    <!-- ko if : game_ == "Piedra papel tijera"-->
+                    <h1 data-bind="html : game"></h1>
                         <!-- ko with : board -->
                         <div class="Board">
-                            <h1>Tablero</h1>
                             <!-- ko for each : squares -->
                             <div class="Row">
                                 <!-- ko foreach : $data -->

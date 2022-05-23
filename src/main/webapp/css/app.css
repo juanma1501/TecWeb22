@@ -197,3 +197,9 @@
   font-size: 4rem;
   color: #73a029;
 }
+
+.div-partida{
+  border-top: solid 4px blue;
+  padding-top: 20px;
+  margin-top: 20px;
+}

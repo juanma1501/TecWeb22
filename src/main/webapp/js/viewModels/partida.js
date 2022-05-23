@@ -8,7 +8,8 @@ class Partida{
         this.winner = ko.observable(response.winner)
         this.looser = ko.observable(response.looser)
         this.draw = ko.observable(response.draw)
-        this.game = game
+        this.game = ko.observable(game)
+        this.game_ = game
     }
 
     unete($, ko, game){
