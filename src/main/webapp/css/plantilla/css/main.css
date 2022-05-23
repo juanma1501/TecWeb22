@@ -526,3 +526,15 @@ iframe {
     width: 100%;
   }
 }
+
+
+/*//////////////////////////////////////////////////////////////////
+[ Custom CSS ]*/
+.chatDiv{
+  color: #b1dd88;
+  background: #b1dd88;
+  position: inherit;
+  margin-left: 120px;
+  width: 13%;
+}
+

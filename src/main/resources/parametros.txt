@@ -1,3 +1,19 @@
 {
+    "home" : "http://localhost",
+    "login" : "?ojr=login",
 
+    "email" : {
+    		"host" : "smtp.gmail.com",
+    		"startTTLS" : "true",
+    		"port" : "587",
+    		"sender" : "minijuegostec22@gmail.com",
+    		"serverUser" : "minijuegostec22@gmail.com",
+    		"auth" : "true",
+    		"pwd" : "minijuegos22",
+    		"fallback" : "true",
+    		"registerMsgTopic": "Dar de alta una cuenta",
+    		"registerMsgContent" : "Creación de cuenta hecha con éxito! Que lo pases genial :)",
+    		"recoveryMsgTopic": "Recuperación de contraseña",
+    		"recoveryMsgContent" : "Para recuperar tu contraseña pulsa en el siguiente link: "
+    	},
 }

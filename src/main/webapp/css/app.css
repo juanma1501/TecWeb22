@@ -23,29 +23,18 @@
 }
 
 /* **********************************************************
-                       CSS DEL LOGIN
+                       CSS DEL TABLERO
 *************************************************************/
-
-
-
-
-
-
-
 .Board {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+
   margin: 20px 0px 20px 0px;
 }
 
 .Row {
   display: flex;
   flex-direction: row;
-  padding: 15px;
-  align-items: center;
-  justify-content: center;
 }
 
 .Square {
@@ -67,7 +56,6 @@
   border: solid white 5px;
   border-radius: 10px;
   box-shadow: 0px 0px 12px cadetblue;
-  margin-left: 5px;
 }
 
 .TicTacToeBackground {
@@ -80,57 +68,6 @@
 }
 
 .TicTacToeSquare .Circle {
-  font-size: 4rem;
-  color: #73a029;
-}
-
-.stone{
-  padding: 9px;
-  border: 1px solid #3e5f8a;
-  border-radius: 3px;
-  background-color: #a0c5f7;
-  font-weight: bold;
-}
-
-.buttons{
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.button-movements{
-  padding: 10px;
-}
-
-.button-move{
-  font-weight: bold;
-  padding: 8px;
-  background-color: #312d2a;
-  color: white;
-  border-radius: 5px;
-}
-
-.paraph{
-  font-size: 20px;
-}
-
-.info-message{
-  text-align: center;
-}
-
-.TicTacToeSquare .paper {
-  font-size: 4rem;
-  color: #73a029;
-}
-
-.TicTacToeSquare .stone-icon{
-  font-size: 4rem;
-  color: #73a029;
-}
-
-.TicTacToeSquare .scissor{
   font-size: 4rem;
   color: #73a029;
 }

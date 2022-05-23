@@ -7,20 +7,27 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpSession;
 
+import edu.uclm.esi.tys2122.dao.UserRepository;
 import edu.uclm.esi.tys2122.model.Match;
+import edu.uclm.esi.tys2122.services.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import edu.uclm.esi.tys2122.model.Game;
 import edu.uclm.esi.tys2122.model.User;
 import edu.uclm.esi.tys2122.websockets.WrapperSession;
+import org.springframework.web.socket.WebSocketSession;
 
 @Component
 public class Manager {
 	
 	private Vector<Game> games;
+
+	@Autowired
+	private UserRepository userRepository;
 	
 	private JSONObject configuration;
 
@@ -32,9 +39,12 @@ public class Manager {
 
 	private ConcurrentHashMap<String, Match> matches;
 
+	private Vector<WebSocketSession> chatSessions;
+
 	private Manager() {
 		this.games = new Vector<>();
 		this.httpSessions = new ConcurrentHashMap<>();
+		this.chatSessions = new Vector<>();
 		this.ajedrezSessionsPorHttp = new ConcurrentHashMap<>();
 		this.ajedrezSessionsPorWs = new ConcurrentHashMap<>();
 		this.matches = new ConcurrentHashMap<>();
@@ -46,12 +56,39 @@ public class Manager {
 		}
 	}
 
+	public void addChatSession(WebSocketSession wsSession) {
+		this.chatSessions.add(wsSession);
+	}
+
+	public void removeChatSession(WebSocketSession wssession) {
+		Vector<WebSocketSession> cSessions = this.getChatSessions();
+		for(WebSocketSession ws : cSessions) {
+			if(ws.getId() == wssession.getId()) {
+				cSessions.remove(ws);
+				break;
+			}
+		}
+
+	}
+
+	public void setChatSessions(Vector<WebSocketSession> chatSessions) {
+		this.chatSessions = chatSessions;
+	}
+
+	public Vector<WebSocketSession> getChatSessions() {
+		return chatSessions;
+	}
+
 	public void put(String id, Match match) {
 		this.matches.put(id, match);
 	}
 
 	public Match findMatch(String id){
 		return this.matches.get(id);
+	}
+
+	public UserRepository getUserRepository() {
+		return userRepository;
 	}
 
 	private static class ManagerHolder {
