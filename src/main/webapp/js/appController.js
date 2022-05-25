@@ -24,21 +24,12 @@ define(['knockout', 'ojs/ojcorerouter', 'ojs/ojmodulerouter-adapter', 'ojs/ojkno
             // Save the theme so we can perform platform specific navigational animations
             var platform = ThemeUtils.getThemeTargetPlatform();
 
-            var navDataList = [
-                {path: '', redirect: 'login'},
-                {path: 'login', detail: {label: 'Login', iconClass: 'oj-ux-ico-bar-chart'}},
-                {path: 'register', detail: {label: 'Crear cuenta', iconClass: 'oj-ux-ico-fire'}},
-                {path: 'resetPassword', detail: {label: 'Resetear contraseña', iconClass: 'uil uil-key-skeleton'}},
-                {path: 'games', detail: {label: 'Juegos', iconClass: 'oj-ux-ico-fire'}},
-                {path: 'about', detail: {label: 'About', iconClass: 'oj-ux-ico-information-s'}}
-            ];
-
             var navData = [
                 {path: '', redirect: 'login'},
                 {path: 'login', detail: {label: 'Login', iconClass: 'oj-ux-ico-bar-chart'}},
                 {path: 'register', detail: {label: 'Crear cuenta', iconClass: 'oj-ux-ico-fire'}},
-                {path: 'changePassword', detail: {label: 'Cambiar contraseña', iconClass: 'uil uil-key-skeleton'}},
                 {path: 'resetPassword', detail: {label: 'Resetear contraseña', iconClass: 'uil uil-key-skeleton'}},
+                {path: 'changePassword', detail: {label: 'Cambiar contraseña', iconClass: 'uil uil-key-skeleton'}},
                 {path: 'games', detail: {label: 'Juegos', iconClass: 'oj-ux-ico-fire'}},
                 {path: 'about', detail: {label: 'About', iconClass: 'oj-ux-ico-information-s'}}
             ];

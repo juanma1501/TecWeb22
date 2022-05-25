@@ -1,6 +1,7 @@
 package edu.uclm.esi.tys2122.http;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
@@ -151,6 +152,35 @@ public class GamesController extends CookiesController {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@GetMapping("/meRindo/{matchId}")
+	public void surrender(HttpSession session, @PathVariable String matchId) throws Exception {
+		User user = (User) session.getAttribute("user");
+		Match partidaACerrar = gamesService.getMatch(matchId);
+		//partidaACerrar.closeMatchByUser(user);
+	}
+
+	@GetMapping("/getStatistics")
+	public int[] getStatistics(HttpSession session) {
+		int[] statistics = {0, 0, 0, 0, 0};
+		User user = null;
+		user = (User) session.getAttribute("user");
+
+		/*
+		if (user != null) {
+			Object[] array = (Object[]) Manager.get().getMatchRepository().getStatistics(user.getId())[0];
+			boolean token = false;
+
+			for (int i = 0; i < array.length; i++) {
+				token = ((BigInteger) array[i]).intValue() == 0 ? token : true;
+				statistics[i + 1] = ((BigInteger) array[i]).intValue();
+			}
+			statistics[0] = token ? 1 : 0;
+		}
+		return statistics;	}
+		 */
+		return statistics;
 	}
 
 }

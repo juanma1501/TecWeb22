@@ -2,6 +2,8 @@ package edu.uclm.esi.tys2122.tictactoe;
 
 import java.security.SecureRandom;
 
+import edu.uclm.esi.tys2122.dao.MatchRepository;
+import edu.uclm.esi.tys2122.http.Manager;
 import org.json.JSONObject;
 
 import edu.uclm.esi.tys2122.model.Board;
@@ -96,7 +98,7 @@ public class TictactoeMatch extends Match {
 		}
 		if (this.winner!=null) {
 			this.looser = this.winner==this.players.get(0) ? this.players.get(1) : this.players.get(0);
-			System.out.println(this.looser.getName());
+			Manager.get().getMatchRepository().saveMatch(this.getGame(), this.getId(), this.getLooser(), this.getWinner(), this.isDraw());
 		}
 
 

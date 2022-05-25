@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpSession;
 
+import edu.uclm.esi.tys2122.dao.MatchRepository;
 import edu.uclm.esi.tys2122.dao.UserRepository;
 import edu.uclm.esi.tys2122.model.Match;
 import edu.uclm.esi.tys2122.services.UserService;
@@ -28,6 +29,9 @@ public class Manager {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private MatchRepository matchRepository;
 	
 	private JSONObject configuration;
 
@@ -158,5 +162,9 @@ public class Manager {
 
 	public void add(HttpSession session) {
 		this.httpSessions.put(session.getId(), session);
+	}
+
+	public MatchRepository getMatchRepository() {
+		return this.matchRepository;
 	}
 }

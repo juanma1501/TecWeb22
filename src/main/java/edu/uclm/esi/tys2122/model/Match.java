@@ -12,10 +12,13 @@ import javax.persistence.Transient;
 
 import com.google.gson.Gson;
 import edu.uclm.esi.tys2122.StonePaperScissor.StonePaperScissorMatch;
+import edu.uclm.esi.tys2122.dao.MatchRepository;
+import edu.uclm.esi.tys2122.dao.UserRepository;
 import edu.uclm.esi.tys2122.http.Manager;
 import edu.uclm.esi.tys2122.tictactoe.TictactoeMatch;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Entity
@@ -36,6 +39,10 @@ public abstract class Match {
 
     @Transient
     protected boolean ready;
+
+    @Transient
+    @Autowired
+    protected UserRepository userRepository;
 
     public Match() {
         this.id = UUID.randomUUID().toString();
@@ -120,7 +127,6 @@ public abstract class Match {
 
     public void notifyNewStateSecondGame(String userId) {
         JSONObject jso = new JSONObject();
-        JSONObject movement = new JSONObject();
         jso.put("type", "BOARD");
         jso.put("id", this.id);
         jso.put("playerWithTurn", this.playerWithTurn.getName());
@@ -200,6 +206,10 @@ public abstract class Match {
                 e.printStackTrace();
             }
         }
+    }
+
+    public String getGame() {
+        return this.getClass().getSimpleName();
     }
 
 }
