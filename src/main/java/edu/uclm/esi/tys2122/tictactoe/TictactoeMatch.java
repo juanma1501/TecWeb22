@@ -98,7 +98,7 @@ public class TictactoeMatch extends Match {
 		}
 		if (this.winner!=null) {
 			this.looser = this.winner==this.players.get(0) ? this.players.get(1) : this.players.get(0);
-			Manager.get().getMatchRepository().saveMatch(this.getGame(), this.getId(), this.getLooser(), this.getWinner(), this.isDraw());
+			Manager.get().getMatchRepository().saveMatch(this.getId(), this.getGame(), this.getLooser(), this.getWinner(), this.isDraw());
 		}
 
 

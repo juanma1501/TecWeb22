@@ -85,7 +85,6 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				theme: 'dark',
 				onsuccess: function (response) {
 					self.googleUser = response;
-					localStorage.login3rd = true;
 					self.login();
 				},
 				onfailure: function (error) {
@@ -97,7 +96,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 		};
 
 		disconnected() {
-
+			gapi.auth2.getAuthInstance().disconnect();
 		};
 
 		transitionCompleted() {

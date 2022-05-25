@@ -12,7 +12,6 @@ import javax.persistence.Transient;
 
 import com.google.gson.Gson;
 import edu.uclm.esi.tys2122.StonePaperScissor.StonePaperScissorMatch;
-import edu.uclm.esi.tys2122.dao.MatchRepository;
 import edu.uclm.esi.tys2122.dao.UserRepository;
 import edu.uclm.esi.tys2122.http.Manager;
 import edu.uclm.esi.tys2122.tictactoe.TictactoeMatch;
@@ -61,6 +60,11 @@ public abstract class Match {
     public Board getBoard() {
         return board;
     }
+
+    public abstract User getWinner();
+
+    public abstract User getLooser();
+
 
     public void setBoard(Board board) {
         this.board = board;
@@ -137,7 +141,7 @@ public abstract class Match {
 
             if(match.getWinner() != null){
                 String winner = match.getWinner().getName();
-                String looser = match.getLooserUser().getName();
+                String looser = match.getLooser().getName();
                 boolean draw = match.getDraw();
 
                 jso.put("winner", winner);

@@ -19,6 +19,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
             self.handMove = ko.observable(null);
 
+            self.conectarAWebSocket();
+
             self.secondMove = function(data,event){
                 self.handMove(event.target.innerText)
                 console.log(event.target.innerText)
@@ -49,8 +51,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             self.chatBoxInput = ko.observable(null);
 
 
-            self.conectarAWebSocket();
-            self.conectarAChat();
+
 
             self.refresh = function (array) {
                 let data = array().slice(0);
@@ -79,6 +80,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     self.error(response);
                 }
             }
+
             $.ajax(data);
         };
 
@@ -106,6 +108,9 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 self.addMsgChat(msg);
                 self.handleScrollBottom();
             };
+            ws.onclose = function (event) {
+                ws.close()
+            }
         }
 
         addMsgChat(msg) {
@@ -166,6 +171,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             let self = this;
             self.cont += 1
             let ws = new WebSocket("ws://localhost/wsGenerico");
+            console.log(ws)
+            console.log("Conectado al socket de juegos correctamente.")
             ws.onopen = function (event) {
                 self.mensaje("Conexión establecida")
                 self.infoMessage("One player missing")
@@ -217,6 +224,9 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 }
 
             }
+            ws.onclose = function (event) {
+                ws.close()
+            }
         }
 
         actualizarPreparada(partida, msg){
@@ -265,6 +275,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     console.log(response.players)
                     //SE PINTA CUANDO SE HACE PUSH
                     self.matches.push(match)
+
+                    self.conectarAChat();
                     console.log("PARTIDAS " + self.matches().length)
                     //console.log("PARTIDAS " + self.players())
 

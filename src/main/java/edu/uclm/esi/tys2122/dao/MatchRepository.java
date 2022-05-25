@@ -11,7 +11,7 @@ public interface MatchRepository extends JpaRepository<Match, String> {
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO partida (id,looser_id, winner_id, draw) VALUES (:game, :id, :looser, :winner, :draw)", nativeQuery = true)
-    public void saveMatch(String game, String id, User looser, User winner, boolean draw);
+    @Query(value = "INSERT INTO partida (id, game, looser_id, winner_id, draw) VALUES (:id, :game, :looser, :winner, :draw)", nativeQuery = true)
+    public void saveMatch(String id, String game, User looser, User winner, boolean draw);
 
 }

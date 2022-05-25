@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import edu.uclm.esi.tys2122.dao.MatchRepository;
 import edu.uclm.esi.tys2122.dao.UserRepository;
 import edu.uclm.esi.tys2122.model.Match;
-import edu.uclm.esi.tys2122.services.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class Manager {
 
 	private ConcurrentHashMap<String, WrapperSession> ajedrezSessionsPorHttp;
 
-	private ConcurrentHashMap<String, WrapperSession> ajedrezSessionsPorWs;
+	private ConcurrentHashMap<String, WrapperSession> partidasPorWebSockets;
 
 	private ConcurrentHashMap<String, Match> matches;
 
@@ -50,7 +49,7 @@ public class Manager {
 		this.httpSessions = new ConcurrentHashMap<>();
 		this.chatSessions = new Vector<>();
 		this.ajedrezSessionsPorHttp = new ConcurrentHashMap<>();
-		this.ajedrezSessionsPorWs = new ConcurrentHashMap<>();
+		this.partidasPorWebSockets = new ConcurrentHashMap<>();
 		this.matches = new ConcurrentHashMap<>();
 		try {
 			loadParameters();
@@ -65,15 +64,20 @@ public class Manager {
 	}
 
 	public void removeChatSession(WebSocketSession wssession) {
-		Vector<WebSocketSession> cSessions = this.getChatSessions();
-		for(WebSocketSession ws : cSessions) {
+		Vector<WebSocketSession> chatSessions = this.getChatSessions();
+		for(WebSocketSession ws : chatSessions) {
 			if(ws.getId() == wssession.getId()) {
-				cSessions.remove(ws);
+				chatSessions.remove(ws);
 				break;
 			}
 		}
 
 	}
+
+	public void cerrarConexion(WebSocketSession wssession) {
+		this.partidasPorWebSockets.remove(wssession);
+	}
+
 
 	public void setChatSessions(Vector<WebSocketSession> chatSessions) {
 		this.chatSessions = chatSessions;
@@ -94,6 +98,8 @@ public class Manager {
 	public UserRepository getUserRepository() {
 		return userRepository;
 	}
+
+
 
 	private static class ManagerHolder {
 		static Manager singleton=new Manager();
@@ -157,7 +163,7 @@ public class Manager {
 		user.setSession(wrapperSession);
 		wrapperSession.setHttpSession(httpSession);
 		this.ajedrezSessionsPorHttp.put(httpSessionId, wrapperSession);
-		this.ajedrezSessionsPorWs.put(wrapperSession.getWsSession().getId(), wrapperSession);
+		this.partidasPorWebSockets.put(wrapperSession.getWsSession().getId(), wrapperSession);
 	}
 
 	public void add(HttpSession session) {
@@ -167,4 +173,6 @@ public class Manager {
 	public MatchRepository getMatchRepository() {
 		return this.matchRepository;
 	}
+
+
 }

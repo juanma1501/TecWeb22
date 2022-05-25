@@ -3,9 +3,7 @@ package edu.uclm.esi.tys2122.StonePaperScissor;
 import edu.uclm.esi.tys2122.model.Board;
 import edu.uclm.esi.tys2122.model.Match;
 import edu.uclm.esi.tys2122.model.User;
-import edu.uclm.esi.tys2122.tictactoe.TictactoeBoard;
 import org.json.JSONObject;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.security.SecureRandom;
 
@@ -131,7 +129,8 @@ public class StonePaperScissorMatch extends Match {
         return winner;
     }
 
-    public User getLooserUser() {
+
+    public User getLooser() {
         return this.looser;
     }
 

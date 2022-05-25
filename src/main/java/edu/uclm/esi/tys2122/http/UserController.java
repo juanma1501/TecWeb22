@@ -51,6 +51,7 @@ public class UserController extends CookiesController {
 		Manager.get().getUserRepository().save(user);
 		userService.insertLogin(user, ip, cookie);
 		request.getSession().setAttribute("user", user);
+		Manager.get().add(request.getSession());
 	}
 
 	private void loginWithGoogle(HttpServletRequest request, HttpServletResponse response, JSONObject jso) {
