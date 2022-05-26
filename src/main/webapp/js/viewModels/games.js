@@ -19,7 +19,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
             self.handMove = ko.observable(null);
 
-            self.conectarAWebSocket();
+
 
             self.secondMove = function(data,event){
                 self.handMove(event.target.innerText)
@@ -40,6 +40,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 })
             });
 
+            self.chatBoxInput = ko.observable(null);
+
             //Vamos a crear un observableArray al que se irán sumando mensajes
             self.chat = ko.observableArray([
                 {
@@ -48,17 +50,27 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 },
             ]);
 
-            self.chatBoxInput = ko.observable(null);
-
-
-
-
             self.refresh = function (array) {
                 let data = array().slice(0);
                 array([]);
                 array(data);
             };
 
+        }
+
+        getStatistics() {
+            let self = this;
+
+            let data = {
+                type: "get",
+                url: "http://localhost/games/getStatistics",
+                success: function (response) {
+                    console.log("LAS ESTADÍSTICAS SON: ")
+                    console.log(response);
+                },
+                error: function (response) {},
+            };
+            $.ajax(data);
         }
 
 
@@ -277,6 +289,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     self.matches.push(match)
 
                     self.conectarAChat();
+                    self.conectarAWebSocket();
+                    self.getStatistics();
                     console.log("PARTIDAS " + self.matches().length)
                     //console.log("PARTIDAS " + self.players())
 

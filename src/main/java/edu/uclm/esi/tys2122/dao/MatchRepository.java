@@ -14,4 +14,7 @@ public interface MatchRepository extends JpaRepository<Match, String> {
     @Query(value = "INSERT INTO partida (id, game, looser_id, winner_id, draw) VALUES (:id, :game, :looser, :winner, :draw)", nativeQuery = true)
     public void saveMatch(String id, String game, User looser, User winner, boolean draw);
 
+    @Query (value = "SELECT COUNT(IF(looser_id=:id && game='TictactoeMatch',1, null)) as looserTicTacToe, COUNT(IF(winner_id=:id && game='TictactoeMatch',1, null)) as winnerTicTacToe, COUNT(IF(looser_id=:id && game='StonePaperScissorMatch',1, null)) as looserPPT, COUNT(IF(winner_id=:id && game='StonePaperScissorMatch',1, null)) as winnerPPT  FROM juegos.partida", nativeQuery = true)
+    public Object[] getStatistics(String id);
+
 }

@@ -35,6 +35,7 @@ public class GamesController extends CookiesController {
 	
 	@GetMapping("/getGames")
 	public List<Game> getGames(HttpSession session) throws Exception {
+		Manager.get().add(session);
 		return gamesService.getGames();
 	}
 
@@ -167,7 +168,6 @@ public class GamesController extends CookiesController {
 		User user = null;
 		user = (User) session.getAttribute("user");
 
-		/*
 		if (user != null) {
 			Object[] array = (Object[]) Manager.get().getMatchRepository().getStatistics(user.getId())[0];
 			boolean token = false;
@@ -178,9 +178,11 @@ public class GamesController extends CookiesController {
 			}
 			statistics[0] = token ? 1 : 0;
 		}
-		return statistics;	}
-		 */
+
 		return statistics;
 	}
 
 }
+
+
+
