@@ -179,7 +179,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             $.ajax(data);
         }
 
-        conectarAWebSocket() {
+        conectarAWebSocket(callback) {
             let self = this;
             self.cont += 1
             let ws = new WebSocket("ws://localhost/wsGenerico");
@@ -188,7 +188,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             ws.onopen = function (event) {
                 self.mensaje("Conexión establecida")
                 self.infoMessage("One player missing")
-
+                callback()
             }
             ws.onmessage = function (event) {
 
@@ -280,7 +280,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 success: function (response) {
                     //VAMOS A CREAR UN PARTIDO DONDE TODOS SEAN OBSEVARBLES PARA PODER
                     //ACTUALIZAR CUANDO UN JUGADOR SE UNA
-                    let match = new Partida(ko, response, game.name)
+                    let match = new Partida(self, ko, response, game.name)
 
                     console.log("INFORMACION DE LA RAW RESPONSE ABAJO")
                     console.log(match);
@@ -326,11 +326,13 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                 success: function (response) {
                     //VAMOS A CREAR UN PARTIDO DONDE TODOS SEAN OBSEVARBLES PARA PODER
                     //ACTUALIZAR CUANDO UN JUGADOR SE UNA
-                    let match = new Partida(ko, response)
+                    let match = new Partida(self, ko, response, game.name)
 
                     //SE PINTA CUANDO SE HACE PUSH
                     self.matches.push(match)
-                    match.unete($, ko, game)
+                    self.conectarAWebSocket(function (){
+                        match.unete($, ko, game)
+                    });
 
                 },
                 error: function (response) {

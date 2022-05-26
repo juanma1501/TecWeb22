@@ -1,5 +1,5 @@
 class Partida{
-    constructor(ko, response, game) {
+    constructor(vm, ko, response, game) {
         this.id = ko.observable(response.id)
         this.board = ko.observable(response.board)
         this.ready = ko.observable(response.ready)
@@ -10,6 +10,7 @@ class Partida{
         this.draw = ko.observable(response.draw)
         this.game = ko.observable(game)
         this.game_ = game
+        this.vm = vm
     }
 
     unete($, ko, game){
@@ -30,9 +31,11 @@ class Partida{
                 self.looser(response.looser)
                 self.draw(response.draw)
                 self.setTurn(response.playerWithTurn.name)
+                self._game(game)
 
 
                 console.log(self.board())
+                console.log(self.game_)
 
                 //SE PINTA CUANDO SE HACE PUSH
                 //self.matches.push(match)
@@ -64,7 +67,7 @@ class Partida{
 
         let data = {
             type: "post",
-            url: "/games/move",
+            url: "/games/move?cpu=true",
             data: JSON.stringify(info),
             contentType: "application/json",
             success: function (response) {
@@ -72,7 +75,7 @@ class Partida{
             },
             error: function (response) {
                 console.error(response);
-                self.error(response);
+                self.vm.error(response);
             }
         }
         $.ajax(data);
