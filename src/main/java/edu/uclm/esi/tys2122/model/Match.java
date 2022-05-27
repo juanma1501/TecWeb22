@@ -216,4 +216,6 @@ public abstract class Match {
         return this.getClass().getSimpleName();
     }
 
+    public abstract void cerrarCuandoSeRinda(User user);
+
 }

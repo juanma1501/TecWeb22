@@ -1,5 +1,6 @@
 package edu.uclm.esi.tys2122.StonePaperScissor;
 
+import edu.uclm.esi.tys2122.http.Manager;
 import edu.uclm.esi.tys2122.model.Board;
 import edu.uclm.esi.tys2122.model.Match;
 import edu.uclm.esi.tys2122.model.User;
@@ -8,7 +9,17 @@ import org.json.JSONObject;
 import java.security.SecureRandom;
 
 public class StonePaperScissorMatch extends Match {
-    private User winner, looser;
+    private User winner;
+
+    public void setWinner(User winner) {
+        this.winner = winner;
+    }
+
+    public void setLooser(User looser) {
+        this.looser = looser;
+    }
+
+    private User looser;
     private boolean draw;
     private String lastUser;
     private String message;
@@ -127,6 +138,17 @@ public class StonePaperScissorMatch extends Match {
 
     public User getWinner() {
         return winner;
+    }
+
+    @Override
+    public void cerrarCuandoSeRinda(User user) {
+        this.setLooser(user);
+        for (User u_ : this.players)
+            if(!u_.equals(user))
+                this.setWinner(u_);
+
+        Manager.get().getMatchRepository().saveMatch(this.getId(), this.getGame(), this.getLooser(), this.getWinner(), this.isDraw());
+        notifyNewStateSecondGame(this.getWinner().getId());
     }
 
 

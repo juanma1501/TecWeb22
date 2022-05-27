@@ -35,6 +35,14 @@ public class GamesController extends CookiesController {
 	
 	@GetMapping("/getGames")
 	public List<Game> getGames(HttpSession session) throws Exception {
+		User user;
+		if (session.getAttribute("user")!=null) {
+			user = (User) session.getAttribute("user");
+		} else {
+			user = new User();
+			user.setName("anonimo" + new SecureRandom().nextInt(1000));
+			session.setAttribute("user", user);
+		}
 		Manager.get().add(session);
 		return gamesService.getGames();
 	}
@@ -48,13 +56,6 @@ public class GamesController extends CookiesController {
 			user = User.fakeUser();
 			User real = (User) session.getAttribute("user");
 			user.setSession(real.getSession());
-
-			/* INTENTÉ MODIFICAR EL USUARIO HACIENDO USO DE UNA SESIÓN CREADA A PARTIR DE LA DEL VERDADERO CLIENTE PERO
-			AL FINAL EL ID DE LA SESIÓN ES EL MISMO Y NO SE PUEDE CAMBIAR UNA SIN CAMBIAR LA OTRA
-			HttpSession sesionCPU =  user.getSession().getHttpSession();
-			sesionCPU.setAttribute("user", user);
-			user.getSession().setHttpSession(sesionCPU);
-			 */
 
 		}else if (session.getAttribute("user")!=null) {
 			user = (User) session.getAttribute("user");
@@ -73,13 +74,6 @@ public class GamesController extends CookiesController {
 			throw new Exception("No se encuentra el juego " + gameName);
 		
 		Match match = getMatch(game);
-
-		/* ESTO ES PARA LO DE LAS PARTIDAS EN ESPERA
-		if (!match.getPlayers().isEmpty() && match.getPlayers().get(0).getId() == user.getId()) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Ya hay una partida en espera.");
-		}
-		*/
-
 
 		match.addPlayer(user);
 
@@ -163,13 +157,6 @@ public class GamesController extends CookiesController {
 		}
 	}
 
-	@GetMapping("/meRindo/{matchId}")
-	public void surrender(HttpSession session, @PathVariable String matchId) throws Exception {
-		User user = (User) session.getAttribute("user");
-		Match partidaACerrar = gamesService.getMatch(matchId);
-		//partidaACerrar.closeMatchByUser(user);
-	}
-
 	@GetMapping("/getStatistics")
 	public int[] getStatistics(HttpSession session) {
 		int[] statistics = {0, 0, 0, 0, 0};
@@ -189,6 +176,14 @@ public class GamesController extends CookiesController {
 
 		return statistics;
 	}
+
+	@GetMapping("/rendirse/{matchId}")
+	public void rendirse(HttpSession session, @PathVariable String matchId) throws Exception {
+		User user = (User) session.getAttribute("user");
+		Match partida = gamesService.getMatch(matchId);
+		partida.cerrarCuandoSeRinda(user);
+	}
+
 
 }
 

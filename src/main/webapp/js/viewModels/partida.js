@@ -31,7 +31,7 @@ class Partida{
                 self.looser(response.looser)
                 self.draw(response.draw)
                 self.setTurn(response.playerWithTurn.name)
-                self._game(game)
+                self._game=game
 
 
                 console.log(self.board())
@@ -58,11 +58,16 @@ class Partida{
 
     mover() {
         let self = this;
+        let posicion = self.cogerCasillaLibre()
+
+        if(self.winner() !== null){
+            return
+        }
 
         let info = {
             matchId: self.id(),
-            x: 2,
-            y: 2
+            x: posicion[0],
+            y: posicion[1]
         };
 
         let data = {
@@ -73,17 +78,22 @@ class Partida{
             success: function (response) {
                 console.log(response);
             },
-            error: function (response) {
-                console.error(response);
-                self.vm.error(response);
-            }
         }
         $.ajax(data);
     }
 
     cogerCasillaLibre(){
         let self = this;
+        var posicion = new Array()
 
-            for (let i=0; i<self.board().length; i++);
+            for (let i=0; i<self.board().squares[0].length; i++){
+                for (let j=0; j<self.board().squares[0].length; j++){
+                    if (self.board().squares[i][j] == 0){
+                        posicion = [i, j]
+                        break
+                    }
+                }
+            }
+            return posicion;
     }
 }

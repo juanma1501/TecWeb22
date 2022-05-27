@@ -90,7 +90,7 @@
                         <input data-bind="value : $parent.y" type="number" size="1" placeholder="Y">
                         <button data-bind="click : function() { $parent.mover($data); }">Mover</button>
                         <br>
-                        <button data-bind="click : function() { $parent.reload($data); }">Recargar partida</button>
+                        <button data-bind="click : function() { $parent.rendirse($data.id()); }">Rendirse</button>
                     </li>
 
                     <h1 data-bind="html : game"></h1>

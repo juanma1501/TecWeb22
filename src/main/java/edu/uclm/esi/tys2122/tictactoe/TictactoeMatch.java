@@ -12,7 +12,17 @@ import edu.uclm.esi.tys2122.model.User;
 
 public class TictactoeMatch extends Match {
 	
-	private User winner, looser;
+	private User winner;
+
+	public void setWinner(User winner) {
+		this.winner = winner;
+	}
+
+	public void setLooser(User looser) {
+		this.looser = looser;
+	}
+
+	private User looser;
 	private boolean draw;
 	private String lastUser;
 	
@@ -103,6 +113,17 @@ public class TictactoeMatch extends Match {
 
 
 
+	}
+
+	@Override
+	public void cerrarCuandoSeRinda(User user) {
+		this.setLooser(user);
+		for (User u_ : this.players)
+			if(!u_.equals(user))
+				this.setWinner(u_);
+
+		Manager.get().getMatchRepository().saveMatch(this.getId(), this.getGame(), this.getLooser(), this.getWinner(), this.isDraw());
+		notifyNewState(this.getWinner().getId());
 	}
 
 	public User getWinner() {

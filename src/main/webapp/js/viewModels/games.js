@@ -21,6 +21,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
 
 
+
+
             self.secondMove = function(data,event){
                 self.handMove(event.target.innerText)
                 console.log(event.target.innerText)
@@ -79,6 +81,10 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             document.title = "Juegos";
 
             let self = this;
+
+            self.conectarAWebSocket(function (){
+                match.unete($, ko, game)
+            }, false);
 
             let data = {
                 type: "get",
@@ -157,6 +163,13 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
         mover(match) {
             let self = this;
 
+            self.matches().map((match, index) => {
+                if (self.matches()[index].winner() !== null) {
+                    console.log("Esta partida ya tiene ganador")
+                    return
+                }
+            })
+
             let info = {
                 matchId: match.id(),
                 x: this.x(),
@@ -179,7 +192,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             $.ajax(data);
         }
 
-        conectarAWebSocket(callback) {
+        conectarAWebSocket(callback, cpu) {
             let self = this;
             self.cont += 1
             let ws = new WebSocket("ws://localhost/wsGenerico");
@@ -188,7 +201,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             ws.onopen = function (event) {
                 self.mensaje("Conexión establecida")
                 self.infoMessage("One player missing")
-                callback()
+                if (cpu) callback()
             }
             ws.onmessage = function (event) {
 
@@ -287,16 +300,18 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     console.log(response.players)
                     //SE PINTA CUANDO SE HACE PUSH
                     self.matches.push(match)
-
+                    self.conectarAWebSocket(function (){
+                        match.unete($, ko, game)
+                    }, false);
                     self.conectarAChat();
-                    self.conectarAWebSocket();
+
                     self.getStatistics();
                     console.log("PARTIDAS " + self.matches().length)
                     //console.log("PARTIDAS " + self.players())
 
                 },
                 error: function (response) {
-                    console.error(response.responseJSON.message);
+                    console.log(response)
                     alert(response.responseJSON.message);
                 }
             };
@@ -332,11 +347,11 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     self.matches.push(match)
                     self.conectarAWebSocket(function (){
                         match.unete($, ko, game)
-                    });
+                    }, true);
 
                 },
                 error: function (response) {
-                    console.error(response.responseJSON.message);
+                    console.log(response);
                     alert(response.responseJSON.message);
                 }
             };
@@ -420,7 +435,30 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             }
 
         }
+
+        rendirse(matchId){
+            console.log(matchId)
+            let self = this;
+            let actualMatch = self.matches().find((match) => match.id() == matchId);
+            if (actualMatch.ready() == false) {
+                console.log("errorrrrrr")
+            } else {
+                let data = {
+                    type: "get",
+                    url: "http://localhost/games/rendirse/" + matchId,
+                    success: function (response) {
+                        console.log("te has rendido")
+                    },
+                    error: function (response) {
+                        console.log(response)
+                    },
+                };
+                $.ajax(data);
+            }
+        }
     }
+
+
 
     return MenuViewModel;
 });
