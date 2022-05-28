@@ -51,7 +51,7 @@ public class TictactoeMatch extends Match {
 
 	@Override
 	public void move(String userId, JSONObject jsoMovimiento) throws Exception {
-		if (this.filled())
+		if (this.filled() || this.winner != null || this.isDraw())
 			throw new Exception("La partida ya terminó");
 
 		System.out.println("Los IDs son:");
