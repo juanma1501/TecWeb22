@@ -164,6 +164,8 @@ public class StonePaperScissorMatch extends Match {
                 this.draw = false;
                 getLooser(this.winner.getId());
             }
+
+            if (this.winner != null) Manager.get().getMatchRepository().saveMatch(this.getId(), this.getGame(), this.getLooser(), this.getWinner(), this.isDraw());
     }
 
     private boolean filled() {
