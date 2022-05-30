@@ -20,6 +20,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import edu.uclm.esi.tys2122.websockets.WrapperSession;
 
+/**
+ * The type User.
+ */
 @Entity
 @Table(indexes = {
 	@Index(unique = true, columnList = "email"),
@@ -44,12 +47,22 @@ public class User {
 	
 	@Transient
 	private WrapperSession session;
-	
+
+	/**
+	 * Instantiates a new User.
+	 */
 	public User() {
 		this.id = UUID.randomUUID().toString();
 	}
 
-	//Google
+	/**
+	 * Instantiates a new User.
+	 *
+	 * @param id    the id
+	 * @param name  the name
+	 * @param email the email
+	 */
+//Google
 	public User(@NotBlank String id, @NotBlank String name, @NotBlank String email) {
 		this.id = id;
 		this.email = email;
@@ -59,6 +72,11 @@ public class User {
 	}
 
 
+	/**
+	 * Fake user user.
+	 *
+	 * @return the user
+	 */
 	public static User fakeUser() {
 		User cpu = new User();
 		cpu.name = "cpu";
@@ -66,36 +84,76 @@ public class User {
 		return cpu;
 	}
 
+	/**
+	 * Gets id.
+	 *
+	 * @return the id
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * Sets id.
+	 *
+	 * @param id the id
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
+	/**
+	 * Gets email.
+	 *
+	 * @return the email
+	 */
 	@JsonIgnore
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * Sets email.
+	 *
+	 * @param email the email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	/**
+	 * Gets name.
+	 *
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets name.
+	 *
+	 * @param userName the user name
+	 */
 	public void setName(String userName) {
 		this.name = userName;
 	}
 
+	/**
+	 * Gets pwd.
+	 *
+	 * @return the pwd
+	 */
 	@JsonIgnore
 	public String getPwd() {
 		return pwd;
 	}
 
+	/**
+	 * Gets user.
+	 *
+	 * @return the user
+	 */
 	public String getUser() {
 		JSONObject jso = new JSONObject();
 		jso.put("id", this.id);
@@ -104,19 +162,39 @@ public class User {
 		return jso.toString();
 	}
 
+	/**
+	 * Sets pwd.
+	 *
+	 * @param pwd the pwd
+	 */
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
 
+	/**
+	 * Gets picture.
+	 *
+	 * @return the picture
+	 */
 	public String getPicture() {
 		return picture;
 	}
 
+	/**
+	 * Sets picture.
+	 *
+	 * @param picture the picture
+	 */
 	public void setPicture(byte[] picture) {
 		byte[] b64 = Base64.getEncoder().encode(picture);
 		this.picture = new String(b64);	
 	}
-	
+
+	/**
+	 * Sets picture.
+	 *
+	 * @param picture the picture
+	 */
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
@@ -125,26 +203,52 @@ public class User {
 	public Long getConfirmationDate() {
 		return confirmationDate;
 	}
-	
+
+	/**
+	 * Sets confirmation date.
+	 *
+	 * @param confirmationDate the confirmation date
+	 */
 	public void setConfirmationDate(Long confirmationDate) {
 		this.confirmationDate = confirmationDate;
 	}
 
+	/**
+	 * Sets session.
+	 *
+	 * @param wrapperSession the wrapper session
+	 */
 	public void setSession(WrapperSession wrapperSession) {
 		this.session = wrapperSession;
 	}
-	
+
+	/**
+	 * Gets session.
+	 *
+	 * @return the session
+	 */
 	@JsonIgnore
 	public WrapperSession getSession() {
 		return session;
 	}
 
+	/**
+	 * Send message.
+	 *
+	 * @param jso the jso
+	 * @throws IOException the io exception
+	 */
 	public void
 	sendMessage(JSONObject jso) throws IOException {
 		WebSocketSession wsSession = this.session.getWsSession();
 		wsSession.sendMessage(new TextMessage(jso.toString()));
 	}
 
+	/**
+	 * Sets cookie.
+	 *
+	 * @param value the value
+	 */
 	public void setCookie(String value) {
 		this.cookie = cookie;
 	}

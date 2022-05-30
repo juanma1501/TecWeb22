@@ -21,6 +21,9 @@ import edu.uclm.esi.tys2122.model.User;
 import edu.uclm.esi.tys2122.websockets.WrapperSession;
 import org.springframework.web.socket.WebSocketSession;
 
+/**
+ * The type Manager.
+ */
 @Component
 public class Manager {
 	
@@ -59,10 +62,20 @@ public class Manager {
 		}
 	}
 
+	/**
+	 * Add chat session.
+	 *
+	 * @param wsSession the ws session
+	 */
 	public void addChatSession(WebSocketSession wsSession) {
 		this.chatSessions.add(wsSession);
 	}
 
+	/**
+	 * Remove chat session.
+	 *
+	 * @param wssession the wssession
+	 */
 	public void removeChatSession(WebSocketSession wssession) {
 		Vector<WebSocketSession> chatSessions = this.getChatSessions();
 		for(WebSocketSession ws : chatSessions) {
@@ -74,27 +87,59 @@ public class Manager {
 
 	}
 
+	/**
+	 * Cerrar conexion.
+	 *
+	 * @param wssession the wssession
+	 */
 	public void cerrarConexion(WebSocketSession wssession) {
 		this.partidasPorWebSockets.remove(wssession);
 	}
 
 
+	/**
+	 * Sets chat sessions.
+	 *
+	 * @param chatSessions the chat sessions
+	 */
 	public void setChatSessions(Vector<WebSocketSession> chatSessions) {
 		this.chatSessions = chatSessions;
 	}
 
+	/**
+	 * Gets chat sessions.
+	 *
+	 * @return the chat sessions
+	 */
 	public Vector<WebSocketSession> getChatSessions() {
 		return chatSessions;
 	}
 
+	/**
+	 * Put.
+	 *
+	 * @param id    the id
+	 * @param match the match
+	 */
 	public void put(String id, Match match) {
 		this.matches.put(id, match);
 	}
 
+	/**
+	 * Find match match.
+	 *
+	 * @param id the id
+	 * @return the match
+	 */
 	public Match findMatch(String id){
 		return this.matches.get(id);
 	}
 
+	/**
+	 * Gets user repository.
+	 *
+	 * @return the user repository
+	 */
 	public UserRepository getUserRepository() {
 		return userRepository;
 	}
@@ -102,14 +147,27 @@ public class Manager {
 
 
 	private static class ManagerHolder {
+		/**
+		 * The Singleton.
+		 */
 		static Manager singleton=new Manager();
 	}
-	
+
+	/**
+	 * Get manager.
+	 *
+	 * @return the manager
+	 */
 	@Bean
 	public static Manager get() {
 		return ManagerHolder.singleton;
 	}
 
+	/**
+	 * Gets configuration.
+	 *
+	 * @return the configuration
+	 */
 	public JSONObject getConfiguration() {
 		return configuration;
 	}
@@ -127,7 +185,14 @@ public class Manager {
 			return new JSONObject(s);
 		 }
 	}
-	
+
+	/**
+	 * Read file as json array json array.
+	 *
+	 * @param fileName the file name
+	 * @return the json array
+	 * @throws IOException the io exception
+	 */
 	public JSONArray readFileAsJSONArray(String fileName) throws IOException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		 try (InputStream fis = classLoader.getResourceAsStream(fileName)) {
@@ -138,18 +203,37 @@ public class Manager {
 		 }
 	}
 
+	/**
+	 * Clear games.
+	 */
 	public void clearGames() {
 		this.games.clear();
 	}
 
+	/**
+	 * Add.
+	 *
+	 * @param game the game
+	 */
 	public void add(Game game) {
 		this.games.add(game);
 	}
-	
+
+	/**
+	 * Gets games.
+	 *
+	 * @return the games
+	 */
 	public Vector<Game> getGames() {
 		return games;
 	}
 
+	/**
+	 * Find game game.
+	 *
+	 * @param gameName the game name
+	 * @return the game
+	 */
 	public Game findGame(String gameName) {
 		for (Game game : this.games)
 			if (game.getName().equals(gameName))
@@ -157,6 +241,12 @@ public class Manager {
 		return null;
 	}
 
+	/**
+	 * Add.
+	 *
+	 * @param wrapperSession the wrapper session
+	 * @param httpSessionId  the http session id
+	 */
 	public void add(WrapperSession wrapperSession, String httpSessionId) {
 		HttpSession httpSession = this.httpSessions.get(httpSessionId);
 		User user = (User) httpSession.getAttribute("user");
@@ -166,10 +256,20 @@ public class Manager {
 		this.partidasPorWebSockets.put(wrapperSession.getWsSession().getId(), wrapperSession);
 	}
 
+	/**
+	 * Add.
+	 *
+	 * @param session the session
+	 */
 	public void add(HttpSession session) {
 		this.httpSessions.put(session.getId(), session);
 	}
 
+	/**
+	 * Gets match repository.
+	 *
+	 * @return the match repository
+	 */
 	public MatchRepository getMatchRepository() {
 		return this.matchRepository;
 	}

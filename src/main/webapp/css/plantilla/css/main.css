@@ -187,6 +187,7 @@ iframe {
   background: #fff;
   border-radius: 10px;
   position: relative;
+  border: 5px solid orangered;
 }
 
 
@@ -536,5 +537,9 @@ iframe {
   position: inherit;
   margin-left: 120px;
   width: 13%;
+}
+
+.controles{
+  height: 20px;
 }
 

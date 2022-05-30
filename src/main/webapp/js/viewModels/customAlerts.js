@@ -6,7 +6,7 @@ class Alerta{
 
     abre(id, classes, titulo, corpo, functionCancelar, functionEnviar, textoCancelar, textoEnviar){
         let self = this
-        var cancelar = (textoCancelar !== undefined)? textoCancelar: 'Cancel';
+        var cancelar = (textoCancelar !== undefined)? textoCancelar: 'Continuar';
         var enviar = (textoEnviar !== undefined)? textoEnviar: 'Send';
         classes += ' ';
         var classArray = classes.split(' ');

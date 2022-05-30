@@ -46,10 +46,10 @@
 
                 <div class="Message">
                     <span class="Estadistica"> Victorias </span>
-                    <span class="Valor" data-bind="html: stats()[1]"></span>
+                    <span class="Valor" data-bind="html: stats()[2]"></span>
 
                     <span class="Estadistica"> Derrotas </span>
-                    <span class="Valor" data-bind="html: stats()[2]"></span>
+                    <span class="Valor" data-bind="html: stats()[1]"></span>
                 </div>
 
                 <div class="JuegoStats-content">
@@ -58,10 +58,10 @@
 
                 <div class="Message">
                     <span class="Estadistica"> Victorias </span>
-                    <span class="Valor" data-bind="html: stats()[3]"></span>
+                    <span class="Valor" data-bind="html: stats()[4]"></span>
 
                     <span class="Estadistica"> Derrotas </span>
-                    <span class="Valor" data-bind="html: stats()[4]"></span>
+                    <span class="Valor" data-bind="html: stats()[3]"></span>
                 </div>
 
             </div>
@@ -73,21 +73,16 @@
 					<span class="login100-form-title p-b-53">
 						Juegos
 					</span>
-                <div>
-
-                    <span data-bind="html : mensaje" style="color : blue"></span>
-                    <span data-bind="html : error" style="color : red"></span>
-
-
+                <div class="botones-juegos">
 
                     <!-- ko foreach : games -->
-                    <div class="container-login100-form-btn m-t-17">
+                    <div class="container-login100-form-btn m-t-17 ">
                         <button class="login100-form-btn" data-bind="click : function() { $parent.joinGame($data); }">
                             <label data-bind="html : name"></label>
                         </button>
                     </div>
 
-                    <div class="container-login100-form-btn m-t-17">
+                    <div class="container-login100-form-btn m-t-17 ">
                         <button class="login100-form-btn" data-bind="click : function() { $parent.joinGameCPU($data); }">
                             <label data-bind="html : name +' CPU'"></label>
                         </button>
@@ -98,36 +93,38 @@
                 <ol>
                     <!-- ko foreach : matches -->
                     <li class="div-partida">
-                        <div>Id: <label data-bind="html : id"></label></div>
 
-                        <div>Preparada: <span data-bind="html : ready"></span></div>
+
+                        <div class="info-partidas">Preparada: <span data-bind="html : ready"></span></div>
 
                         <!-- ko foreach : players -->
-                        <div>Jugador <span data-bind="html : $index() + 1"></span>: <span
-                                data-bind="html : name"></span></div>
+                        <div class="info-partidas">Jugador <span data-bind="html : $index() + 1" ></span>: <span
+                                data-bind="html : name" class="info-partidas-jugadores"></span></div>
                         <!-- /ko -->
 
-                        <div>Jugador con el turno:
+                        <div class="info-partidas">Jugador con el turno:
 
-                            <span data-bind="html : playerWithTurn"></span>
+                            <span data-bind="html : playerWithTurn" class="info-partidas-turno"></span>
 
                         </div>
 
-                        <div>Ganador: <span data-bind="html : winner"></span></div>
-                        <div>Perdedor: <span data-bind="html : looser"></span></div>
+                        <div class="info-partidas">Ganador: <span data-bind="html : winner" class="info-partidas-ganador"></span></div>
+                        <div class="info-partidas">Perdedor: <span data-bind="html : looser" class="info-partidas-perdedor"></span></div>
 
-                        <div>Acabó en empate: <span data-bind="html : draw"></span></div>
+                        <div class="info-partidas">Acabó en empate: <span data-bind="html : draw" class="info-partidas-empate"></span></div>
 
                         <!-- ko if : game_ == "Tres en raya"-->
-                        <div class="wrap-input100 validate-input" data-validate="Password is required">
-                            <input data-bind="value : $parent.x" type="number" size="1" placeholder="X" class="inputº">
+                        <div class="wrap-input100 validate-input" data-validate="Password is required" style="margin: 10px; border: 2px solid orange">
+                            <input data-bind="value : $parent.x" type="number" size="1" placeholder="X" class="input100 controles">
                             <span class="focus-input100"></span>
                         </div>
-
-                        <input data-bind="value : $parent.y" type="number" size="1" placeholder="Y">
-                        <button data-bind="click : function() { $parent.mover($data); }">Mover</button>
+                        <div class="wrap-input100 validate-input" data-validate="Password is required" style="margin: 10px; border: 2px solid orange" >
+                        <input data-bind="value : $parent.y" type="number" size="1" placeholder="Y" class="input100 controles">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <button data-bind="click : function() { $parent.mover($data); }" class="button">Mover 🎮</button>
                         <br>
-                        <button data-bind="click : function() { $parent.rendirse($data.id()); }">Rendirse</button>
+                        <button data-bind="click : function() { $parent.rendirse($data.id()); }" class="button">Rendirse 🏳️</button>
                     </li>
 
                     <h1 data-bind="html : game"></h1>
@@ -199,15 +196,13 @@
                             <button class="stone" data-bind="click: $parent.secondMove"> tijera</button>
                         </div>
                         <div>
-                            <button class="button-move" data-bind="click: function(){ $parent.moveSecondGame($data)}"> Move </button>
+                            <button class="button" data-bind="click: function(){ $parent.moveSecondGame($data)}"> Move </button>
                         </div>
+                        <button data-bind="click : function() { $parent.rendirse($data.id()); }" class="button">Rendirse 🏳️</button>
                     </div>
                     <!-- /ko -->
 
                     <!-- /ko -->
-                    <div class="info-message">
-                        <span data-bind="html : infoMessage" style="color : blue"></span>
-                    </div>
                 </ol>
             </form>
         </div>

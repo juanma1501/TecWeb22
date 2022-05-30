@@ -13,9 +13,19 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * The type Email.
+ */
 public class Email {
 	private final Properties properties = new Properties();
 
+	/**
+	 * Send.
+	 *
+	 * @param destinatario the destinatario
+	 * @param subject      the subject
+	 * @param body         the body
+	 */
 	public void send(String destinatario, String subject, String body) {
 		JSONObject emailParameters = (JSONObject) Manager.get().getConfiguration().getJSONObject("email");
 
@@ -63,6 +73,12 @@ public class Email {
         private String sender;
 		private String pwd;
 
+		/**
+		 * Instantiates a new Autentificador smtp.
+		 *
+		 * @param sender the sender
+		 * @param pwd    the pwd
+		 */
 		public AutentificadorSMTP(String sender, String pwd) {
 			this.sender = sender;
 			this.pwd = pwd;
@@ -72,7 +88,13 @@ public class Email {
             return new PasswordAuthentication(sender, pwd);
         }
     }
-	
+
+	/**
+	 * The entry point of application.
+	 *
+	 * @param args the input arguments
+	 * @throws Exception the exception
+	 */
 	public static void main(String[] args) throws Exception {
 		Email sender=new Email();
 		sender.send("juanmaporreroalmansa@gmail.com", "Hola", "Ya me va el correo");

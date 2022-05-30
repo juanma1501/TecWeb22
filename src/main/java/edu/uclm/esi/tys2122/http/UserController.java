@@ -19,6 +19,9 @@ import org.springframework.web.server.ResponseStatusException;
 import edu.uclm.esi.tys2122.model.User;
 import edu.uclm.esi.tys2122.services.UserService;
 
+/**
+ * The type User controller.
+ */
 @RestController
 @RequestMapping("user")
 @CrossOrigin
@@ -27,6 +30,13 @@ public class UserController extends CookiesController {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * Login.
+	 *
+	 * @param request      the request
+	 * @param response     the response
+	 * @param credenciales the credenciales
+	 */
 	@PostMapping(value = "/login")
 	public void login(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> credenciales) {
 		JSONObject jso = new JSONObject(credenciales);
@@ -75,6 +85,12 @@ public class UserController extends CookiesController {
 		}
 	}
 
+	/**
+	 * Register string.
+	 *
+	 * @param credenciales the credenciales
+	 * @return the string
+	 */
 	@PutMapping("/register")
 	@ResponseBody
 	public String register(@RequestBody Map<String, Object> credenciales) {
@@ -103,12 +119,24 @@ public class UserController extends CookiesController {
 				return "Te hemos enviado un correo para confirmar tu registro";
 			}
 	}
-	
+
+	/**
+	 * Remove.
+	 *
+	 * @param userId the user id
+	 */
 	@DeleteMapping("/remove/{userId}")
 	public void remove(@PathVariable String userId) {
 		System.out.println("Borrar el usuario con id " + userId);		
 	}
-	
+
+	/**
+	 * Validate account.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @param tokenId  the token id
+	 */
 	@GetMapping("/validateAccount/{tokenId}")
 	public void validateAccount(HttpServletRequest request, HttpServletResponse response, @PathVariable String tokenId) {
 		userService.validateToken(tokenId);
@@ -122,12 +150,26 @@ public class UserController extends CookiesController {
 		}
 	}
 
+	/**
+	 * Reset password string.
+	 *
+	 * @param request      the request
+	 * @param credenciales the credenciales
+	 * @return the string
+	 */
 	@PostMapping(value = "/resetPassword")
 	public String resetPassword(HttpServletRequest request, @RequestBody Map<String, Object> credenciales) {
 		sendEmailRecovery(credenciales);
 		return "Revisa tu correo electrónico, allí encontrarás un link para restablecer tu contraseña. La próxima vez apúntala mejor \uD83D\uDCC3";
 	}
 
+	/**
+	 * Reset password token string.
+	 *
+	 * @param request      the request
+	 * @param credenciales the credenciales
+	 * @return the string
+	 */
 	@PostMapping(value = "/changePassword")
 	public String resetPasswordToken(HttpServletRequest request, @RequestBody Map<String, Object> credenciales) {
 		try {

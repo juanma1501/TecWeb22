@@ -20,6 +20,9 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+/**
+ * The type Match.
+ */
 @Entity
 @Table(name = "partida")
 public abstract class Match {
@@ -30,75 +33,165 @@ public abstract class Match {
     @Transient
     private Board board;
 
+    /**
+     * The Players.
+     */
     @Transient
     protected Vector<User> players;
 
+    /**
+     * The Player with turn.
+     */
     @Transient
     protected User playerWithTurn;
 
+    /**
+     * The Ready.
+     */
     @Transient
     protected boolean ready;
 
+    /**
+     * The User repository.
+     */
     @Transient
     @Autowired
     protected UserRepository userRepository;
 
+    /**
+     * Instantiates a new Match.
+     */
     public Match() {
         this.id = UUID.randomUUID().toString();
         this.players = new Vector<>();
         this.board = newBoard();
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Gets board.
+     *
+     * @return the board
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Gets winner.
+     *
+     * @return the winner
+     */
     public abstract User getWinner();
 
+    /**
+     * Gets looser.
+     *
+     * @return the looser
+     */
     public abstract User getLooser();
 
 
+    /**
+     * Sets board.
+     *
+     * @param board the board
+     */
     public void setBoard(Board board) {
         this.board = board;
     }
 
-    // TODO : no se puede añadir dos veces el mismo jugador
+    /**
+     * Add player.
+     *
+     * @param user the user
+     */
+// TODO : no se puede añadir dos veces el mismo jugador
     public void addPlayer(User user) {
         this.players.add(user);
         checkReady();
     }
 
+    /**
+     * Is ready boolean.
+     *
+     * @return the boolean
+     */
     public boolean isReady() {
         return ready;
     }
 
+    /**
+     * Gets player with turn.
+     *
+     * @return the player with turn
+     */
     public User getPlayerWithTurn() {
         return playerWithTurn;
     }
 
+    /**
+     * Sets player with turn.
+     *
+     * @param user the user
+     */
     public void setPlayerWithTurn (User user) {
         this.playerWithTurn = user;
     }
 
+    /**
+     * Gets players.
+     *
+     * @return the players
+     */
     @Transient
     public Vector<User> getPlayers() {
         return players;
     }
 
+    /**
+     * Check ready.
+     */
     protected abstract void checkReady();
 
+    /**
+     * New board board.
+     *
+     * @return the board
+     */
     protected abstract Board newBoard();
 
+    /**
+     * Move.
+     *
+     * @param userId the user id
+     * @param jso    the jso
+     * @throws Exception the exception
+     */
     public abstract void move(String userId, JSONObject jso) throws Exception;
 
+    /**
+     * Notify new state.
+     *
+     * @param userId the user id
+     */
     public void notifyNewState(String userId) {
         JSONObject jso = new JSONObject();
         JSONObject movement = new JSONObject();
@@ -129,6 +222,11 @@ public abstract class Match {
         }
     }
 
+    /**
+     * Notify new state second game.
+     *
+     * @param userId the user id
+     */
     public void notifyNewStateSecondGame(String userId) {
         JSONObject jso = new JSONObject();
         jso.put("type", "BOARD");
@@ -168,6 +266,12 @@ public abstract class Match {
         }
     }
 
+    /**
+     * Notify message.
+     *
+     * @param userId  the user id
+     * @param message the message
+     */
     public void notifyMessage(String userId, String message) {
         JSONObject jso = new JSONObject();
         JSONObject movement = new JSONObject();
@@ -191,6 +295,9 @@ public abstract class Match {
         }
     }
 
+    /**
+     * Notify preparada.
+     */
     public void notifyPreparada() {
         JSONObject jso = new JSONObject();
         JSONObject user = new JSONObject(this.players.get(this.players.size() - 1).getUser());
@@ -212,10 +319,20 @@ public abstract class Match {
         }
     }
 
+    /**
+     * Gets game.
+     *
+     * @return the game
+     */
     public String getGame() {
         return this.getClass().getSimpleName();
     }
 
+    /**
+     * Cerrar cuando se rinda.
+     *
+     * @param user the user
+     */
     public abstract void cerrarCuandoSeRinda(User user);
 
 }

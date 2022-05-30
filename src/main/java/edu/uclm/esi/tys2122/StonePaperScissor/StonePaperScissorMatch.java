@@ -10,13 +10,26 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.SecureRandom;
 
+/**
+ * The type Stone paper scissor match.
+ */
 public class StonePaperScissorMatch extends Match {
     private User winner;
 
+    /**
+     * Sets winner.
+     *
+     * @param winner the winner
+     */
     public void setWinner(User winner) {
         this.winner = winner;
     }
 
+    /**
+     * Sets looser.
+     *
+     * @param looser the looser
+     */
     public void setLooser(User looser) {
         this.looser = looser;
     }
@@ -39,19 +52,43 @@ public class StonePaperScissorMatch extends Match {
             this.playerWithTurn = new SecureRandom().nextBoolean() ? this.players.get(0) : this.players.get(1);
     }
 
+    /**
+     * Get message string.
+     *
+     * @return the string
+     */
     public String getMessage(){
         return this.message;
     }
+
+    /**
+     * Gets square.
+     *
+     * @param x the x
+     * @return the square
+     */
     public int getSquare(Integer x) {
         StonePaperScissorBoard board = (StonePaperScissorBoard) this.getBoard();
         return board.getArray()[x];
     }
+
+    /**
+     * Get all square int [ ].
+     *
+     * @return the int [ ]
+     */
     public int[] getAllSquare() {
         StonePaperScissorBoard board = (StonePaperScissorBoard) this.getBoard();
         return board.getArray();
     }
 
 
+    /**
+     * Sets square.
+     *
+     * @param x     the x
+     * @param value the value
+     */
     public void setSquare(Integer x, int value) {
         StonePaperScissorBoard board = (StonePaperScissorBoard) this.getBoard();
         board.getArray()[x]=value;
@@ -137,6 +174,12 @@ public class StonePaperScissorMatch extends Match {
                     return false;
         return true;
     }
+
+    /**
+     * Gets filled.
+     *
+     * @return the filled
+     */
     public boolean getFilled() {
         return this.filled();
     }
@@ -166,10 +209,20 @@ public class StonePaperScissorMatch extends Match {
         return this.looser;
     }
 
+    /**
+     * Is draw boolean.
+     *
+     * @return the boolean
+     */
     public boolean isDraw() {
         return draw;
     }
 
+    /**
+     * Get draw boolean.
+     *
+     * @return the boolean
+     */
     public boolean getDraw(){
         return this.draw;
     }

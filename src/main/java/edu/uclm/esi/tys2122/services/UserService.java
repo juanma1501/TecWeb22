@@ -20,6 +20,9 @@ import edu.uclm.esi.tys2122.model.Login;
 import edu.uclm.esi.tys2122.model.Token;
 import edu.uclm.esi.tys2122.model.User;
 
+/**
+ * The type User service.
+ */
 @Service
 public class UserService {
 	@Autowired
@@ -32,11 +35,22 @@ public class UserService {
 	private TokenRepository tokenRepo;
 	
 	private ConcurrentHashMap<String, User> connectedUsers;
-	
+
+	/**
+	 * Instantiates a new User service.
+	 */
 	public UserService() {
 		this.connectedUsers = new ConcurrentHashMap<>();
 	}
 
+	/**
+	 * Do login user.
+	 *
+	 * @param name the name
+	 * @param pwd  the pwd
+	 * @param ip   the ip
+	 * @return the user
+	 */
 	public User doLogin(String name, String pwd, String ip) {
 		User user = userRepository.findByNameAndPwd(name, pwd);
 
@@ -49,6 +63,11 @@ public class UserService {
 		return user;
 	}
 
+	/**
+	 * Save.
+	 *
+	 * @param user the user
+	 */
 	public void save(User user) {
 		userRepository.save(user);
 		
@@ -62,6 +81,11 @@ public class UserService {
 
 	}
 
+	/**
+	 * Validate token.
+	 *
+	 * @param tokenId the token id
+	 */
 	public void validateToken(String tokenId) {
 		Optional<Token> optToken = tokenRepo.findById(tokenId);
 		if (optToken.isPresent()) {
@@ -79,6 +103,13 @@ public class UserService {
 		} else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Token " + tokenId + " no encontrado");
 	}
 
+	/**
+	 * Insert login.
+	 *
+	 * @param user   the user
+	 * @param ip     the ip
+	 * @param cookie the cookie
+	 */
 	public void insertLogin(User user, String ip, Cookie cookie) {
 		Login login = new Login();
 		login.setEmail(user.getEmail());
@@ -88,11 +119,23 @@ public class UserService {
 		loginDAO.save(login);
 	}
 
+	/**
+	 * Find user user.
+	 *
+	 * @param userId the user id
+	 * @return the user
+	 */
 	public User findUser(String userId) {
 		return this.connectedUsers.get(userId);
 	}
 
-    public boolean findUserByEmail(String email) {
+	/**
+	 * Find user by email boolean.
+	 *
+	 * @param email the email
+	 * @return the boolean
+	 */
+	public boolean findUserByEmail(String email) {
 		User user = userRepository.findByEmail(email);
 		if (user == null)
 			return false;

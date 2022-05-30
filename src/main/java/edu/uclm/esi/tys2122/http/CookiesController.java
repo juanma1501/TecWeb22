@@ -8,11 +8,27 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * The type Cookies controller.
+ */
 @CrossOrigin
 public abstract class CookiesController {
+	/**
+	 * The Cookie name.
+	 */
 	public final String COOKIE_NAME = "laCookie";
+	/**
+	 * The Cookie path.
+	 */
 	public final String COOKIE_PATH = "/";
 
+	/**
+	 * Read or create cookie cookie.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @return the cookie
+	 */
 	protected Cookie readOrCreateCookie(HttpServletRequest request, HttpServletResponse response) {
 		Cookie[] cookies = request.getCookies();
 		if (cookies==null)
