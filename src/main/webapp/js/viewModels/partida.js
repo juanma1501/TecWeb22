@@ -50,10 +50,17 @@ class Partida{
     }
 
     setTurn(nombre){
+        let self = this;
 
         this.playerWithTurn(nombre)
-        if (nombre == "cpu")
-            this.mover()
+        if(self.game_ == "Tres en raya"){
+            if (nombre == "cpu")
+                this.mover()
+        }else{
+            if (nombre == "cpu")
+                this.mover2()
+        }
+
     }
 
     mover() {
@@ -80,6 +87,37 @@ class Partida{
             },
         }
         $.ajax(data);
+    }
+
+    mover2() {
+        let self = this;
+        //Piedra --> 1 ; Papel --> 2; Tijera --> 3
+
+        if (self.ready()){
+            let infoMove = {
+                matchId: self.id(),
+                move: Math.floor(Math.random() * (4 - 1)) + 1,
+            };
+
+            console.log("LA MAQUINA TIRA ")
+            console.log(infoMove)
+
+            let data = {
+                type: "post",
+                url: "/games/move2?cpu=true",
+                data: JSON.stringify(infoMove),
+                contentType: "application/json",
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (response) {
+                   console.log(response)
+                }
+            }
+            $.ajax(data);
+        }else{
+            self.infoMessage("Match isn´t ready yet.")
+        }
     }
 
     cogerCasillaLibre(){

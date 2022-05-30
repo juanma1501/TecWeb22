@@ -203,3 +203,46 @@
   padding-top: 20px;
   margin-top: 20px;
 }
+
+.JuegoStats-content .JuegoStats{
+  align-items: center;
+  font-size: x-large;
+  font-weight: 500;
+  color: mediumblue;
+}
+
+.Estadisticas{
+  align-items: center;
+  margin-right: 20px;
+  text-align: center;
+  border: 5px solid #74adf0;
+  word-break: break-all;
+}
+
+.Estadistica{
+  color: brown;
+
+}
+
+.Valor{
+  font-weight: bold;
+  color: #9c590b;
+}
+
+.Estadisticas .StatsContent{
+  min-height: 250px;
+  max-height: 250px;
+  min-width: 310px;
+  max-width: 310px;
+  border: 3px solid #db90df;
+}
+
+.Estadisticas .texto{
+  float: right;
+  display: flex;
+  align-items: center;
+  word-break:break-all;
+  margin: 0 0 1em 1em;
+  line-height: normal;
+}
+

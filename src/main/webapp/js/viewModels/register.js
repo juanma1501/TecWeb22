@@ -50,6 +50,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 						self.message(response);
 					},
 					error : function(response) {
+						console.log(response.responseJSON.message)
 						self.message("");
 						self.error(response.responseJSON.errorMessage);
 					}

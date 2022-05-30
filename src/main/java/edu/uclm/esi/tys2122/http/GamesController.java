@@ -108,11 +108,17 @@ public class GamesController extends CookiesController {
 	}
 
 	@PostMapping("/move2")
-	public Match move2(HttpSession session, @RequestBody Map<String, Object> movement) throws Exception {
-		User user = (User) session.getAttribute("user");
+	public Match move2(HttpSession session, @RequestBody Map<String, Object> movement, @RequestParam(required = false) boolean cpu) throws Exception {
+		User user;
 		JSONObject jso = new JSONObject(movement);
-		System.out.println("User: "+ user+" ;; "+ jso);
 		Match match = gamesService.getMatch(jso.getString("matchId"));
+
+		if (cpu){
+			user = match.getPlayers().get(1);
+		}else{
+			user = (User) session.getAttribute("user");
+		}
+
 		System.out.println(match.getId());
 		match.move(user.getId(), jso);
 		match.notifyNewStateSecondGame(user.getId());
@@ -157,8 +163,8 @@ public class GamesController extends CookiesController {
 		}
 	}
 
-	@GetMapping("/getStatistics")
-	public int[] getStatistics(HttpSession session) {
+	@GetMapping("/getStats")
+	public int[] getStats(HttpSession session) {
 		int[] statistics = {0, 0, 0, 0, 0};
 		User user = null;
 		user = (User) session.getAttribute("user");

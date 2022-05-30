@@ -65,6 +65,9 @@ public class StonePaperScissorMatch extends Match {
         User user1 = this.players.get(0);
         User user2 = this.players.get(1);
 
+        if (this.filled() || this.winner != null || this.isDraw())
+            throw new Exception("La partida ya terminó");
+
 
         if(!userId.equals(this.playerWithTurn.getId())){
             this.message = "Please, is the turn of "+ this.playerWithTurn.getName();

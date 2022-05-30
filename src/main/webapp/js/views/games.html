@@ -33,6 +33,41 @@
 <div class="limiter">
     <div class="container-login100" style="background-image: url('css/plantilla/images/bg-01.jpg');">
 
+        <!--========================================= ESTADÍSTICAS ======================================================-->
+        <div class="Chat wrap-games Estadisticas">
+            <div class="Title">
+                <span class="login100-form-title p-b-20"> Historial </span>
+            </div>
+            <div id="statsContent" class="ChatContent StatsContent">
+
+                <div class="JuegoStats-content">
+                    <span class="JuegoStats"> Tres en raya </span>
+                </div>
+
+                <div class="Message">
+                    <span class="Estadistica"> Victorias </span>
+                    <span class="Valor" data-bind="html: stats()[1]"></span>
+
+                    <span class="Estadistica"> Derrotas </span>
+                    <span class="Valor" data-bind="html: stats()[2]"></span>
+                </div>
+
+                <div class="JuegoStats-content">
+                    <span class="JuegoStats"> PPT </span>
+                </div>
+
+                <div class="Message">
+                    <span class="Estadistica"> Victorias </span>
+                    <span class="Valor" data-bind="html: stats()[3]"></span>
+
+                    <span class="Estadistica"> Derrotas </span>
+                    <span class="Valor" data-bind="html: stats()[4]"></span>
+                </div>
+
+            </div>
+        </div>
+
+        <!--========================================= JUEGOS ======================================================-->
         <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
             <form class="login100-form validate-form flex-sb flex-w">
 					<span class="login100-form-title p-b-53">
@@ -42,6 +77,8 @@
 
                     <span data-bind="html : mensaje" style="color : blue"></span>
                     <span data-bind="html : error" style="color : red"></span>
+
+
 
                     <!-- ko foreach : games -->
                     <div class="container-login100-form-btn m-t-17">

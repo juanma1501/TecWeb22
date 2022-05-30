@@ -19,6 +19,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
             self.handMove = ko.observable(null);
 
+            self.stats = ko.observableArray([]);
+
 
 
 
@@ -60,15 +62,16 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
         }
 
-        getStatistics() {
+        getStats() {
             let self = this;
 
             let data = {
                 type: "get",
-                url: "http://localhost/games/getStatistics",
+                url: "http://localhost/games/getStats",
                 success: function (response) {
                     console.log("LAS ESTADÍSTICAS SON: ")
-                    console.log(response);
+                    console.log(response)
+                    self.stats(response)
                 },
                 error: function (response) {},
             };
@@ -85,6 +88,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             self.conectarAWebSocket(function (){
                 match.unete($, ko, game)
             }, false);
+
+            self.getStats()
 
             let data = {
                 type: "get",
