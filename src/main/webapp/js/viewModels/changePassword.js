@@ -9,6 +9,8 @@ define(["knockout", "appController", "ojs/ojmodule-element-utils", "accUtils", "
             self.message = ko.observable();
             self.error = ko.observable();
 
+            self.alerta = new Alerta();
+
             // Header Config
             self.headerConfig = ko.observable({
                 view: [],
@@ -44,12 +46,10 @@ define(["knockout", "appController", "ojs/ojmodule-element-utils", "accUtils", "
                 type: "post",
                 contentType: "application/json",
                 success: function (response) {
-                    self.message(response);
-                    self.error("");
+                    self.alerta.abre( "example", 'p green alert',  'Cambio de contraseña correcto 👍' ,  response.responseJSON.message);
                 },
                 error: function (response) {
-                    self.message("");
-                    self.error(response.responseJSON.message);
+                    self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
                 },
             };
             $.ajax(data);

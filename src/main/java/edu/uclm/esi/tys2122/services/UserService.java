@@ -43,7 +43,7 @@ public class UserService {
 		Iterator<ConcurrentHashMap.Entry<String, User>> itr = connectedUsers.entrySet().iterator();
 
 		if (user==null  || user.getConfirmationDate()==null)
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Credenciales no válidas o cuenta no validada");
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Credenciales no válidas o cuenta no validada \uD83D\uDCC2");
 		
 		this.connectedUsers.put(user.getId(), user);
 		return user;
@@ -56,7 +56,7 @@ public class UserService {
 		tokenRepo.save(token);
 
 		Email smtp=new Email();
-		smtp.send(user.getEmail(), "Bienvenido al sistema",
+		smtp.send(user.getEmail(), "Bienvenido al sistema \uD83D\uDCBB",
 			"Para confirmar, pulse aquí: " +
 			"http://localhost/user/validateAccount/" + token.getId());
 
@@ -69,13 +69,13 @@ public class UserService {
 			long date = token.getDate();
 			long now = System.currentTimeMillis();
 			if (now>date+24*60*60*1000)
-				throw new ResponseStatusException(HttpStatus.GONE, "Token caducado");
+				throw new ResponseStatusException(HttpStatus.GONE, "Token caducado \uD83D\uDCC6");
 			String email = token.getEmail();
 			User user = userRepository.findByEmail(email);
 			if (user!=null) {
 				user.setConfirmationDate(now);
 				userRepository.save(user);
-			} else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+			} else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado \uD83D\uDCBF");
 		} else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Token " + tokenId + " no encontrado");
 	}
 

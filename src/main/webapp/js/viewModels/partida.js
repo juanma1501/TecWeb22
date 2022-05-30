@@ -111,7 +111,7 @@ class Partida{
                     console.log(response);
                 },
                 error: function (response) {
-                   console.log(response)
+                    self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
                 }
             }
             $.ajax(data);

@@ -118,14 +118,14 @@ public class UserController extends CookiesController {
 		try {
 			response.sendRedirect(Manager.get().getConfiguration().getString("home"));
 		} catch (IOException e) {
-			
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No encuentro ese token");
 		}
 	}
 
 	@PostMapping(value = "/resetPassword")
 	public String resetPassword(HttpServletRequest request, @RequestBody Map<String, Object> credenciales) {
 		sendEmailRecovery(credenciales);
-		return "Revisa tu correo electrónico, allí encontrarás un link para restablecer tu contraseña.";
+		return "Revisa tu correo electrónico, allí encontrarás un link para restablecer tu contraseña. La próxima vez apúntala mejor \uD83D\uDCC3";
 	}
 
 	@PostMapping(value = "/changePassword")
@@ -142,8 +142,6 @@ public class UserController extends CookiesController {
 			if (newPass.length() < 4)
 				throw new ResponseStatusException(HttpStatus.CONFLICT, "La contraseña debe tener al menos cuatro caracteres");
 
-			//newPass = org.apache.commons.codec.digest.DigestUtils.sha512Hex(newPass);
-
 			User user = null;
 			try {
 				user = Manager.get().getUserRepository().findByToken(token);
@@ -157,7 +155,7 @@ public class UserController extends CookiesController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ambos campos son obligatorios");
 		}
 
-		return "Se ha recuperado tu contraseña satisfactoria";
+		return "Se ha cambiado tu contraseña de forma correcta \uD83D\uDC4D";
 	}
 
 

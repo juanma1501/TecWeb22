@@ -21,7 +21,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
             self.stats = ko.observableArray([]);
 
-
+            self.alerta = new Alerta();
 
 
 
@@ -91,6 +91,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
             self.getStats()
 
+            self.alerta.abre( "example", 'p blue alert',  'Estadísticas 📊' ,  "Recuerda crear una cuenta y loguearte para guardar y mostrar tus estadísticas 💾");
+
             let data = {
                 type: "get",
                 url: "/games/getGames",
@@ -159,7 +161,9 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     success: function (response) {
                         self.chatBoxInput("");
                     },
-                    error: function (response) {},
+                    error: function (response) {
+                        self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
+                    },
                 };
                 $.ajax(data);
             }
@@ -168,12 +172,14 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
         mover(match) {
             let self = this;
 
+            /*
             self.matches().map((match, index) => {
                 if (self.matches()[index].winner() !== null) {
                     console.log("Esta partida ya tiene ganador")
                     return
                 }
             })
+            */
 
             let info = {
                 matchId: match.id(),
@@ -190,8 +196,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     console.log(response);
                 },
                 error: function (response) {
-                    console.error(response);
-                    self.error(response);
+                    self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
                 }
             }
             $.ajax(data);
@@ -309,15 +314,12 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                         match.unete($, ko, game)
                     }, false);
                     self.conectarAChat();
-
-                    self.getStatistics();
                     console.log("PARTIDAS " + self.matches().length)
                     //console.log("PARTIDAS " + self.players())
 
                 },
                 error: function (response) {
-                    console.log(response)
-                    alert(response.responseJSON.message);
+                    self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
                 }
             };
             $.ajax(data);
@@ -356,8 +358,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
                 },
                 error: function (response) {
-                    console.log(response);
-                    alert(response.responseJSON.message);
+                    self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
                 }
             };
             $.ajax(data);
@@ -430,13 +431,12 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                         console.log(response);
                     },
                     error: function (response) {
-                        console.error(response);
-                        self.error(response);
+                        self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
                     }
                 }
                 $.ajax(data);
             }else{
-                self.infoMessage("Match isn´t ready yet.")
+                self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  "La partida aún no cuenta con dos jugadores!");
             }
 
         }
@@ -452,10 +452,10 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     type: "get",
                     url: "http://localhost/games/rendirse/" + matchId,
                     success: function (response) {
-                        console.log("te has rendido")
+                        self.alerta.abre( "example", 'p red alert',  'Has perdido' ,  "Te has rendido 🙄");
                     },
                     error: function (response) {
-                        console.log(response)
+                        self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
                     },
                 };
                 $.ajax(data);

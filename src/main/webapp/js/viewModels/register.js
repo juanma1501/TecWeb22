@@ -22,6 +22,8 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
 		self.message = ko.observable();
 		self.error = ko.observable();
+
+		self.alerta = new Alerta();
 		
 		self.setPicture = function(widget, event) {
 			var file = event.target.files[0];
@@ -46,13 +48,10 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 					type : "put",
 					contentType : 'application/json',
 					success : function(response) {
-						self.error("");
-						self.message(response);
+						self.alerta.abre( "example", 'p green alert',  'Registro correcto 👍' ,  response.responseJSON.message);
 					},
 					error : function(response) {
-						console.log(response.responseJSON.message)
-						self.message("");
-						self.error(response.responseJSON.errorMessage);
+						self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
 					}
 			};
 			$.ajax(data);    	  

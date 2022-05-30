@@ -5,6 +5,8 @@ import edu.uclm.esi.tys2122.model.Board;
 import edu.uclm.esi.tys2122.model.Match;
 import edu.uclm.esi.tys2122.model.User;
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.SecureRandom;
 
@@ -66,13 +68,13 @@ public class StonePaperScissorMatch extends Match {
         User user2 = this.players.get(1);
 
         if (this.filled() || this.winner != null || this.isDraw())
-            throw new Exception("La partida ya terminó");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Esta partida ya terminó ⏹");
 
 
         if(!userId.equals(this.playerWithTurn.getId())){
             this.message = "Please, is the turn of "+ this.playerWithTurn.getName();
             this.notifyMessage(this.getId(), this.message);
-            throw new Exception("Ins`t your turn");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "No es tu turno! ⛔");
         }
 
         if (userId == user1.getId()){
@@ -145,13 +147,18 @@ public class StonePaperScissorMatch extends Match {
 
     @Override
     public void cerrarCuandoSeRinda(User user) {
-        this.setLooser(user);
-        for (User u_ : this.players)
-            if(!u_.equals(user))
-                this.setWinner(u_);
 
-        Manager.get().getMatchRepository().saveMatch(this.getId(), this.getGame(), this.getLooser(), this.getWinner(), this.isDraw());
-        notifyNewStateSecondGame(this.getWinner().getId());
+        try {
+            this.setLooser(user);
+            for (User u_ : this.players)
+                if (!u_.equals(user))
+                    this.setWinner(u_);
+
+            Manager.get().getMatchRepository().saveMatch(this.getId(), this.getGame(), this.getLooser(), this.getWinner(), this.isDraw());
+            notifyNewStateSecondGame(this.getWinner().getId());
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "En serio te quieres rendir dos veces? ⛔");
+        }
     }
 
 

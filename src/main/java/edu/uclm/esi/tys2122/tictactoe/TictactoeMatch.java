@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import edu.uclm.esi.tys2122.model.Board;
 import edu.uclm.esi.tys2122.model.Match;
 import edu.uclm.esi.tys2122.model.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 public class TictactoeMatch extends Match {
 	
@@ -52,20 +54,20 @@ public class TictactoeMatch extends Match {
 	@Override
 	public void move(String userId, JSONObject jsoMovimiento) throws Exception {
 		if (this.filled() || this.winner != null || this.isDraw())
-			throw new Exception("La partida ya terminó");
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Esta partida ya terminó ⏹");
 
 		System.out.println("Los IDs son:");
 		System.out.println(this.getPlayerWithTurn().getId() + " " + this.getPlayerWithTurn().getName());
 		System.out.println(userId);
 		
 		if (!this.getPlayerWithTurn().getId().equals(userId))
-			throw new Exception("No es tu turno");
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "No es tu turno! ⛔");
 		
 		Integer x = jsoMovimiento.getInt("x");
 		Integer y = jsoMovimiento.getInt("y");
 		
 		if (this.getSquare(x, y)!=0)
-			throw new Exception("Casilla ocupada");
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Esta casila está ocupada ⛔");
 		
 		int value = this.getPlayerWithTurn()==this.getPlayers().get(0) ? 1 : 2;
 		this.setSquare(x, y, value);
@@ -117,13 +119,18 @@ public class TictactoeMatch extends Match {
 
 	@Override
 	public void cerrarCuandoSeRinda(User user) {
-		this.setLooser(user);
-		for (User u_ : this.players)
-			if(!u_.equals(user))
-				this.setWinner(u_);
 
-		Manager.get().getMatchRepository().saveMatch(this.getId(), this.getGame(), this.getLooser(), this.getWinner(), this.isDraw());
-		notifyNewState(this.getWinner().getId());
+		try {
+			this.setLooser(user);
+			for (User u_ : this.players)
+				if (!u_.equals(user))
+					this.setWinner(u_);
+
+			Manager.get().getMatchRepository().saveMatch(this.getId(), this.getGame(), this.getLooser(), this.getWinner(), this.isDraw());
+			notifyNewState(this.getWinner().getId());
+		}catch (Exception e){
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "En serio te quieres rendir dos veces? ⛔");
+		}
 	}
 
 	public User getWinner() {

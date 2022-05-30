@@ -11,7 +11,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			self.message = ko.observable();
 			self.error = ko.observable();
 
-
+			self.alerta = new Alerta();
 
 			self.googleUser = undefined
 			
@@ -54,10 +54,11 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				type : "post",
 				contentType : 'application/json',
 				success : function(response) {
+					self.alerta.abre( "example", 'p green alert',  'Login correcto 👍' ,  "Que te diviertas!");
 					app.router.go( { path : "games"} );
 				},
 				error : function(response) {
-					self.error(response.responseJSON.errorMessage);
+					self.alerta.abre( "example", 'p red alert',  'Error en el Login 🚧' ,  response.responseJSON.message);
 				}
 			};
 			$.ajax(data);
