@@ -1,5 +1,5 @@
 define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
-    'jquery'], function (ko, app, moduleUtils, accUtils, $) {
+    'jquery', "libs/persist/debug/offline-persistence-toolkit-core-1.4.8"], function (ko, app, moduleUtils, accUtils, $, process) {
 
     class MenuViewModel {
         constructor() {
@@ -205,7 +205,11 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
         conectarAWebSocket(callback, cpu) {
             let self = this;
             self.cont += 1
+
+
+
             let ws = new WebSocket("ws://localhost/wsGenerico");
+
             console.log(ws)
             console.log("Conectado al socket de juegos correctamente.")
             ws.onopen = function (event) {

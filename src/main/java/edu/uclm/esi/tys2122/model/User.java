@@ -13,6 +13,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -241,7 +243,11 @@ public class User {
 	public void
 	sendMessage(JSONObject jso) throws IOException {
 		WebSocketSession wsSession = this.session.getWsSession();
-		wsSession.sendMessage(new TextMessage(jso.toString()));
+		try {
+			wsSession.sendMessage(new TextMessage(jso.toString()));
+		}catch (IllegalStateException e){
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Estamos cerrando la anterior sesión, haz click ahora de nuevo! ⏹");
+		}
 	}
 
 	/**

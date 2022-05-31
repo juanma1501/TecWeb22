@@ -1,28 +1,98 @@
-<!--
- Copyright (c) 2014, 2020, Oracle and/or its affiliates.
- Licensed under The Universal Permissive License (UPL), Version 1.0
- as shown at https://oss.oracle.com/licenses/upl/
- -->
-<div class="oj-hybrid-applayout-page">
-  <div class="oj-applayout-fixed-top">
-      <!--
-       ** Oracle JET V9.1.0 hybrid mobile application header pattern.
-       ** Please see the Oracle JET Cookbook App Shell: Hybrid Mobile demos for
-       ** more information on how to use this pattern.
-    -->
-    <header role="banner" class="oj-hybrid-applayout-header">
-      <oj-module config="[[headerConfig]]"></oj-module>
-    </header>
-    </div>
-  <!-- This is where your main page content will be loaded -->
-  <div class="oj-applayout-content">
-    <div role="main" class="oj-hybrid-applayout-content">
-      <div class="oj-hybrid-padding">
-        <h1>About Content Area</h1>
-        <div>
-            Aplicación web con knockoutjs en cliente y Spring en el servidor.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Reset password</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--===============================================================================================-->
+  <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="css/plantilla/vendor/bootstrap/css/bootstrap.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="css/plantilla/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="css/plantilla/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="css/plantilla/vendor/animate/animate.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="css/plantilla/vendor/css-hamburgers/hamburgers.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="css/plantilla/vendor/animsition/css/animsition.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="css/plantilla/vendor/select2/select2.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="css/plantilla/vendor/daterangepicker/daterangepicker.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="css/plantilla/css/util.css">
+  <link rel="stylesheet" type="text/css" href="css/plantilla/css/main.css">
+  <!--===============================================================================================-->
+</head>
+<body>
+
+<div class="limiter">
+  <div class="container-login100" style="background-image: url('css/plantilla/images/bg-01.jpg');">
+    <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+      <form class="login100-form validate-form flex-sb flex-w">
+					<span class="login100-form-title p-b-53">
+						Sobre este trabajo
+					</span>
+
+
+        <span class="txt2" style="color: grey">
+                    Te enviaremos un email de confirmación a la dirección de correo que pongas a continuación.
+                </span>
+
+
+        <div class="p-t-31 p-b-9">
+						<span class="txt1">
+							Correo electrónico 📩
+						</span>
         </div>
-      </div>
+        <div class="wrap-input100 validate-input" data-validate="Username is required">
+          <input type="text" class="input100" placeholder="Dirección de correo electrónico"
+                 data-bind="value : email">
+          <span class="focus-input100"></span>
+        </div>
+
+        <div class="container-login100-form-btn m-t-17">
+          <button class="login100-form-btn" data-bind="click: resetPassword">
+            Resetear
+          </button>
+        </div>
+
+        <div class="w-full text-center p-t-55">
+						<span class="txt2">
+							¿Ya tienes una cuenta?
+						</span>
+
+          <a href="#" class="txt2 bo1">
+            <a href="http://localhost">Inicia sesión</a>
+          </a>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+
+
+<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+<script src="css/plantilla/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="css/plantilla/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="css/plantilla/vendor/bootstrap/js/popper.js"></script>
+<script src="css/plantilla/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="css/plantilla/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="css/plantilla/vendor/daterangepicker/moment.min.js"></script>
+<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="css/plantilla/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="css/plantilla/js/main.js"></script>
+
+</body>
+</html>

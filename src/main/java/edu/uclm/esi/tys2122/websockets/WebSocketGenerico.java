@@ -12,11 +12,14 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import edu.uclm.esi.tys2122.http.Manager;
 
+import javax.websocket.OnClose;
+
 @Component
 public class WebSocketGenerico extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession wsSession) throws Exception {
+
 		wsSession.setBinaryMessageSizeLimit(1000*1024*1024);
 		System.out.println(wsSession.getId());
 		
@@ -103,4 +106,5 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 		Manager.get().cerrarConexion(wssession);
 		super.afterConnectionClosed(wssession, status);
 	}
+
 }
