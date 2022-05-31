@@ -20,6 +20,7 @@ public class WrapperSession {
 	public HttpSession getHttpSession() {
 		return httpSession;
 	}
+
 	
 	public WebSocketSession getWsSession() {
 		return wsSession;

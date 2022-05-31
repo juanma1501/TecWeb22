@@ -2,16 +2,44 @@ package edu.uclm.esi.tys2122.tictactoe;
 
 import java.security.SecureRandom;
 
+import edu.uclm.esi.tys2122.dao.MatchRepository;
+import edu.uclm.esi.tys2122.http.Manager;
 import org.json.JSONObject;
 
 import edu.uclm.esi.tys2122.model.Board;
 import edu.uclm.esi.tys2122.model.Match;
 import edu.uclm.esi.tys2122.model.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * The type Tictactoe match.
+ */
 public class TictactoeMatch extends Match {
 	
-	private User winner, looser;
+	private User winner;
+
+	/**
+	 * Sets winner.
+	 *
+	 * @param winner the winner
+	 */
+	public void setWinner(User winner) {
+		this.winner = winner;
+	}
+
+	/**
+	 * Sets looser.
+	 *
+	 * @param looser the looser
+	 */
+	public void setLooser(User looser) {
+		this.looser = looser;
+	}
+
+	private User looser;
 	private boolean draw;
+	private String lastUser;
 	
 	@Override
 	protected Board newBoard() {
@@ -26,11 +54,25 @@ public class TictactoeMatch extends Match {
 			this.playerWithTurn = new SecureRandom().nextBoolean() ? this.players.get(0) : this.players.get(1);
 	}
 
+	/**
+	 * Gets square.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @return the square
+	 */
 	public int getSquare(Integer x, Integer y) {
 		TictactoeBoard board = (TictactoeBoard) this.getBoard();
 		return board.getSquares()[x][y];
 	}
 
+	/**
+	 * Sets square.
+	 *
+	 * @param x     the x
+	 * @param y     the y
+	 * @param value the value
+	 */
 	public void setSquare(Integer x, Integer y, int value) {
 		TictactoeBoard board = (TictactoeBoard) this.getBoard();
 		board.getSquares()[x][y]=value;
@@ -38,17 +80,37 @@ public class TictactoeMatch extends Match {
 
 	@Override
 	public void move(String userId, JSONObject jsoMovimiento) throws Exception {
-		if (this.filled())
-			throw new Exception("La partida ya terminó");
+
+		Integer x;
+		Integer y;
+
+		if (this.filled() || this.winner != null || this.isDraw())
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Esta partida ya terminó ⏹");
+
+		if(this.playerWithTurn == null){
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Espera a que se una un nuevo jugador! ⛔");
+		}
+
+		System.out.println("Los IDs son:");
+		System.out.println(this.getPlayerWithTurn().getId() + " " + this.getPlayerWithTurn().getName());
+		System.out.println(userId);
 		
 		if (!this.getPlayerWithTurn().getId().equals(userId))
-			throw new Exception("No es tu turno");
-		
-		Integer x = jsoMovimiento.getInt("x");
-		Integer y = jsoMovimiento.getInt("y");
-		
-		if (this.getSquare(x, y)!=0)
-			throw new Exception("Casilla ocupada");
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "No es tu turno! ⛔");
+
+		try {
+			 x = jsoMovimiento.getInt("x");
+			 y = jsoMovimiento.getInt("y");
+		}catch (Exception e){
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Escribe una casilla válida para ocupar!");
+		}
+
+		try {
+			if (this.getSquare(x, y) != 0)
+				throw new ResponseStatusException(HttpStatus.CONFLICT, "Esta casila está ocupada ⛔");
+		}catch (ArrayIndexOutOfBoundsException e){
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Esa casilla no existe! Elige valores de 0️⃣ a 2️⃣");
+		}
 		
 		int value = this.getPlayerWithTurn()==this.getPlayers().get(0) ? 1 : 2;
 		this.setSquare(x, y, value);
@@ -91,6 +153,26 @@ public class TictactoeMatch extends Match {
 		}
 		if (this.winner!=null) {
 			this.looser = this.winner==this.players.get(0) ? this.players.get(1) : this.players.get(0);
+			Manager.get().getMatchRepository().saveMatch(this.getId(), this.getGame(), this.getLooser(), this.getWinner(), this.isDraw());
+		}
+
+
+
+	}
+
+	@Override
+	public void cerrarCuandoSeRinda(User user) {
+
+		try {
+			this.setLooser(user);
+			for (User u_ : this.players)
+				if (!u_.equals(user))
+					this.setWinner(u_);
+
+			Manager.get().getMatchRepository().saveMatch(this.getId(), this.getGame(), this.getLooser(), this.getWinner(), this.isDraw());
+			notifyNewState(this.getWinner().getId());
+		}catch (Exception e){
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "En serio te quieres rendir dos veces? ⛔");
 		}
 	}
 
@@ -101,7 +183,12 @@ public class TictactoeMatch extends Match {
 	public User getLooser() {
 		return looser;
 	}
-	
+
+	/**
+	 * Is draw boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isDraw() {
 		return draw;
 	}

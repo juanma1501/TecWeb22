@@ -11,8 +11,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.google.gson.Gson;
+import edu.uclm.esi.tys2122.StonePaperScissor.StonePaperScissorMatch;
+import edu.uclm.esi.tys2122.dao.UserRepository;
+import edu.uclm.esi.tys2122.http.Manager;
+import edu.uclm.esi.tys2122.tictactoe.TictactoeMatch;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Entity
@@ -34,6 +39,10 @@ public abstract class Match {
     @Transient
     protected boolean ready;
 
+    @Transient
+    @Autowired
+    protected UserRepository userRepository;
+
     public Match() {
         this.id = UUID.randomUUID().toString();
         this.players = new Vector<>();
@@ -52,6 +61,11 @@ public abstract class Match {
         return board;
     }
 
+    public abstract User getWinner();
+
+    public abstract User getLooser();
+
+
     public void setBoard(Board board) {
         this.board = board;
     }
@@ -68,6 +82,10 @@ public abstract class Match {
 
     public User getPlayerWithTurn() {
         return playerWithTurn;
+    }
+
+    public void setPlayerWithTurn (User user) {
+        this.playerWithTurn = user;
     }
 
     @Transient
@@ -91,6 +109,14 @@ public abstract class Match {
         JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getSquares()));
         movement.put("squares", jsonArray);
         jso.put("board", movement);
+        jso.put("playerWithTurn", this.playerWithTurn.getName());
+
+        TictactoeMatch match = (TictactoeMatch) Manager.get().findMatch(this.id);
+        if(match.getWinner() != null) {
+            jso.put("winner", match.getWinner().getName());
+            jso.put("looser", match.getLooser().getName());
+            jso.put("draw", match.isDraw());
+        }
 
 
         for (User player : this.players) {
@@ -100,6 +126,68 @@ public abstract class Match {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+        }
+    }
+
+    public void notifyNewStateSecondGame(String userId) {
+        JSONObject jso = new JSONObject();
+        jso.put("type", "BOARD");
+        jso.put("id", this.id);
+        jso.put("playerWithTurn", this.playerWithTurn.getName());
+
+        StonePaperScissorMatch match = (StonePaperScissorMatch) Manager.get().findMatch(this.id);
+
+        if(match.getFilled()){
+
+            if(match.getWinner() != null){
+                String winner = match.getWinner().getName();
+                String looser = match.getLooser().getName();
+                boolean draw = match.getDraw();
+
+                jso.put("winner", winner);
+                jso.put("looser", looser);
+                jso.put("draw", draw);
+            }else{
+                boolean draw = match.getDraw();
+                jso.put("draw", draw);
+            }
+
+
+            Gson gson = new Gson();
+            JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getArray()));
+            jso.put("board", jsonArray);
+        }
+
+        for (User player : this.players) {
+            try {
+                player.sendMessage(jso);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void notifyMessage(String userId, String message) {
+        JSONObject jso = new JSONObject();
+        JSONObject movement = new JSONObject();
+        jso.put("type", "BOARD");
+        jso.put("id", this.id);
+        //jso.put("board", this.board);
+        Gson gson = new Gson();
+        JSONArray jsonArray = new JSONArray(gson.toJson(this.board.getSquares()));
+        movement.put("squares", jsonArray);
+        jso.put("board", movement);
+        jso.put("playerWithTurn", this.playerWithTurn.getName());
+        jso.put("message", message);
+
+        for (User player : this.players) {
+            try {
+                player.sendMessage(jso);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
 
@@ -123,5 +211,11 @@ public abstract class Match {
             }
         }
     }
+
+    public String getGame() {
+        return this.getClass().getSimpleName();
+    }
+
+    public abstract void cerrarCuandoSeRinda(User user);
 
 }

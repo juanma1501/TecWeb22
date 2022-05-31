@@ -14,14 +14,16 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 	function RegisterViewModel() {
 		var self = this;
 		
-		self.userName = ko.observable("pepe");
-		self.email = ko.observable("pepe@pepe.com");
-		self.pwd1 = ko.observable("pepe123");
-		self.pwd2 = ko.observable("pepe123");
+		self.userName = ko.observable();
+		self.email = ko.observable();
+		self.pwd1 = ko.observable();
+		self.pwd2 = ko.observable();
 		self.picture=ko.observable();
 
 		self.message = ko.observable();
 		self.error = ko.observable();
+
+		self.alerta = new Alerta();
 		
 		self.setPicture = function(widget, event) {
 			var file = event.target.files[0];
@@ -46,12 +48,10 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 					type : "put",
 					contentType : 'application/json',
 					success : function(response) {
-						self.error("");
-						self.message(response);
+						self.alerta.abre( "example", 'p green alert',  'Registro correcto 👍' ,  response.responseJSON.message);
 					},
 					error : function(response) {
-						self.message("");
-						self.error(response.responseJSON.errorMessage);
+						self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
 					}
 			};
 			$.ajax(data);    	  
@@ -84,7 +84,15 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 		self.transitionCompleted = function() {
 			// Implement if needed
 		};
+
+		self.login = function () {
+			app.router.go( { path : "register" } );
+		}
 	}
+
+
+
+
 
 	return RegisterViewModel;
 });

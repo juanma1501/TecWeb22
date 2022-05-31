@@ -1,5 +1,8 @@
 package edu.uclm.esi.tys2122.model;
 
+import edu.uclm.esi.tys2122.http.Manager;
+import org.json.JSONObject;
+
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -10,28 +13,40 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * The type Email.
+ */
 public class Email {
 	private final Properties properties = new Properties();
 
+	/**
+	 * Send.
+	 *
+	 * @param destinatario the destinatario
+	 * @param subject      the subject
+	 * @param body         the body
+	 */
 	public void send(String destinatario, String subject, String body) {
-		String smtpHost= "smtp.office365.com";
-		String startTTLS="true";
-		String port="587";
-		String sender="macario.polo@uclm.es";		// REMITENTE
-		String serverUser="macario.polo@uclm.es";	// USUARIO
-		String userAutentication= "true";
-		String pwd="*****";				// PONER LA CONTRASEÑA
-		String fallback="true";	
-		
-		properties.put("mail.smtp.host", smtpHost);  
-        properties.put("mail.smtp.starttls.enable", startTTLS);  
-        properties.put("mail.smtp.port", port);  
-        properties.put("mail.smtp.mail.sender", sender);  
-        properties.put("mail.smtp.user", serverUser);  
-        properties.put("mail.smtp.auth", userAutentication);
-        properties.put("mail.smtp.socketFactory.port", port);
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.smtp.socketFactory.fallback", fallback);
+		JSONObject emailParameters = (JSONObject) Manager.get().getConfiguration().getJSONObject("email");
+
+		String smtpHost = (String) emailParameters.get("host");
+		String startTTLS = (String) emailParameters.get("startTTLS");
+		String port = (String) emailParameters.get("port");
+		String sender = (String) emailParameters.get("sender");
+		String serverUser = (String) emailParameters.get("serverUser");
+		String userAutentication = (String) emailParameters.get("auth");
+		String pwd = (String) emailParameters.get("pwd");
+		String fallback = (String) emailParameters.get("fallback");
+
+		properties.put("mail.smtp.host", smtpHost);
+		properties.put("mail.smtp.starttls.enable", startTTLS);
+		properties.put("mail.smtp.port", port);
+		properties.put("mail.smtp.mail.sender", sender);
+		properties.put("mail.smtp.user", serverUser);
+		properties.put("mail.smtp.auth", userAutentication);
+		properties.put("mail.smtp.socketFactory.port", port);
+		properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		properties.put("mail.smtp.socketFactory.fallback", fallback);
         
         Runnable r = new Runnable() {
 			@Override
@@ -58,6 +73,12 @@ public class Email {
         private String sender;
 		private String pwd;
 
+		/**
+		 * Instantiates a new Autentificador smtp.
+		 *
+		 * @param sender the sender
+		 * @param pwd    the pwd
+		 */
 		public AutentificadorSMTP(String sender, String pwd) {
 			this.sender = sender;
 			this.pwd = pwd;
@@ -67,10 +88,16 @@ public class Email {
             return new PasswordAuthentication(sender, pwd);
         }
     }
-	
+
+	/**
+	 * The entry point of application.
+	 *
+	 * @param args the input arguments
+	 * @throws Exception the exception
+	 */
 	public static void main(String[] args) throws Exception {
 		Email sender=new Email();
-		sender.send("macario.polo@uclm.es", "Hola", "Caracola");
+		sender.send("juanmaporreroalmansa@gmail.com", "Hola", "Ya me va el correo");
 		System.out.println("Enviado");
 	}
 }

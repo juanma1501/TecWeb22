@@ -7,19 +7,19 @@ import edu.uclm.esi.tys2122.model.Match;
 import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.BinaryMessage;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketMessage;
-import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import edu.uclm.esi.tys2122.http.Manager;
+
+import javax.websocket.OnClose;
 
 @Component
 public class WebSocketGenerico extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession wsSession) throws Exception {
+
 		wsSession.setBinaryMessageSizeLimit(1000*1024*1024);
 		System.out.println(wsSession.getId());
 		
@@ -36,6 +36,7 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 			}
 		}
 		WrapperSession ajedrezSesion = new WrapperSession(wsSession);
+
 		Manager.get().add(ajedrezSesion, httpSessionId);
 		
 		//saludarDeVezEnCuando(session);
@@ -99,4 +100,11 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void afterConnectionClosed(WebSocketSession wssession, CloseStatus status) throws Exception {
+		Manager.get().cerrarConexion(wssession);
+		super.afterConnectionClosed(wssession, status);
+	}
+
 }

@@ -15,5 +15,10 @@ public class WebSocketGenericoConfigurer implements WebSocketConfigurer {
 			addHandler(new WebSocketGenerico(), "/wsGenerico").
 			setAllowedOrigins("*").
 			addInterceptors(new HttpSessionHandshakeInterceptor());
+
+		registry.
+				addHandler(new WebSocketChat(), "/wsChat").
+				setAllowedOrigins("*").
+				addInterceptors(new HttpSessionHandshakeInterceptor());
 	}
 }
