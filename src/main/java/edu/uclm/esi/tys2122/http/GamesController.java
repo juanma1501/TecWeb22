@@ -23,9 +23,6 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-/**
- * The type Games controller.
- */
 @CrossOrigin
 @RestController
 @RequestMapping("games")
@@ -35,14 +32,7 @@ public class GamesController extends CookiesController {
 	
 	@Autowired
 	private UserService userService;
-
-	/**
-	 * Gets games.
-	 *
-	 * @param session the session
-	 * @return the games
-	 * @throws Exception the exception
-	 */
+	
 	@GetMapping("/getGames")
 	public List<Game> getGames(HttpSession session) throws Exception {
 		User user;
@@ -57,15 +47,6 @@ public class GamesController extends CookiesController {
 		return gamesService.getGames();
 	}
 
-	/**
-	 * Join game match.
-	 *
-	 * @param session  the session
-	 * @param gameName the game name
-	 * @param cpu      the cpu
-	 * @return the match
-	 * @throws Exception the exception
-	 */
 	@GetMapping("/joinGame/{gameName}")
 	public Match joinGame(HttpSession session, @PathVariable String gameName, @RequestParam(required = false) boolean cpu) throws Exception {
 		User user;
@@ -106,15 +87,6 @@ public class GamesController extends CookiesController {
 		return match;
 	}
 
-	/**
-	 * Move match.
-	 *
-	 * @param session  the session
-	 * @param movement the movement
-	 * @param cpu      the cpu
-	 * @return the match
-	 * @throws Exception the exception
-	 */
 	@PostMapping("/move")
 	public Match move(HttpSession session, @RequestBody Map<String, Object> movement, @RequestParam(required = false) boolean cpu) throws Exception {
 		User user;
@@ -127,7 +99,6 @@ public class GamesController extends CookiesController {
 			user = (User) session.getAttribute("user");
 		}
 
-
 		System.out.println("User: "+ user+" ;; "+ jso);
 		System.out.println(match.getId());
 		match.move(user.getId(), jso);
@@ -135,15 +106,6 @@ public class GamesController extends CookiesController {
 		return match;
 	}
 
-	/**
-	 * Move 2 match.
-	 *
-	 * @param session  the session
-	 * @param movement the movement
-	 * @param cpu      the cpu
-	 * @return the match
-	 * @throws Exception the exception
-	 */
 	@PostMapping("/move2")
 	public Match move2(HttpSession session, @RequestBody Map<String, Object> movement, @RequestParam(required = false) boolean cpu) throws Exception {
 		User user;
@@ -162,13 +124,7 @@ public class GamesController extends CookiesController {
 		//if finish : notifytablero
 		return match;
 	}
-
-	/**
-	 * Find match match.
-	 *
-	 * @param matchId the match id
-	 * @return the match
-	 */
+	
 	@GetMapping("/findMatch/{matchId}")
 	public Match findMatch(@PathVariable String matchId) {
 		return gamesService.getMatch(matchId);
@@ -185,12 +141,6 @@ public class GamesController extends CookiesController {
 		return match;
 	}
 
-	/**
-	 * Send message chat.
-	 *
-	 * @param session     the session
-	 * @param messageInfo the message info
-	 */
 	@PostMapping("/sendMessageChat")
 	public void sendMessageChat(HttpSession session, @RequestBody Map<String, Object> messageInfo) {
 		JSONObject jso = new JSONObject(messageInfo);
@@ -212,12 +162,6 @@ public class GamesController extends CookiesController {
 		}
 	}
 
-	/**
-	 * Get stats int [ ].
-	 *
-	 * @param session the session
-	 * @return the int [ ]
-	 */
 	@GetMapping("/getStats")
 	public int[] getStats(HttpSession session) {
 		int[] statistics = {0, 0, 0, 0, 0};
@@ -238,13 +182,6 @@ public class GamesController extends CookiesController {
 		return statistics;
 	}
 
-	/**
-	 * Rendirse.
-	 *
-	 * @param session the session
-	 * @param matchId the match id
-	 * @throws Exception the exception
-	 */
 	@GetMapping("/rendirse/{matchId}")
 	public void rendirse(HttpSession session, @PathVariable String matchId) throws Exception {
 		User user = (User) session.getAttribute("user");

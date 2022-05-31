@@ -23,11 +23,11 @@ public abstract class MvcTestCase {
 	
 	protected ResultActions doPost(String url, HttpSession session, Object... fieldsAndValues) throws Exception {
 		url = normalize(url);
-		
+
 		JSONObject jso = new JSONObject();
 		for (int i=0; i<fieldsAndValues.length; i=i+2)
 			jso.put(fieldsAndValues[i].toString(), fieldsAndValues[i+1]);
-		
+
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.
 				post(url).
 				contentType("application/json").
@@ -35,7 +35,7 @@ public abstract class MvcTestCase {
 		
 		if (session!=null)
 			request.session((MockHttpSession) session);
-		
+
 		return mvc.perform(request);
 	}
 	

@@ -56,9 +56,9 @@ public class UserService {
 
 		Iterator<ConcurrentHashMap.Entry<String, User>> itr = connectedUsers.entrySet().iterator();
 
-		if (user==null  || user.getConfirmationDate()==null)
+		if (user==null)//  || user.getConfirmationDate()==null)
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Credenciales no válidas o cuenta no validada \uD83D\uDCC2");
-		
+
 		this.connectedUsers.put(user.getId(), user);
 		return user;
 	}

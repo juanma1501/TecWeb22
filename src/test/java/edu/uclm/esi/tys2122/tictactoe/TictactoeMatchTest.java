@@ -26,7 +26,6 @@ import edu.uclm.esi.tys2122.MvcTestCase;
 public class TictactoeMatchTest extends MvcTestCase {
 	
 	private JSONObject jsoPepe, jsoAna, jsoLucas;
-	
 	private HttpSession sessionPepe, sessionAna, sessionLucas;
 	
 	@BeforeEach

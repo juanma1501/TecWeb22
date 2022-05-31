@@ -172,15 +172,6 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
         mover(match) {
             let self = this;
 
-            /*
-            self.matches().map((match, index) => {
-                if (self.matches()[index].winner() !== null) {
-                    console.log("Esta partida ya tiene ganador")
-                    return
-                }
-            })
-            */
-
             let info = {
                 matchId: match.id(),
                 x: this.x(),

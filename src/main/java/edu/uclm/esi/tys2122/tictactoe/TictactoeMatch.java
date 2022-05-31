@@ -87,6 +87,10 @@ public class TictactoeMatch extends Match {
 		if (this.filled() || this.winner != null || this.isDraw())
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Esta partida ya terminó ⏹");
 
+		if(this.playerWithTurn == null){
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Espera a que se una un nuevo jugador! ⛔");
+		}
+
 		System.out.println("Los IDs son:");
 		System.out.println(this.getPlayerWithTurn().getId() + " " + this.getPlayerWithTurn().getName());
 		System.out.println(userId);

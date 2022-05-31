@@ -104,20 +104,18 @@ public class UserController extends CookiesController {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Error: las contraseñas no coinciden");
 		if (pwd1.length()<4)
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Error: la contraseña debe tener al menos cuatro caracteres");
+		if (Manager.get().getUserRepository().findByEmail(email) != null){
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "El usuario que intentas crear ya existe. Introuce otro mail");
+		}else{
+			User user = new User();
+			user.setName(userName);
+			user.setEmail(email);
+			user.setPwd(pwd1);
+			user.setPicture(picture);
 
-
-			if (Manager.get().getUserRepository().findByEmail(email) != null){
-				throw new ResponseStatusException(HttpStatus.CONFLICT, "El usuario que intentas crear ya existe. Introuce otro mail");
-			}else{
-				User user = new User();
-				user.setName(userName);
-				user.setEmail(email);
-				user.setPwd(pwd1);
-				user.setPicture(picture);
-
-				userService.save(user);
-				return "Te hemos enviado un correo para confirmar tu registro";
-			}
+			userService.save(user);
+			return "Te hemos enviado un correo para confirmar tu registro";
+		}
 	}
 
 	/**
