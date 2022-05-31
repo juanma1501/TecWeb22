@@ -123,8 +123,8 @@ public class seleniumTest {
             e.printStackTrace();
         }
 
-        driver.findElement(By.xpath("//div[@id='globalBody']/oj-module/div/div/div/form/ol/input")).clear();
-        driver.findElement(By.xpath("//div[@id='globalBody']/oj-module/div/div/div/form/ol/input")).sendKeys("2");
+        driver.findElement(By.xpath("/html/body/div/oj-module/div[1]/div/div[2]/form/ol/div[2]/input")).clear();
+        driver.findElement(By.xpath("/html/body/div/oj-module/div[1]/div/div[2]/form/ol/div[2]/input")).sendKeys("2");
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/button")).click();
         try {
             Thread.sleep(4000);

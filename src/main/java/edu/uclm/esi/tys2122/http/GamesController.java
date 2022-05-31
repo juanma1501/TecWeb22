@@ -50,13 +50,11 @@ public class GamesController extends CookiesController {
 	@GetMapping("/joinGame/{gameName}")
 	public Match joinGame(HttpSession session, @PathVariable String gameName, @RequestParam(required = false) boolean cpu) throws Exception {
 		User user;
-		System.out.println(gameName);
-		if(cpu) {
 
+		if(cpu) {
 			user = User.fakeUser();
 			User real = (User) session.getAttribute("user");
 			user.setSession(real.getSession());
-
 		}else if (session.getAttribute("user")!=null) {
 			user = (User) session.getAttribute("user");
 		} else {

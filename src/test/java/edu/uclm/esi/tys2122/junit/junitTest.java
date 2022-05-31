@@ -140,12 +140,6 @@ class junitTest  extends MvcTestCase{
         assertFalse(matchU.getBoolean("ready"));
         assertEquals(1, matchU.getJSONArray("players").length());
 
-        /*.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-        System.out.println(sesU);
-        System.out.println(matchU.getString("id"));
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");*/
-
-
         // {Try move although there ins´t an opponent}
         doPost("games/move", sesU,
                 "matchId",matchU.getString("id"),
@@ -154,26 +148,6 @@ class junitTest  extends MvcTestCase{
                )
                 .andExpect(status().is4xxClientError())
                 .andReturn().getResponse().getContentAsString();
-
-        /*
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-        System.out.println(sesU2);
-        System.out.println(sesU);
-        System.out.println(matchU.getString("id"));
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-         */
-
-
-        // Correct Join Game {Everything is correct}
-        response = doGet("/games/joinGame/Tres en raya", sesU2).andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        matchU2 = new JSONObject(response);
-
-        // {Check if the parameters are correctly set}
-        assertEquals("TictactoeMatch", matchU2.getString("game"));
-        assertTrue(matchU2.getBoolean("ready"));
-        assertEquals(2, matchU2.getJSONArray("players").length());
-        assertTrue(matchU.getString("id").equals(matchU2.getString("id")));
 
     }
 
