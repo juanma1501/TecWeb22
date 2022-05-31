@@ -155,6 +155,14 @@ class junitTest  extends MvcTestCase{
                 .andExpect(status().is4xxClientError())
                 .andReturn().getResponse().getContentAsString();
 
+        /*
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        System.out.println(sesU2);
+        System.out.println(sesU);
+        System.out.println(matchU.getString("id"));
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+         */
+
 
         // Correct Join Game {Everything is correct}
         response = doGet("/games/joinGame/Tres en raya", sesU2).andExpect(status().isOk())

@@ -24,8 +24,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             self.alerta = new Alerta();
 
 
-
-            self.secondMove = function(data,event){
+            self.secondMove = function (data, event) {
                 self.handMove(event.target.innerText)
                 console.log(event.target.innerText)
             }
@@ -73,7 +72,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     console.log(response)
                     self.stats(response)
                 },
-                error: function (response) {},
+                error: function (response) {
+                },
             };
             $.ajax(data);
         }
@@ -85,13 +85,13 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
             let self = this;
 
-            self.conectarAWebSocket(function (){
+            self.conectarAWebSocket(function () {
                 match.unete($, ko, game)
             }, false);
 
             self.getStats()
 
-            self.alerta.abre( "example", 'p blue alert',  'Estadísticas 📊' ,  "Recuerda crear una cuenta y loguearte para guardar y mostrar tus estadísticas 💾");
+            self.alerta.abre("example", 'p blue alert', 'Estadísticas 📊', "Recuerda crear una cuenta y loguearte para guardar y mostrar tus estadísticas 💾");
 
             let data = {
                 type: "get",
@@ -127,7 +127,8 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             console.log("Conectado a chat con éxito")
             console.log(ws)
 
-            ws.onopen = function (event) {};
+            ws.onopen = function (event) {
+            };
             ws.onmessage = function (event) {
                 let msg = JSON.parse(event.data);
                 self.addMsgChat(msg);
@@ -162,7 +163,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                         self.chatBoxInput("");
                     },
                     error: function (response) {
-                        self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
+                        self.alerta.abre("example", 'p red alert', 'Error 🚧', response.responseJSON.message);
                     },
                 };
                 $.ajax(data);
@@ -187,7 +188,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     console.log(response);
                 },
                 error: function (response) {
-                    self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
+                    self.alerta.abre("example", 'p red alert', 'Error 🚧', response.responseJSON.message);
                 }
             }
             $.ajax(data);
@@ -196,7 +197,6 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
         conectarAWebSocket(callback, cpu) {
             let self = this;
             self.cont += 1
-
 
 
             let ws = new WebSocket("ws://localhost/wsGenerico");
@@ -227,7 +227,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     })
                 }
 
-                if (msg.type == "BOARD"){
+                if (msg.type == "BOARD") {
                     self.matches().map((match, index) => {
                         if (self.matches()[index].id() == msg.id) {
 
@@ -259,7 +259,7 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             }
         }
 
-        actualizarPreparada(partida, msg){
+        actualizarPreparada(partida, msg) {
             //VAMOS IR RECARGANDO ATRIBUTO A ATRIBUTO
             let player = {
                 email: ko.observable(msg.player.email),
@@ -274,12 +274,12 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             partida.playerWithTurn(msg.playerWithTurn)
         }
 
-        actualizarMovimiento(partida, msg){
+        actualizarMovimiento(partida, msg) {
             partida.board(msg.board)
             console.log("Jugador actual con turno: " + msg.playerWithTurn)
             partida.setTurn(msg.playerWithTurn)
 
-            if (msg.winner != null){
+            if (msg.winner != null) {
                 partida.winner(msg.winner)
                 partida.looser(msg.looser)
             }
@@ -305,16 +305,19 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     console.log(response.players)
                     //SE PINTA CUANDO SE HACE PUSH
                     self.matches.push(match)
-                    self.conectarAWebSocket(function (){
+
+                    self.conectarAWebSocket(function () {
                         match.unete($, ko, game)
                     }, false);
+
+
                     self.conectarAChat();
                     console.log("PARTIDAS " + self.matches().length)
                     //console.log("PARTIDAS " + self.players())
 
                 },
                 error: function (response) {
-                    self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
+                    self.alerta.abre("example", 'p red alert', 'Error 🚧', response.responseJSON.message);
                 }
             };
             $.ajax(data);
@@ -347,13 +350,13 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 
                     //SE PINTA CUANDO SE HACE PUSH
                     self.matches.push(match)
-                    self.conectarAWebSocket(function (){
+                    self.conectarAWebSocket(function () {
                         match.unete($, ko, game)
                     }, true);
 
                 },
                 error: function (response) {
-                    self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
+                    self.alerta.abre("example", 'p red alert', 'Error 🚧', response.responseJSON.message);
                 }
             };
             $.ajax(data);
@@ -389,29 +392,29 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
             // Implement if needed
         };
 
-        moveSecondGame(match){
+        moveSecondGame(match) {
             let self = this;
             let move;
             let hand = self.handMove()
             console.log(self.handMove())
             //Piedra --> 1 ; Papel --> 2; Tijera --> 3
 
-            if(hand == 'piedra'){
+            if (hand == 'piedra') {
                 move = 1
 
-            }else if(hand == 'papel'){
+            } else if (hand == 'papel') {
                 move = 2
-            }else{
+            } else {
                 move = 3
             }
 
-            console.log("Movement: " +move)
+            console.log("Movement: " + move)
 
             console.log("Match ID: " + match.id())
 
             console.log("Ready? " + match.ready())
 
-            if (match.ready()){
+            if (match.ready()) {
                 let infoMove = {
                     matchId: match.id(),
                     move: move,
@@ -426,17 +429,17 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                         console.log(response);
                     },
                     error: function (response) {
-                        self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
+                        self.alerta.abre("example", 'p red alert', 'Error 🚧', response.responseJSON.message);
                     }
                 }
                 $.ajax(data);
-            }else{
-                self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  "La partida aún no cuenta con dos jugadores!");
+            } else {
+                self.alerta.abre("example", 'p red alert', 'Error 🚧', "La partida aún no cuenta con dos jugadores!");
             }
 
         }
 
-        rendirse(matchId){
+        rendirse(matchId) {
             console.log(matchId)
             let self = this;
             let actualMatch = self.matches().find((match) => match.id() == matchId);
@@ -447,17 +450,16 @@ define(['knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
                     type: "get",
                     url: "http://localhost/games/rendirse/" + matchId,
                     success: function (response) {
-                        self.alerta.abre( "example", 'p red alert',  'Has perdido' ,  "Te has rendido 🙄");
+                        self.alerta.abre("example", 'p red alert', 'Has perdido', "Te has rendido 🙄");
                     },
                     error: function (response) {
-                        self.alerta.abre( "example", 'p red alert',  'Error 🚧' ,  response.responseJSON.message);
+                        self.alerta.abre("example", 'p red alert', 'Error 🚧', response.responseJSON.message);
                     },
                 };
                 $.ajax(data);
             }
         }
     }
-
 
 
     return MenuViewModel;

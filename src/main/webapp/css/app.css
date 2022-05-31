@@ -15,6 +15,10 @@
   visibility: hidden;
 }
 
+.link:hover {
+  color: deepskyblue;
+}
+
 .sendOffScreen {
   position: absolute;
   left: -10000px;
@@ -680,5 +684,7 @@ That part is just for the form
 .info-partidas-turno{
   color: #a64bf4;
 }
+
+
 
 
