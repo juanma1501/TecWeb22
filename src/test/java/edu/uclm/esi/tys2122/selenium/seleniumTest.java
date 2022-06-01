@@ -48,6 +48,45 @@ public class seleniumTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        //Wrong login {incorrect userName}
+        driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/div[3]/input")).click();
+        driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/div[3]/input")).clear();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/div[3]/input")).sendKeys("alonsito");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/div[3]/input")).sendKeys(Keys.ENTER);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals("Credenciales no válidas o cuenta no validada \uD83D\uDCC2", driver.findElement(By.xpath("//div[@id='example']/div/span")).getText());
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.findElement(By.xpath("//*[@id=\"example_cancelar\"]")).click();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //Correct login
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/div[3]/input")).click();
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/div[3]/input")).clear();
         try {
@@ -62,17 +101,24 @@ public class seleniumTest {
             e.printStackTrace();
         }
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/div[3]/input")).sendKeys(Keys.ENTER);
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        driver.findElement(By.xpath("//div[@id=\'example\']/button")).click();
+
+        assertEquals("Que te diviertas!", driver.findElement(By.xpath("//*[@id=\"example\"]/div/span")).getText());
+
+        driver.findElement(By.xpath("//*[@id=\"example_cancelar\"]")).click();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+
+        //Clica en el boton del juego
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/div/div[2]/button/label")).click();
         js.executeScript("window.scrollTo(0,0)");
         try {
@@ -81,7 +127,37 @@ public class seleniumTest {
             e.printStackTrace();
         }
 
-        /***/
+        js.executeScript("window.scrollTo(0,411)");
+
+        //Wrong cell {outside of board}
+        driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/div/input")).clear();
+        driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/div/input")).sendKeys("3");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.findElement(By.xpath("/html/body/div/oj-module/div[1]/div/div[2]/form/ol/div[2]/input")).clear();
+        driver.findElement(By.xpath("/html/body/div/oj-module/div[1]/div/div[2]/form/ol/div[2]/input")).sendKeys("3");
+        driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/button")).click();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals("Esa casilla no existe! Elige valores de 0️⃣ a 2️⃣", driver.findElement(By.xpath("//*[@id=\"example\"]/div/span")).getText());
+        driver.findElement(By.xpath("//*[@id=\"example_cancelar\"]")).click();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //First run
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/div/input")).clear();
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/div/input")).sendKeys("1");
         try {
@@ -93,11 +169,42 @@ public class seleniumTest {
         driver.findElement(By.xpath("/html/body/div/oj-module/div[1]/div/div[2]/form/ol/div[2]/input")).clear();
         driver.findElement(By.xpath("/html/body/div/oj-module/div[1]/div/div[2]/form/ol/div[2]/input")).sendKeys("1");
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/button")).click();
-        {
-            WebElement element = driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/div/input"));
-            Actions builder = new Actions(driver);
-            builder.doubleClick(element).perform();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
+        //Wrong {select a occupied cell}
+        driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/div/input")).clear();
+        driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/div/input")).sendKeys("1");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.findElement(By.xpath("/html/body/div/oj-module/div[1]/div/div[2]/form/ol/div[2]/input")).clear();
+        driver.findElement(By.xpath("/html/body/div/oj-module/div[1]/div/div[2]/form/ol/div[2]/input")).sendKeys("1");
+        driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/button")).click();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals("Esta casila está ocupada ⛔", driver.findElement(By.xpath("//*[@id=\"example\"]/div/span")).getText());
+        driver.findElement(By.xpath("//*[@id=\"example_cancelar\"]")).click();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //Second run
         js.executeScript("window.scrollTo(0,411)");
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/div/input")).clear();
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/div/input")).sendKeys("0");
@@ -115,6 +222,8 @@ public class seleniumTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        //Third run
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/div/input")).clear();
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/div/input")).sendKeys("2");
         try {
@@ -126,10 +235,13 @@ public class seleniumTest {
         driver.findElement(By.xpath("/html/body/div/oj-module/div[1]/div/div[2]/form/ol/div[2]/input")).clear();
         driver.findElement(By.xpath("/html/body/div/oj-module/div[1]/div/div[2]/form/ol/div[2]/input")).sendKeys("2");
         driver.findElement(By.xpath("//div[@id=\'globalBody\']/oj-module/div/div/div/form/ol/button")).click();
+
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        driver.quit();
+
     }
 }
